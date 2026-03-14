@@ -248,9 +248,9 @@ const Hero: React.FC<HeroProps> = ({ hero }) => {
       title: 'eSthira Raptric: The Future of Commuting',
       subtitle: 'Packed with Cutting-Edge Features for an Unmatched Riding Experience',
       primaryButtonText: 'Buy Now',
-      primaryButtonLink: '#product',
+      primaryButtonLink: '/ebikes',
       secondaryButtonText: 'Book Test Ride',
-      secondaryButtonLink: '#test-ride',
+      secondaryButtonLink: '/contact',
       imageUrl: '/Banner1.png'
     },
     {
@@ -258,9 +258,9 @@ const Hero: React.FC<HeroProps> = ({ hero }) => {
       title: 'Ride with Confidence',
       subtitle: 'Premium quality, unmatched performance, eco-friendly commute',
       primaryButtonText: 'Learn More',
-      primaryButtonLink: '#features',
+      primaryButtonLink: '/why-ebikes',
       secondaryButtonText: 'Contact Us',
-      secondaryButtonLink: '#contact',
+      secondaryButtonLink: '/contact',
       imageUrl: '/Banner2.jpg'
     },
     {
@@ -268,9 +268,9 @@ const Hero: React.FC<HeroProps> = ({ hero }) => {
       title: 'Sustainable Living',
       subtitle: 'Eco-friendly transportation reduces carbon footprint and promotes healthier lifestyles',
       primaryButtonText: 'Join Movement',
-      primaryButtonLink: '#community',
+      primaryButtonLink: '/why-ebikes',
       secondaryButtonText: 'Learn More',
-      secondaryButtonLink: '#sustainability',
+      secondaryButtonLink: '/why-ebikes',
       imageUrl: '/Banner3.jpg'
     }
   ]

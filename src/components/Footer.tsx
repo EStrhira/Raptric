@@ -103,19 +103,10 @@ const Footer: React.FC = () => {
               Leading the electric revolution in sustainable mobility. Experience the future of commuting with our premium eBikes.
             </FooterText>
             <SocialLinks>
-              <SocialLink href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-facebook-f"></i>
-              </SocialLink>
-              <SocialLink href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <SocialLink href="https://instagram.com/esthiramobility" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-instagram"></i>
               </SocialLink>
-              <SocialLink href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-twitter"></i>
-              </SocialLink>
-              <SocialLink href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-linkedin-in"></i>
-              </SocialLink>
-              <SocialLink href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+              <SocialLink href="https://www.youtube.com/@eSthiraMobility" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-youtube"></i>
               </SocialLink>
             </SocialLinks>

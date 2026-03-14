@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
+import BUSINESS_INFO from '../constants/businessInfo'
 
 const ContactSection = styled.section`
   padding: 0;
@@ -211,31 +212,31 @@ const Contact: React.FC = () => {
     {
       name: "Bengaluru Headquarters",
       icon: "fas fa-map-marker-alt",
-      address: "#123, 4th Main, BTM Layout, Bangalore - 560076",
-      phone: "+91 98765 43210",
-      email: "info@esthira.com",
-      hours: "Monday - Saturday: 9:00 AM - 7:00 PM, Sunday: 10:00 AM - 6:00 PM"
+      address: BUSINESS_INFO.address.full,
+      phone: BUSINESS_INFO.contact.phoneFormatted,
+      email: BUSINESS_INFO.contact.email,
+      hours: BUSINESS_INFO.hours.weekdays
     },
     {
       name: "Customer Support",
       icon: "fas fa-headset",
-      phone: "+91 98765 43211",
-      email: "support@esthira.com",
+      phone: BUSINESS_INFO.contact.phoneFormatted,
+      email: BUSINESS_INFO.contact.email,
       hours: "24/7 Customer Support Available"
     },
     {
       name: "Service Center",
       icon: "fas fa-wrench",
-      address: "#456, 8th Cross, Indiranagar, Bangalore - 560068",
-      phone: "+91 98765 43212",
-      email: "service@esthira.com",
-      hours: "Monday - Saturday: 9:00 AM - 6:00 PM"
+      address: BUSINESS_INFO.address.full,
+      phone: BUSINESS_INFO.contact.phoneFormatted,
+      email: BUSINESS_INFO.contact.email,
+      hours: BUSINESS_INFO.hours.weekdays
     },
     {
       name: "Sales Inquiries",
       icon: "fas fa-shopping-cart",
-      phone: "+91 98765 43213",
-      email: "sales@esthira.com",
+      phone: BUSINESS_INFO.contact.phoneFormatted,
+      email: BUSINESS_INFO.contact.email,
       hours: "Monday - Friday: 9:00 AM - 6:00 PM"
     }
   ]
@@ -276,10 +277,7 @@ const Contact: React.FC = () => {
                   <strong>Email:</strong> {contact.email}<br />
                   <strong>Hours:</strong> {contact.hours}
                 </ContactInfo>
-                <ContactButton href={`mailto:${contact.email}`}>
-                  <i className="fas fa-envelope"></i>
-                  {contact.name === 'Customer Support' ? 'Contact Support' : contact.name === 'Sales Inquiries' ? 'Inquire Now' : 'Book Service'}
-                </ContactButton>
+                
               </ContactCard>
             ))}
           </ContactGrid>

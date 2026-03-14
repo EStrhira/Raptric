@@ -10,6 +10,7 @@ import Support from '../components/Support'
 import Retailers from '../components/Retailers'
 import Contact from '../components/Contact'
 import MechanicalShowcaseSection from '../components/MechanicalShowcaseSection'
+import BUSINESS_INFO from '../constants/businessInfo'
 
 // Fallback data to ensure the app works even without Sanity
 const fallbackHero = {
@@ -53,16 +54,16 @@ const fallbackTestimonials = [
 
 const fallbackContactInfo = {
   _id: 'fallback',
-  address: '#123, 4th Main, BTM Layout, Bangalore - 560076',
-  phone: '+91 98765 43210',
-  email: 'info@esthira.com',
-  workingHours: 'Monday - Saturday: 9:00 AM - 7:00 PM, Sunday: 10:00 AM - 6:00 PM'
+  address: BUSINESS_INFO.address.full,
+  phone: BUSINESS_INFO.contact.phoneFormatted,
+  email: BUSINESS_INFO.contact.email,
+  workingHours: BUSINESS_INFO.hours.weekdays
 }
 
 const fallbackRetailers = [
-  { _id: '1', name: 'eSthira Bangalore Central', address: '#123, Brigade Road, Bangalore', phone: '+91 98765 43210', email: 'bangalore@esthira.com', city: 'Bangalore', order: 1 },
-  { _id: '2', name: 'eSthira Koramangala', address: '#456, 80 Feet Road, Koramangala', phone: '+91 98765 43211', email: 'koramangala@esthira.com', city: 'Bangalore', order: 2 },
-  { _id: '3', name: 'eSthira Indiranagar', address: '#789, 100 Feet Road, Indiranagar', phone: '+91 98765 43212', email: 'indiranagar@esthira.com', city: 'Bangalore', order: 3 }
+  { _id: '1', name: 'eSthira Bengaluru Headquarters', address: BUSINESS_INFO.address.full, phone: BUSINESS_INFO.contact.phoneFormatted, email: BUSINESS_INFO.contact.email, city: 'Bengaluru', order: 1 },
+  { _id: '2', name: 'eSthira Service Center', address: BUSINESS_INFO.address.full, phone: BUSINESS_INFO.contact.phoneFormatted, email: BUSINESS_INFO.contact.email, city: 'Bengaluru', order: 2 },
+  { _id: '3', name: 'eSthira Sales Office', address: BUSINESS_INFO.address.full, phone: BUSINESS_INFO.contact.phoneFormatted, email: BUSINESS_INFO.contact.email, city: 'Bengaluru', order: 3 }
 ]
 
 const HomePage: React.FC = () => {

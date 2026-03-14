@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
-
-// Google Review interface
-interface GoogleReview {
-  author_name: string
-  rating: number
-  text: string
-  relative_time_description: string
-  profile_photo_url: string
-}
+import GoogleReviewsService, { GoogleReview } from '../services/GoogleReviewsService'
+import BUSINESS_INFO from '../constants/businessInfo'
 
 const TestimonialsSection = styled.section`
   padding: 80px 0;
@@ -212,51 +205,19 @@ const Testimonials: React.FC = () => {
         setLoading(true)
         setError(null)
         
-        // Simulate Google Reviews API call
-        const mockGoogleReviews: GoogleReview[] = [
-          {
-            author_name: "Sarah Johnson",
-            rating: 5,
-            text: "Absolutely love my eSthira e-bike! The battery life is incredible and the motor power is perfect for my daily commute. Best investment I've made this year.",
-            relative_time_description: "2 weeks ago",
-            profile_photo_url: ""
-          },
-          {
-            author_name: "Michael Chen",
-            rating: 5,
-            text: "The build quality is outstanding. I've been riding for 6 months now and it still feels brand new. Customer service is also top-notch.",
-            relative_time_description: "1 month ago",
-            profile_photo_url: ""
-          },
-          {
-            author_name: "Emma Rodriguez",
-            rating: 4,
-            text: "Great value for money. The range is exactly as advertised and the charging time is impressive. Would definitely recommend to friends.",
-            relative_time_description: "3 weeks ago",
-            profile_photo_url: ""
-          },
-          {
-            author_name: "David Thompson",
-            rating: 5,
-            text: "This e-bike has transformed my daily commute. I save so much time and energy. The smart features are really intuitive too.",
-            relative_time_description: "2 months ago",
-            profile_photo_url: ""
-          },
-          {
-            author_name: "Lisa Park",
-            rating: 5,
-            text: "Couldn't be happier with my purchase. The design is sleek, the performance is smooth, and it turns heads everywhere I go!",
-            relative_time_description: "1 week ago",
-            profile_photo_url: ""
-          }
-        ]
-
-        // Sort by rating and take top 5
-        const topReviews = mockGoogleReviews
-          .sort((a, b) => b.rating - a.rating)
-          .slice(0, 5)
-
-        setReviews(topReviews)
+        const reviewsService = GoogleReviewsService.getInstance()
+        
+        // Try to get real Google reviews first
+        try {
+          const googleReviews = await reviewsService.getPlaceReviews(BUSINESS_INFO.social.google.placeId)
+          setReviews(googleReviews)
+        } catch (apiError) {
+          console.warn('Google Places API failed, using fallback:', apiError)
+          
+          // Fallback to widget method or demo reviews
+          const fallbackReviews = await reviewsService.getReviewsFromWidget()
+          setReviews(fallbackReviews)
+        }
       } catch (err) {
         setError('Failed to load reviews. Please try again later.')
       } finally {

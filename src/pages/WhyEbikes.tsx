@@ -420,8 +420,8 @@ const WhyEbikes: React.FC = () => {
               Experience the perfect blend of technology, sustainability, and freedom with eSthira eBikes.
             </CTADescription>
             <CTAButtons>
-              <Button $variant="primary" href="#product">Explore eSthira Raptric</Button>
-              <Button $variant="secondary" href="#test-ride">Schedule a Test Ride</Button>
+              <Button $variant="primary" href="/ebikes">Explore eSthira Raptric</Button>
+              <Button $variant="secondary" href="/contact">Schedule a Test Ride</Button>
             </CTAButtons>
           </CTASection>
         </Container>

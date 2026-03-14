@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { client, urlFor } from '../lib/sanity'
 import { Container } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
+import BUSINESS_INFO from '../constants/businessInfo'
 
 const ServiceSection = styled.section`
   padding: 0;
@@ -227,6 +228,85 @@ const ServiceButton = styled.a`
   }
 `
 
+// Contact Section Styles
+const ContactSection = styled.section`
+  margin-top: 4rem;
+  padding: 3rem 0;
+  background: rgba(0, 166, 82, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 166, 82, 0.2);
+`
+
+const ContactTitle = styled.h2`
+  color: #00a652;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+`
+
+const ContactSubtitle = styled.p`
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+`
+
+const ContactGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+`
+
+const ContactCard = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+`
+
+const ContactIcon = styled.div`
+  width: 100%;
+  height: 80px;
+  background: rgba(0, 166, 82, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00a652;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+`
+
+const ContactName = styled.h3`
+  color: #00a652;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+`
+
+const ContactInfo = styled.div`
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+`
+
 const Service: React.FC = () => {
   const [loading, setLoading] = useState(true)
 
@@ -326,13 +406,58 @@ const Service: React.FC = () => {
                     <ServiceFeature key={featureIndex}>{feature}</ServiceFeature>
                   ))}
                 </ServiceFeatures>
-                <ServiceButton href="#contact-us">
-                  <i className="fas fa-arrow-right"></i>
-                  Book Service
-                </ServiceButton>
               </ServiceCard>
             ))}
           </ServiceGrid>
+
+          {/* Contact Information Section */}
+          <ContactSection id="contact-us">
+            <ContactTitle>Service Center Contact</ContactTitle>
+            <ContactSubtitle>
+              Visit our service center or contact us for any maintenance and repair needs
+            </ContactSubtitle>
+            
+            <ContactGrid>
+              <ContactCard>
+                <ContactIcon>
+                  <i className="fas fa-map-marker-alt"></i>
+                </ContactIcon>
+                <ContactName>Service Center Address</ContactName>
+                <ContactInfo>
+                  {BUSINESS_INFO.address.line1}<br />
+                  {BUSINESS_INFO.address.line2}<br />
+                  {BUSINESS_INFO.address.city}, {BUSINESS_INFO.address.state}<br />
+                  {BUSINESS_INFO.address.pincode}<br />
+                  {BUSINESS_INFO.address.country}
+                </ContactInfo>
+              </ContactCard>
+
+              <ContactCard>
+                <ContactIcon>
+                  <i className="fas fa-phone-alt"></i>
+                </ContactIcon>
+                <ContactName>Service Hotline</ContactName>
+                <ContactInfo>
+                  <strong>Phone:</strong> {BUSINESS_INFO.contact.phone}<br />
+                  <strong>Email:</strong> {BUSINESS_INFO.contact.email}<br />
+                  <strong>Hours:</strong> {BUSINESS_INFO.hours.weekdays}
+                </ContactInfo>
+                
+              </ContactCard>
+
+              <ContactCard>
+                <ContactIcon>
+                  <i className="fas fa-clock"></i>
+                </ContactIcon>
+                <ContactName>Service Hours</ContactName>
+                <ContactInfo>
+                  <strong>Monday - Sunday:</strong> {BUSINESS_INFO.hours.display}<br />
+                  <strong>Emergency Support:</strong> 24/7 Available<br />
+                  <strong>Appointment:</strong> Recommended
+                </ContactInfo>
+              </ContactCard>
+            </ContactGrid>
+          </ContactSection>
         </ServiceContainer>
       </Container>
     </ServiceSection>

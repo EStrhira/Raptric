@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Container } from '../styles/GlobalStyles'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getCart, getCartTotal } from '../utils/cart'
 import { useScrollToTop } from '../hooks/useScrollToTop'
+import PaymentButton from '../components/Payment/PaymentButton'
+import { usePayment } from '../context/PaymentContext'
+import BUSINESS_INFO from '../constants/businessInfo'
 
 const CheckoutSection = styled.section`
   padding: 80px 0;
@@ -262,6 +265,58 @@ const TotalAmount = styled.span`
   font-weight: 700;
 `
 
+const BangaloreMessage = styled.div`
+  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 2px 4px rgba(255, 193, 7, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`
+
+const MessageIcon = styled.div`
+  font-size: 1.2rem;
+  color: #ff9800;
+  flex-shrink: 0;
+`
+
+const MessageContent = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+`
+
+const MessageTitle = styled.span`
+  color: #e65100;
+  font-size: 0.95rem;
+  font-weight: 600;
+`
+
+const MessageText = styled.span`
+  color: #856404;
+  font-size: 0.9rem;
+  line-height: 1.4;
+
+  a {
+    color: #00a652;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  strong {
+    color: #e65100;
+  }
+`
+
 const BackButton = styled(Link)`
   background: transparent;
   color: #00a652;
@@ -341,7 +396,13 @@ interface AddressFormData {
   sameAsBilling: boolean
 }
 
+interface FormErrors {
+  [key: string]: string
+}
+
 const CheckoutAddress: React.FC = () => {
+  const navigate = useNavigate()
+  const { setPaymentSuccess, setError: setPaymentError, clearError } = usePayment()
   const [formData, setFormData] = useState<AddressFormData>({
     // Billing Address
     billingFirstName: '',
@@ -353,7 +414,7 @@ const CheckoutAddress: React.FC = () => {
     billingState: '',
     billingPincode: '',
     billingCountry: 'India',
-    billingGST: '',  // GST Details field
+    billingGST: '',
     
     // Shipping Address
     shippingFirstName: '',
@@ -367,6 +428,9 @@ const CheckoutAddress: React.FC = () => {
     
     sameAsBilling: true
   })
+
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [error, setError] = useState<string | null>(null)
 
   const cartItems = getCart()
   const cartTotal = getCartTotal()
@@ -396,7 +460,7 @@ const CheckoutAddress: React.FC = () => {
     setFormData(prev => ({
       ...prev,
       sameAsBilling: isChecked,
-      // Copy billing address to shipping if checked
+      // Copy billing address to shipping if checked, clear if unchecked
       ...(isChecked ? {
         shippingFirstName: prev.billingFirstName,
         shippingLastName: prev.billingLastName,
@@ -406,7 +470,16 @@ const CheckoutAddress: React.FC = () => {
         shippingState: prev.billingState,
         shippingPincode: prev.billingPincode,
         shippingCountry: prev.billingCountry
-      } : {})
+      } : {
+        shippingFirstName: '',
+        shippingLastName: '',
+        shippingPhone: '',
+        shippingAddress: '',
+        shippingCity: '',
+        shippingState: '',
+        shippingPincode: '',
+        shippingCountry: 'India'
+      })
     }))
   }
 
@@ -414,8 +487,60 @@ const CheckoutAddress: React.FC = () => {
     e.preventDefault()
     // Handle form submission
     console.log('Checkout data:', formData)
-    // Navigate to payment page
-    // navigate('/payment')
+    // Payment will be handled by PaymentButton
+  }
+
+  const handlePaymentSuccess = (paymentResponse: any) => {
+    // Clear cart after successful payment
+    localStorage.setItem('esthira-cart', JSON.stringify([]))
+    
+    // Store payment details with address information
+    setPaymentSuccess({
+      ...paymentResponse,
+      items: cartItems,
+      totalAmount: cartTotal,
+      billingAddress: {
+        firstName: formData.billingFirstName,
+        lastName: formData.billingLastName,
+        email: formData.billingEmail,
+        phone: formData.billingPhone,
+        address: formData.billingAddress,
+        city: formData.billingCity,
+        state: formData.billingState,
+        pincode: formData.billingPincode,
+        country: formData.billingCountry,
+        gst: formData.billingGST
+      },
+      shippingAddress: formData.sameAsBilling ? {
+        firstName: formData.billingFirstName,
+        lastName: formData.billingLastName,
+        phone: formData.billingPhone,
+        address: formData.billingAddress,
+        city: formData.billingCity,
+        state: formData.billingState,
+        pincode: formData.billingPincode,
+        country: formData.billingCountry
+      } : {
+        firstName: formData.shippingFirstName,
+        lastName: formData.shippingLastName,
+        phone: formData.shippingPhone,
+        address: formData.shippingAddress,
+        city: formData.shippingCity,
+        state: formData.shippingState,
+        pincode: formData.shippingPincode,
+        country: formData.shippingCountry
+      },
+      timestamp: new Date().toISOString()
+    })
+
+    // Show success message and redirect
+    alert('Payment successful! Your order has been placed.')
+    navigate('/order-success')
+  }
+
+  const handlePaymentFailure = (error: any) => {
+    console.error('Payment failed:', error)
+    setError(error.message || 'Payment failed. Please try again.')
   }
 
   const isFormValid = () => {
@@ -457,6 +582,22 @@ const CheckoutAddress: React.FC = () => {
           </BannerContent>
         </Container>
       </CheckoutBanner>
+
+      {/* Bangalore Service Message - Always Visible */}
+      <Container>
+        <BangaloreMessage>
+          <MessageIcon>
+            <i className="fas fa-info-circle"></i>
+          </MessageIcon>
+          <MessageContent>
+            <MessageTitle>📍 Service Area: Bangalore Only</MessageTitle>
+            <MessageText>
+              We currently serve only Bangalore for the best after-sales service. 
+              Contact us at <a href={`mailto:${BUSINESS_INFO.contact.email}`}>{BUSINESS_INFO.contact.email}</a> or <a href={`tel:${BUSINESS_INFO.contact.phoneFormatted}`}>{BUSINESS_INFO.contact.phone}</a> for other locations.
+            </MessageText>
+          </MessageContent>
+        </BangaloreMessage>
+      </Container>
       
       <Container>
         <CheckoutContainer>
@@ -737,14 +878,22 @@ const CheckoutAddress: React.FC = () => {
                   <i className="fas fa-arrow-left"></i>
                   Back to Cart
                 </BackButton>
-                <ContinueButton 
-                  type="submit" 
-                  onClick={handleSubmit}
+                <PaymentButton
+                  amount={Math.round(cartTotal)}
+                  productName="eSthira Purchase"
+                  productDescription={`Order with ${cartItems.length} item(s)`}
+                  customerInfo={{
+                    name: `${formData.billingFirstName} ${formData.billingLastName}`,
+                    email: formData.billingEmail,
+                    contact: formData.billingPhone
+                  }}
+                  onSuccess={handlePaymentSuccess}
+                  onFailure={handlePaymentFailure}
                   disabled={!isFormValid()}
+                  size="large"
                 >
-                  Continue to Payment
-                  <i className="fas fa-arrow-right"></i>
-                </ContinueButton>
+                  💳 Pay ₹{Math.round(cartTotal).toLocaleString('en-IN')}
+                </PaymentButton>
               </ButtonGroup>
             </Form>
           </AddressForm>

@@ -256,15 +256,7 @@ const Header: React.FC = () => {
                 <DropdownItem><DropdownLink to="/accessories" onClick={closeMenu}>Accessories</DropdownLink></DropdownItem>
               </DropdownMenu>
             </NavItem>
-            <NavItem>
-              <NavLink to="#shop">
-                Chronicles <i className="fas fa-chevron-down"></i>
-              </NavLink>
-              <DropdownMenu>
-                <DropdownItem><DropdownLink to="/blog" onClick={closeMenu}>Blog</DropdownLink></DropdownItem>
-                <DropdownItem><DropdownLink to="/news" onClick={closeMenu}>News</DropdownLink></DropdownItem>
-              </DropdownMenu>
-            </NavItem>
+            
             <NavItem>
               <NavLink to="#shop">
                 Support <i className="fas fa-chevron-down"></i>

@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Container } from '../styles/GlobalStyles'
 import { getCart, removeFromCart, updateQuantity } from '../utils/cart'
 import { useScrollToTop } from '../hooks/useScrollToTop'
+import PaymentButton from '../components/Payment/PaymentButton'
+import { usePayment } from '../context/PaymentContext'
 
 const CartSection = styled.section`
   padding: 80px 0;
@@ -368,20 +370,27 @@ interface CartItem {
 }
 
 const Cart: React.FC = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
+  const { setPaymentSuccess, setError, clearError } = usePayment()
 
-  // Scroll to top when page loads or navigates
+  // Scroll to top when page loads
   useScrollToTop()
 
   useEffect(() => {
-    // Load cart from localStorage
-    const savedCart = localStorage.getItem('esthira-cart')
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart))
+    const loadCart = () => {
+      try {
+        const items = getCart()
+        setCartItems(items)
+      } catch (error) {
+        console.error('Error loading cart:', error)
+      } finally {
+        setLoading(false)
+      }
     }
-    setLoading(false)
+
+    loadCart()
   }, [])
 
   const updateQuantity = (id: string, newQuantity: number) => {
@@ -397,6 +406,7 @@ const Cart: React.FC = () => {
   }
 
   const removeItem = (id: string) => {
+    removeFromCart(id)
     setCartItems(prevItems => {
       const updatedItems = prevItems.filter(item => item.id !== id)
       localStorage.setItem('esthira-cart', JSON.stringify(updatedItems))
@@ -424,6 +434,29 @@ const Cart: React.FC = () => {
 
   const calculateTotal = () => {
     return calculateBasePrice() // Total equals base price (no tax)
+  }
+
+  const handlePaymentSuccess = (paymentResponse: any) => {
+    // Clear cart after successful payment
+    localStorage.setItem('esthira-cart', JSON.stringify([]))
+    setCartItems([])
+    
+    // Store payment details
+    setPaymentSuccess({
+      ...paymentResponse,
+      items: cartItems,
+      totalAmount: calculateTotal(),
+      timestamp: new Date().toISOString()
+    })
+
+    // Show success message and redirect
+    alert('Payment successful! Thank you for your purchase.')
+    navigate('/order-success')
+  }
+
+  const handlePaymentFailure = (error: any) => {
+    console.error('Payment failed:', error)
+    setError(error.message || 'Payment failed. Please try again.')
   }
 
   const handleCheckout = () => {
@@ -525,10 +558,7 @@ const Cart: React.FC = () => {
                   <span>Subtotal:</span>
                   <span>₹{calculateBasePrice().toFixed(2)}</span>
                 </SummaryRow>
-                <SummaryRow>
-                  <span>Shipping:</span>
-                  <span>Free</span>
-                </SummaryRow>
+                
                 <SummaryDivider />
                 <SummaryTotal>
                   <span>Total:</span>
