@@ -119,7 +119,8 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
     range: 0,
     speed: 0,
     battery: 0,
-    motor: 0
+    motor: 0,
+    gear: 0
   })
   const [isAnimating, setIsAnimating] = useState(false)
   const [hasAnimated, setHasAnimated] = useState(false)
@@ -130,7 +131,8 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
     range: 60,
     speed: 25,
     battery: 13,
-    motor: 250
+    motor: 250,
+    gear: 7
   }
 
   const specs = [
@@ -161,6 +163,13 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
       label: "Motor",
       unit: "W",
       icon: "fas fa-bolt"
+    },
+    {
+      value: currentValues.gear,
+      target: targetValues.gear,
+      label: "Gears",
+      unit: "",
+      icon: "fas fa-gear"
     }
   ]
 
@@ -173,7 +182,8 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
       range: 0,
       speed: 0,
       battery: 0,
-      motor: 0
+      motor: 0,
+      gear: 0
     })
     animateToTargets()
   }
@@ -203,6 +213,7 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
         newValues.speed = Math.ceil(targetValues.speed * progress)
         newValues.battery = Math.ceil(targetValues.battery * progress)
         newValues.motor = Math.ceil(targetValues.motor * progress)
+        newValues.gear = Math.ceil(targetValues.gear * progress)
 
         return newValues
       })

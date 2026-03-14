@@ -178,7 +178,7 @@ const Showcase: React.FC = () => {
                 </FeatureItem>
                 <FeatureItem>
                   <i className="fas fa-route"></i>
-                  Range: 40-50 km per charge
+                  Range: 40-60 km per charge
                 </FeatureItem>
               </FeatureList>
               <ShowcaseButton href="/ebikes">Learn More</ShowcaseButton>

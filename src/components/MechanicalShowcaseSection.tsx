@@ -169,16 +169,32 @@ const Showcase: React.FC = () => {
                   Convertible Bicycle from Mechanical to Electric
                 </FeatureItem>
                 <FeatureItem>
-                  <i className="fas fa-battery-full"></i>
+                  <i className="fas fa-cycle-frame"></i>
                   27.5" High Tensile Steel Frame
                 </FeatureItem>
                 <FeatureItem>
-                  <i className="fas fa-tachometer-alt"></i>
+                  <i className="fas fa-cycle-rim"></i>
                   Double wall Alloy Rims
                 </FeatureItem>
                 <FeatureItem>
-                  <i className="fas fa-route"></i>
+                  <i className="fas fa-gear"></i>
                   21-Speed Microshift gears
+                </FeatureItem>
+                <FeatureItem>
+                  <i className="fas fa-brakes"></i>
+                  Dual Disc Brakes
+                </FeatureItem>
+                <FeatureItem>
+                  <i className="fas fa-suspension"></i>
+                  Fork Suspension
+                </FeatureItem>
+                <FeatureItem>
+                  <i className="fas fa-gear"></i>
+                  Microshift Derailleur
+                </FeatureItem>
+                <FeatureItem>
+                  <i className="fas fa-tire"></i>
+                  Hartex MTB Tires
                 </FeatureItem>
               </FeatureList>
               <ShowcaseButton href="/cycles">Learn More</ShowcaseButton>
