@@ -60,6 +60,30 @@ const ShowcaseImage = styled.div`
   }
 `
 
+const SpecificationImage = styled.div`
+  margin-top: 3rem;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  position: relative;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+  }
+`
+
 const ShowcaseRight = styled.div`
   color: #ffffff;
 `
@@ -200,6 +224,11 @@ const Showcase: React.FC = () => {
               <ShowcaseButton href="/cycles">Learn More</ShowcaseButton>
             </ShowcaseRight>
           </ShowcaseContent>
+          
+          {/* Mechanical Specification Image */}
+          <SpecificationImage>
+            <img src="/Mechanic Specification.jpeg" alt="Mechanical Bike Specifications" />
+          </SpecificationImage>
         </ShowcaseContainer>
       </Container>
     </ShowcaseSection>

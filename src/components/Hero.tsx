@@ -53,16 +53,15 @@ const CarouselImage = styled.div<{ $imageUrl?: string }>`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.3) 100%);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.4) 100%);
   }
 `
 
 const HeroContent = styled.div`
   position: relative;
   z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 20px;
+  width: 100%;
+  padding: 60px 40px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
@@ -75,6 +74,10 @@ const HeroContent = styled.div`
     padding: 40px 20px;
     gap: 2rem;
   }
+
+  @media (max-width: 480px) {
+    padding: 30px 15px;
+  }
 `
 
 const HeroText = styled.div``
@@ -85,6 +88,8 @@ const HeroTitle = styled.h1`
   margin-bottom: 1.5rem;
   color: #ffffff;
   line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: -0.5px;
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
@@ -98,8 +103,11 @@ const HeroTitle = styled.h1`
 const HeroSubtitle = styled.p`
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  opacity: 0.9;
+  opacity: 0.95;
   color: #ffffff;
+  line-height: 1.6;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  max-width: 600px;
 
   @media (max-width: 480px) {
     font-size: 1rem;
@@ -272,6 +280,16 @@ const Hero: React.FC<HeroProps> = ({ hero }) => {
       secondaryButtonText: 'Learn More',
       secondaryButtonLink: '/why-ebikes',
       imageUrl: '/Banner3.jpg'
+    },
+    {
+      id: '4',
+      title: '🎊 Ugadhi Festive Offer - Celebrate with eSthira!',
+      subtitle: 'Special festive discounts on all eSthira Raptric eBikes! Limited time offer with exclusive benefits and free accessories. Make this Ugadhi memorable with sustainable mobility.',
+      primaryButtonText: 'Grab Offer',
+      primaryButtonLink: '/ebikes',
+      secondaryButtonText: 'Learn More',
+      secondaryButtonLink: '/contact',
+      imageUrl: '/Festive.png'
     }
   ]
 

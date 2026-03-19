@@ -195,7 +195,7 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     // Basic validation
@@ -213,16 +213,49 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
       return
     }
     
-    // Simulate form submission
-    setNotification({ type: 'success', message: 'Thank you for your message! We will get back to you soon.' })
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    })
-    setTimeout(() => setNotification(null), 5000)
+    try {
+      // Send email using EmailJS or similar service
+      const emailData = {
+        to_email: 'info.esthira@gmail.com',
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject || 'General Inquiry',
+        message: formData.message,
+        reply_to: formData.email
+      }
+
+      // For now, we'll use a simple mailto link as a fallback
+      const mailtoLink = `mailto:info.esthira@gmail.com?subject=${encodeURIComponent(formData.subject || 'Contact Form Submission')}&body=${encodeURIComponent(
+        `Name: ${formData.name}\n` +
+        `Email: ${formData.email}\n` +
+        `Phone: ${formData.phone}\n` +
+        `Subject: ${formData.subject || 'General Inquiry'}\n\n` +
+        `Message:\n${formData.message}`
+      )}`
+      
+      // Open email client
+      window.location.href = mailtoLink
+      
+      // Show success message
+      setNotification({ type: 'success', message: 'Thank you for your message! Your email client has been opened to send your inquiry to info.esthira@gmail.com' })
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      })
+      
+      setTimeout(() => setNotification(null), 10000)
+      
+    } catch (error) {
+      console.error('Error sending email:', error)
+      setNotification({ type: 'error', message: 'There was an error sending your message. Please try again or email us directly at info.esthira@gmail.com' })
+      setTimeout(() => setNotification(null), 5000)
+    }
   }
 
   return (

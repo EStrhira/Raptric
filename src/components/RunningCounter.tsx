@@ -28,13 +28,18 @@ const CounterTitle = styled.div`
 
 const SpecsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
   align-items: center;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 15px;
   }
 
   @media (max-width: 480px) {
@@ -49,7 +54,7 @@ const SpecItem = styled.div`
 
 const SpecValue = styled.div<{ $animating?: boolean }>`
   color: #ffffff;
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 700;
   line-height: 1;
   margin-bottom: 8px;
@@ -60,17 +65,33 @@ const SpecValue = styled.div<{ $animating?: boolean }>`
     color: #00a652;
   `}
 
+  @media (max-width: 1024px) {
+    font-size: 28px;
+  }
+
   @media (max-width: 768px) {
+    font-size: 24px;
+  }
+
+  @media (max-width: 480px) {
     font-size: 28px;
   }
 `
 
 const SpecLabel = styled.div`
   color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
 `
 
 const SpecIcon = styled.div`
