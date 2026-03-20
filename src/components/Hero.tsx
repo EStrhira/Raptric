@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Hero as HeroType } from '../lib/sanity'
-import { Container } from '../styles/GlobalStyles'
 
 const HeroSection = styled.section`
   min-height: 100vh;
@@ -120,7 +120,7 @@ const HeroButtons = styled.div`
   flex-wrap: wrap;
 `
 
-const HeroButton = styled.a<{ $variant?: 'primary' | 'secondary' }>`
+const HeroButton = styled(Link)<{ $variant?: 'primary' | 'secondary' }>`
   display: inline-block;
   padding: 12px 24px;
   text-decoration: none;
@@ -230,7 +230,7 @@ const ProgressFill = styled.div<{ $progress: number }>`
   width: ${props => props.$progress}%;
 `
 
-interface CarouselSlide {
+interface SlideData {
   id: string
   title: string
   subtitle: string
@@ -250,7 +250,7 @@ const Hero: React.FC<HeroProps> = ({ hero }) => {
   const [progress, setProgress] = useState(0)
 
   // Default carousel slides - you can update these with your images later
-  const carouselSlides: CarouselSlide[] = [
+  const carouselSlides: SlideData[] = [
     {
       id: '1',
       title: 'eSthira Raptric: The Future of Commuting',
@@ -331,10 +331,10 @@ const Hero: React.FC<HeroProps> = ({ hero }) => {
           <HeroTitle>{currentSlideData.title}</HeroTitle>
           <HeroSubtitle>{currentSlideData.subtitle}</HeroSubtitle>
           <HeroButtons>
-            <HeroButton href={currentSlideData.primaryButtonLink} $variant="primary">
+            <HeroButton to={currentSlideData.primaryButtonLink} $variant="primary">
               {currentSlideData.primaryButtonText}
             </HeroButton>
-            <HeroButton href={currentSlideData.secondaryButtonLink} $variant="secondary">
+            <HeroButton to={currentSlideData.secondaryButtonLink} $variant="secondary">
               {currentSlideData.secondaryButtonText}
             </HeroButton>
           </HeroButtons>

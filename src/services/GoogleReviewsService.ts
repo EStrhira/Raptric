@@ -31,6 +31,13 @@ export class GoogleReviewsService {
       return true
     }
 
+    // Check if API key is valid (not placeholder)
+    if (!BUSINESS_INFO.social.google.apiKey || 
+        BUSINESS_INFO.social.google.apiKey === 'YOUR_GOOGLE_API_KEY') {
+      console.warn('Google Maps API key is not configured. Using fallback reviews.')
+      return false
+    }
+
     try {
       await loadScript(`https://maps.googleapis.com/maps/api/js?key=${BUSINESS_INFO.social.google.apiKey}&libraries=places`)
       this.isLoaded = true
@@ -42,14 +49,23 @@ export class GoogleReviewsService {
   }
 
   async getPlaceReviews(placeId: string): Promise<GoogleReview[]> {
+    // Check if we have a valid API key
+    if (!BUSINESS_INFO.social.google.apiKey || 
+        BUSINESS_INFO.social.google.apiKey === 'YOUR_GOOGLE_API_KEY') {
+      console.warn('Using fallback reviews due to missing Google API key')
+      return this.getReviewsFromWidget()
+    }
+
     const isLoaded = await this.loadGoogleMapsAPI()
     if (!isLoaded) {
-      throw new Error('Failed to load Google Maps API')
+      console.warn('Failed to load Google Maps API, using fallback reviews')
+      return this.getReviewsFromWidget()
     }
 
     return new Promise((resolve, reject) => {
       if (!window.google || !window.google.maps) {
-        reject(new Error('Google Maps API not loaded'))
+        console.warn('Google Maps API not loaded, using fallback reviews')
+        resolve(this.getReviewsFromWidget())
         return
       }
 
@@ -79,7 +95,8 @@ export class GoogleReviewsService {
 
           resolve(topReviews)
         } else {
-          reject(new Error(`Places API error: ${status}`))
+          console.warn(`Places API error: ${status}, using fallback reviews`)
+          resolve(this.getReviewsFromWidget())
         }
       })
     })

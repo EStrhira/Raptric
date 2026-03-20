@@ -192,7 +192,7 @@ const AccessoryPrice = styled.div`
   margin-bottom: 0.5rem;
 `
 
-const AccessoryButton = styled.a`
+const AccessoryButton = styled(Link)`
   background: #00a652;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
@@ -306,7 +306,7 @@ const Accessories: React.FC = () => {
                 {accessory.shortDescription && (
                   <AccessoryDescription>{accessory.shortDescription}</AccessoryDescription>
                 )}
-                <AccessoryButton as={Link} to={`/accessory/${accessory.slug.current}`}>
+                <AccessoryButton to={`/accessory/${accessory.slug.current}`}>
                   <i className="fas fa-arrow-right"></i>
                   Read More
                 </AccessoryButton>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 
@@ -275,7 +276,7 @@ const CTAButtons = styled.div`
   flex-wrap: wrap;
 `
 
-const Button = styled.a<{ $variant?: 'primary' | 'secondary' }>`
+const Button = styled(Link)<{ $variant?: 'primary' | 'secondary' }>`
   display: inline-block;
   padding: 12px 24px;
   text-decoration: none;
@@ -420,8 +421,8 @@ const WhyEbikes: React.FC = () => {
               Experience the perfect blend of technology, sustainability, and freedom with eSthira eBikes.
             </CTADescription>
             <CTAButtons>
-              <Button $variant="primary" href="/ebikes">Explore eSthira Raptric</Button>
-              <Button $variant="secondary" href="/contact">Schedule a Test Ride</Button>
+              <Button to="/ebikes" $variant="primary">Explore eSthira Raptric</Button>
+              <Button to="/contact" $variant="secondary">Schedule a Test Ride</Button>
             </CTAButtons>
           </CTASection>
         </Container>

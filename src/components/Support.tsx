@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
 
 const SupportSection = styled.section`
@@ -57,7 +58,7 @@ const SupportDescription = styled.p`
   margin-bottom: 1.5rem;
 `
 
-const SupportLink = styled.a`
+const SupportLink = styled(Link)`
   color: #00a652;
   text-decoration: none;
   font-weight: 600;
@@ -108,7 +109,7 @@ const Support: React.FC = () => {
               </SupportIcon>
               <SupportTitle>{item.title}</SupportTitle>
               <SupportDescription>{item.description}</SupportDescription>
-              <SupportLink href={item.link}>Learn More →</SupportLink>
+              <SupportLink to={item.link}>Learn More →</SupportLink>
             </SupportCard>
           ))}
         </SupportGrid>

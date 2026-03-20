@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 
@@ -193,7 +194,7 @@ const FAQCTA = styled.div`
   border-radius: 8px;
 `
 
-const CTAButton = styled.a`
+const CTAButton = styled(Link)`
   background: #00a652;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
@@ -448,7 +449,7 @@ const FAQ: React.FC = () => {
                 <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1rem' }}>
                   Can't find what you're looking for? Contact our customer support team at +91-93802-76355 or info@esthira.com for personalized assistance.
                 </p>
-                <CTAButton href="mailto:info@esthira.com">
+                <CTAButton to="mailto:info@esthira.com">
                   <i className="fas fa-envelope"></i>
                   Email Our Support Team
                 </CTAButton>

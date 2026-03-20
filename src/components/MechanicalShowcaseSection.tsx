@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
 
 const ShowcaseSection = styled.section`
@@ -137,7 +138,7 @@ const FeatureItem = styled.li`
   }
 `
 
-const ShowcaseButton = styled.a`
+const ShowcaseButton = styled(Link)`
   display: inline-block;
   padding: 12px 24px;
   background: #ffffff;
@@ -221,7 +222,7 @@ const Showcase: React.FC = () => {
                   Hartex MTB Tires
                 </FeatureItem>
               </FeatureList>
-              <ShowcaseButton href="/cycles">Learn More</ShowcaseButton>
+              <ShowcaseButton to="/cycles">Learn More</ShowcaseButton>
             </ShowcaseRight>
           </ShowcaseContent>
           

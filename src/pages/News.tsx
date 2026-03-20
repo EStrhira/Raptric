@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
 import { client, NewsPost, urlFor } from '../lib/sanity'
 import { useScrollToTop } from '../hooks/useScrollToTop'
@@ -202,7 +203,7 @@ const NewsExcerpt = styled.p`
   margin-bottom: 1.5rem;
 `
 
-const NewsButton = styled.a`
+const NewsButton = styled(Link)`
   background: #00a652;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
@@ -301,7 +302,7 @@ const News: React.FC = () => {
                   <NewsCategory>News</NewsCategory>
                 </NewsMeta>
                 <NewsExcerpt>{article.excerpt}</NewsExcerpt>
-                <NewsButton href={`/news/${article.slug.current}`}>
+                <NewsButton to={`/news/${article.slug.current}`}>
                   <i className="fas fa-arrow-right"></i>
                   Read More
                 </NewsButton>

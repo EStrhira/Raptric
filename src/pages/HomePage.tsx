@@ -18,9 +18,9 @@ const fallbackHero = {
   title: 'eSthira Raptric: The Future of Commuting',
   subtitle: 'Packed with Cutting-Edge Features for an Unmatched Riding Experience',
   primaryButtonText: 'Buy Now',
-  primaryButtonLink: '#product',
+  primaryButtonLink: '/ebikes',
   secondaryButtonText: 'Test Drive Now',
-  secondaryButtonLink: '#test-ride'
+  secondaryButtonLink: '/contact'
 }
 
 const fallbackFeatures = [

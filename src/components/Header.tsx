@@ -247,7 +247,7 @@ const Header: React.FC = () => {
               <NavLink to="/why-ebikes" onClick={closeMenu}>Why eBikes</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="#shop">
+              <NavLink to="/ebikes">
                 Shop <i className="fas fa-chevron-down"></i>
               </NavLink>
               <DropdownMenu>
@@ -258,11 +258,11 @@ const Header: React.FC = () => {
             </NavItem>
             
             <NavItem>
-              <NavLink to="#shop">
+              <NavLink to="/faq">
                 Support <i className="fas fa-chevron-down"></i>
               </NavLink>
               <DropdownMenu>
-                <DropdownItem><DropdownLink to="/FAQ" onClick={closeMenu}>FAQ</DropdownLink></DropdownItem>
+                <DropdownItem><DropdownLink to="/faq" onClick={closeMenu}>FAQ</DropdownLink></DropdownItem>
                 <DropdownItem><DropdownLink to="/service" onClick={closeMenu}>Service</DropdownLink></DropdownItem>
                 <DropdownItem><DropdownLink to="/safety-tips" onClick={closeMenu}>Safety Tips</DropdownLink></DropdownItem>
                 <DropdownItem><DropdownLink to="/manual" onClick={closeMenu}>Manual</DropdownLink></DropdownItem>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
 import { client, BlogPost, urlFor } from '../lib/sanity'
 import { useScrollToTop } from '../hooks/useScrollToTop'
@@ -198,7 +199,7 @@ const BlogExcerpt = styled.p`
   margin-bottom: 1.5rem;
 `
 
-const BlogButton = styled.a`
+const BlogButton = styled(Link)`
   background: #00a652;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
@@ -295,7 +296,7 @@ const Blog: React.FC = () => {
                   <BlogAuthor>{post.author}</BlogAuthor>
                 </BlogMeta>
                 <BlogExcerpt>{post.excerpt}</BlogExcerpt>
-                <BlogButton href={`/blog/${post.slug.current}`}>
+                <BlogButton to={`/blog/${post.slug.current}`}>
                   <i className="fas fa-arrow-right"></i>
                   Read More
                 </BlogButton>
