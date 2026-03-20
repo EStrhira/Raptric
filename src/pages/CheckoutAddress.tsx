@@ -346,7 +346,7 @@ const ButtonGroup = styled.div`
 interface AddressFormData {
   // Company Details
   companyName: string  // Optional company name field
-  
+  billingGST: string  // GST Details field
   // Billing Address
   billingFirstName: string
   billingLastName: string
@@ -357,7 +357,7 @@ interface AddressFormData {
   billingState: string
   billingPincode: string
   billingCountry: string
-  billingGST: string  // GST Details field
+  
   
   // Shipping Address
   shippingFirstName: string
@@ -382,7 +382,7 @@ const CheckoutAddress: React.FC = () => {
   const [formData, setFormData] = useState<AddressFormData>({
     // Company Details
     companyName: '',
-    
+    billingGST: '',
     // Billing Address
     billingFirstName: '',
     billingLastName: '',
@@ -393,7 +393,7 @@ const CheckoutAddress: React.FC = () => {
     billingState: '',
     billingPincode: '',
     billingCountry: 'India',
-    billingGST: '',
+    
     
     // Shipping Address
     shippingFirstName: '',
@@ -481,6 +481,7 @@ const CheckoutAddress: React.FC = () => {
       totalAmount: cartTotal,
       billingAddress: {
         companyName: formData.companyName,
+        gst: formData.billingGST,
         firstName: formData.billingFirstName,
         lastName: formData.billingLastName,
         email: formData.billingEmail,
@@ -489,8 +490,8 @@ const CheckoutAddress: React.FC = () => {
         city: formData.billingCity,
         state: formData.billingState,
         pincode: formData.billingPincode,
-        country: formData.billingCountry,
-        gst: formData.billingGST
+        country: formData.billingCountry
+        
       },
       shippingAddress: formData.sameAsBilling ? {
         companyName: formData.companyName,
@@ -616,6 +617,16 @@ const CheckoutAddress: React.FC = () => {
                     placeholder="Enter company name (optional)"
                   />
                 </FormGroup>
+                <FormGroup>
+                  <Label>GST Details (Optional)</Label>
+                  <Input
+                    type="text"
+                    name="billingGST"
+                    value={formData.billingGST}
+                    onChange={handleInputChange}
+                    placeholder="Enter GST number (optional)"
+                  />
+                </FormGroup>
               </FormRow>
               <FormRow>
                 <FormGroup>
@@ -734,16 +745,7 @@ const CheckoutAddress: React.FC = () => {
                     <option value="Australia">Australia</option>
                   </Select>
                 </FormGroup>
-                <FormGroup>
-                  <Label>GST Details (Optional)</Label>
-                  <Input
-                    type="text"
-                    name="billingGST"
-                    value={formData.billingGST}
-                    onChange={handleInputChange}
-                    placeholder="Enter GST number (optional)"
-                  />
-                </FormGroup>
+                
               </FormRow>
             </Form>
           </AddressForm>
