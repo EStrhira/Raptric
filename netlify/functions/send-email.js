@@ -83,7 +83,9 @@ exports.handler = async (event) => {
           </div>
         </div>
       `,
-      replyTo: email
+      headers: {
+        'Reply-To': email
+      }
     });
 
     if (error) {
