@@ -19,10 +19,11 @@ const Nav = styled.nav`
 const NavContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 20px 0 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  gap: 2rem;
 `
 
 const Logo = styled(Link)`
@@ -32,11 +33,18 @@ const Logo = styled(Link)`
   text-decoration: none;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  margin-right: auto;
 
   img {
     height: 40px;
     width: auto;
     transition: transform 0.3s ease;
+    margin: 0;
+    padding: 0;
 
     &:hover {
       transform: scale(1.05);
@@ -46,6 +54,12 @@ const Logo = styled(Link)`
   @media (max-width: 768px) {
     font-size: 1.5rem;
   }
+`
+
+const NavMenuContainer = styled.div`
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 `
 
 const NavMenu = styled.ul<{ $isOpen: boolean }>`
@@ -242,7 +256,8 @@ const Header: React.FC = () => {
           <Logo to="/">
             <img src="/eSthira_Logo_White.png" alt="eSthira" />
           </Logo>
-          <NavMenu $isOpen={isMenuOpen}>
+          <NavMenuContainer>
+            <NavMenu $isOpen={isMenuOpen}>
             <NavItem>
               <NavLink to="/why-ebikes" onClick={closeMenu}>Why eBikes</NavLink>
             </NavItem>
@@ -279,6 +294,7 @@ const Header: React.FC = () => {
             </NavItem>
             
           </NavMenu>
+          </NavMenuContainer>
           <Hamburger $isOpen={isMenuOpen} onClick={toggleMenu}>
             <span></span>
             <span></span>
