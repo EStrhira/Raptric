@@ -371,6 +371,9 @@ const ButtonGroup = styled.div`
 `
 
 interface AddressFormData {
+  // Company Details
+  companyName: string  // Optional company name field
+  
   // Billing Address
   billingFirstName: string
   billingLastName: string
@@ -404,6 +407,9 @@ const CheckoutAddress: React.FC = () => {
   const navigate = useNavigate()
   const { setPaymentSuccess, setError: setPaymentError, clearError } = usePayment()
   const [formData, setFormData] = useState<AddressFormData>({
+    // Company Details
+    companyName: '',
+    
     // Billing Address
     billingFirstName: '',
     billingLastName: '',
@@ -469,7 +475,8 @@ const CheckoutAddress: React.FC = () => {
         shippingCity: prev.billingCity,
         shippingState: prev.billingState,
         shippingPincode: prev.billingPincode,
-        shippingCountry: prev.billingCountry
+        shippingCountry: prev.billingCountry,
+        companyName: prev.companyName
       } : {
         shippingFirstName: '',
         shippingLastName: '',
@@ -478,7 +485,8 @@ const CheckoutAddress: React.FC = () => {
         shippingCity: '',
         shippingState: '',
         shippingPincode: '',
-        shippingCountry: 'India'
+        shippingCountry: 'India',
+        companyName: ''
       })
     }))
   }
@@ -500,6 +508,7 @@ const CheckoutAddress: React.FC = () => {
       items: cartItems,
       totalAmount: cartTotal,
       billingAddress: {
+        companyName: formData.companyName,
         firstName: formData.billingFirstName,
         lastName: formData.billingLastName,
         email: formData.billingEmail,
@@ -512,6 +521,7 @@ const CheckoutAddress: React.FC = () => {
         gst: formData.billingGST
       },
       shippingAddress: formData.sameAsBilling ? {
+        companyName: formData.companyName,
         firstName: formData.billingFirstName,
         lastName: formData.billingLastName,
         phone: formData.billingPhone,
@@ -521,6 +531,7 @@ const CheckoutAddress: React.FC = () => {
         pincode: formData.billingPincode,
         country: formData.billingCountry
       } : {
+        companyName: formData.companyName,
         firstName: formData.shippingFirstName,
         lastName: formData.shippingLastName,
         phone: formData.shippingPhone,
@@ -624,6 +635,18 @@ const CheckoutAddress: React.FC = () => {
             <Form onSubmit={handleSubmit}>
               <FormRow>
                 <FormGroup>
+                  <Label>Company Name (Optional)</Label>
+                  <Input
+                    type="text"
+                    name="companyName"
+                    value={formData.companyName}
+                    onChange={handleInputChange}
+                    placeholder="Enter company name (optional)"
+                  />
+                </FormGroup>
+              </FormRow>
+              <FormRow>
+                <FormGroup>
                   <Label>First Name *</Label>
                   <Input
                     type="text"
@@ -721,6 +744,9 @@ const CheckoutAddress: React.FC = () => {
                     required
                   />
                 </FormGroup>
+              </FormRow>
+
+              <FormRow>
                 <FormGroup>
                   <Label>Country *</Label>
                   <Select
@@ -735,19 +761,6 @@ const CheckoutAddress: React.FC = () => {
                     <option value="Canada">Canada</option>
                     <option value="Australia">Australia</option>
                   </Select>
-                </FormGroup>
-              </FormRow>
-
-              <FormRow>
-                <FormGroup>
-                  <Label>GST Details (Optional)</Label>
-                  <Input
-                    type="text"
-                    name="billingGST"
-                    value={formData.billingGST}
-                    onChange={handleInputChange}
-                    placeholder="Enter GST number (optional)"
-                  />
                 </FormGroup>
               </FormRow>
             </Form>
