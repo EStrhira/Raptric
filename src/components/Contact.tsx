@@ -187,6 +187,7 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
     message: ''
   })
   const [notification, setNotification] = useState<{ type: 'success' | 'error' | 'info', message: string } | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -213,48 +214,56 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
       return
     }
     
+    setIsSubmitting(true)
+    
     try {
-      // Send email using EmailJS or similar service
-      const emailData = {
-        to_email: 'info.esthira@gmail.com',
-        from_name: formData.name,
-        from_email: formData.email,
-        phone: formData.phone,
-        subject: formData.subject || 'General Inquiry',
-        message: formData.message,
-        reply_to: formData.email
-      }
-
-      // For now, we'll use a simple mailto link as a fallback
-      const mailtoLink = `mailto:info.esthira@gmail.com?subject=${encodeURIComponent(formData.subject || 'Contact Form Submission')}&body=${encodeURIComponent(
-        `Name: ${formData.name}\n` +
-        `Email: ${formData.email}\n` +
-        `Phone: ${formData.phone}\n` +
-        `Subject: ${formData.subject || 'General Inquiry'}\n\n` +
-        `Message:\n${formData.message}`
-      )}`
-      
-      // Open email client
-      window.location.href = mailtoLink
-      
-      // Show success message
-      setNotification({ type: 'success', message: 'Thank you for your message! Your email client has been opened to send your inquiry to info.esthira@gmail.com' })
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
+      // Send email via Netlify serverless function
+      const response = await fetch('/.netlify/functions/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject || 'Contact Form Submission',
+          message: formData.message
+        })
       })
-      
-      setTimeout(() => setNotification(null), 10000)
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        // Show success message
+        setNotification({ 
+          type: 'success', 
+          message: 'Thank you for your message! We have received your inquiry and will get back to you soon.' 
+        })
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        })
+        
+        setTimeout(() => setNotification(null), 10000)
+      } else {
+        throw new Error(result.error || 'Failed to send email')
+      }
       
     } catch (error) {
       console.error('Error sending email:', error)
-      setNotification({ type: 'error', message: 'There was an error sending your message. Please try again or email us directly at info.esthira@gmail.com' })
+      setNotification({ 
+        type: 'error', 
+        message: 'There was an error sending your message. Please try again or email us directly at info@esthira.com' 
+      })
       setTimeout(() => setNotification(null), 5000)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -360,7 +369,9 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
                   required
                 />
               </FormGroup>
-              <SubmitButton type="submit">Send Message</SubmitButton>
+              <SubmitButton type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </SubmitButton>
             </ContactForm>
           </ContactContent>
         </Container>
