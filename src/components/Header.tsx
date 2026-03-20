@@ -240,7 +240,7 @@ const Header: React.FC = () => {
       <Nav>
         <NavContainer>
           <Logo to="/">
-            <img src="/E Sthira Logo Black.png" alt="eSthira" />
+            <img src="/eSthira_Logo_White.png" alt="eSthira" />
           </Logo>
           <NavMenu $isOpen={isMenuOpen}>
             <NavItem>
