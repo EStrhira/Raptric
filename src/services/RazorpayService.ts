@@ -59,10 +59,10 @@ export class RazorpayService {
   }
 
   async createOrder(amount: number): Promise<any> {
-    // In production, this should call your backend API
-    // For now, returning a mock order
+    // For live mode, we'll skip order creation and use direct payment
+    // This avoids 400 errors from Razorpay API
     return {
-      id: `order_${Date.now()}`,
+      id: undefined, // Skip order_id for direct payment
       amount: amount * 100, // Razorpay expects amount in paise
       currency: 'INR'
     }
@@ -81,10 +81,10 @@ export class RazorpayService {
         key: BUSINESS_INFO.social.razorpay.apiKey,
         amount: order.amount,
         currency: order.currency,
-        order_id: order.id,
+        order_id: order.id, // Will be undefined for direct payment
         name: options.name,
         description: options.description,
-        image: options.image || '/eSthira Logo Black.png',
+        image: options.image || '/E Sthira Logo Black.png',
         prefill: {
           name: options.prefill?.name || '',
           email: options.prefill?.email || '',

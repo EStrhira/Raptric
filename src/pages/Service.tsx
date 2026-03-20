@@ -25,7 +25,7 @@ const BannerSection = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('/counter-image.jpg') center/cover;
+    background: url('/Banner3.jpg') center/cover;
     opacity: 0.1;
     z-index: 1;
   }
