@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Container } from '../styles/GlobalStyles'
 import { Link, useNavigate } from 'react-router-dom'
@@ -337,33 +337,6 @@ const BackButton = styled(Link)`
   }
 `
 
-const ContinueButton = styled.button`
-  background: #00a652;
-  color: #ffffff;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  &:hover {
-    background: #008040;
-    transform: translateY(-2px);
-  }
-
-  &:disabled {
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.5);
-    cursor: not-allowed;
-    transform: none;
-  }
-`
-
 const ButtonGroup = styled.div`
   display: flex;
   gap: 1rem;
@@ -405,7 +378,7 @@ interface FormErrors {
 
 const CheckoutAddress: React.FC = () => {
   const navigate = useNavigate()
-  const { setPaymentSuccess, setError: setPaymentError, clearError } = usePayment()
+  const { setPaymentSuccess } = usePayment()
   const [formData, setFormData] = useState<AddressFormData>({
     // Company Details
     companyName: '',
@@ -436,7 +409,6 @@ const CheckoutAddress: React.FC = () => {
   })
 
   const [errors, setErrors] = useState<FormErrors>({})
-  const [error, setError] = useState<string | null>(null)
 
   const cartItems = getCart()
   const cartTotal = getCartTotal()
@@ -551,7 +523,7 @@ const CheckoutAddress: React.FC = () => {
 
   const handlePaymentFailure = (error: any) => {
     console.error('Payment failed:', error)
-    setError(error.message || 'Payment failed. Please try again.')
+    // Error handling can be added back if needed
   }
 
   const isFormValid = () => {
@@ -761,6 +733,16 @@ const CheckoutAddress: React.FC = () => {
                     <option value="Canada">Canada</option>
                     <option value="Australia">Australia</option>
                   </Select>
+                </FormGroup>
+                <FormGroup>
+                  <Label>GST Details (Optional)</Label>
+                  <Input
+                    type="text"
+                    name="billingGST"
+                    value={formData.billingGST}
+                    onChange={handleInputChange}
+                    placeholder="Enter GST number (optional)"
+                  />
                 </FormGroup>
               </FormRow>
             </Form>
