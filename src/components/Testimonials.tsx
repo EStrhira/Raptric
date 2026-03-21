@@ -1,51 +1,40 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
-
-// ---------- Styled Components ----------
 
 const TestimonialsSection = styled.section`
   padding: 80px 0;
   background: #000000;
 `
 
-const SocialProof = styled.div`
-  text-align: center;
-  margin-top: 3rem;
-  padding: 2rem;
-  background: #1a1a1a;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(255,255,255,0.1);
-
-  h3 {
-    color: #00a652;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 1.5rem;
-  }
-`
-
 const WidgetContainer = styled.div`
   margin-top: 3rem;
+
+  .trustindex-widget {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border-radius: 12px !important;
+  }
 `
 
-// ---------- Component ----------
-
 const Testimonials: React.FC = () => {
+  const widgetRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const widgetId = '2556ccd678277553247689bc53b' // Replace with your TrustIndex Widget ID
-    const scriptId = 'trustindex-widget-script'
+    if (!widgetRef.current) return
 
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script')
-      script.id = scriptId
-      script.src = `https://widget.trustindex.io/widget/${widgetId}.js`
-      script.async = true
-      document.body.appendChild(script)
+    // Create the script element using the correct TrustIndex embed URL
+    const script = document.createElement('script')
+    script.src = 'https://widget.trustindex.io/trustindex.js'
+    script.async = true
+    script.setAttribute('data-widget-id', '2556ccd678277553247689bc53b') // Your widget ID
+    widgetRef.current.appendChild(script)
+
+    return () => {
+      // Clean up script on unmount
+      if (widgetRef.current) {
+        widgetRef.current.innerHTML = ''
+      }
     }
   }, [])
 
@@ -55,14 +44,7 @@ const Testimonials: React.FC = () => {
         <SectionTitle>Real Riders. Real Experiences.</SectionTitle>
 
         {/* TrustIndex Widget */}
-        <WidgetContainer>
-          <div className="trustindex-widget" data-locale="en"></div>
-        </WidgetContainer>
-
-        <SocialProof>
-          <h3>Join Our Growing Community</h3>
-          <p>Based on 1000+ Google Reviews with 4.8★ average rating!</p>
-        </SocialProof>
+        <WidgetContainer ref={widgetRef}></WidgetContainer>
       </Container>
     </TestimonialsSection>
   )
