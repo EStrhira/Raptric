@@ -399,6 +399,38 @@ const BuyButton = styled.button<{ disabled?: boolean }>`
   }
 `
 
+const SpecificationsSection = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const SpecCard = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  border-left: 4px solid #00a652;
+`
+
+const SpecTitle = styled.h3`
+  color: #00a652;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+`
+
+const SpecContent = styled.div`
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+`
+
 const CycleInfo = styled.div`
   h1 {
     color: #00a652;
@@ -650,8 +682,7 @@ const CycleDetail: React.FC = () => {
         <Container>
           <BannerContent>
             <BannerText>
-              <BannerTitle>🚴 Premium Cycle</BannerTitle>
-              <BannerSubtitle>High-performance bicycles for every rider</BannerSubtitle>
+              <BannerTitle>🚴 {cycle.name}</BannerTitle>
             </BannerText>
             <BannerImage>
               <i className="fas fa-bicycle"></i>
@@ -733,19 +764,6 @@ const CycleDetail: React.FC = () => {
               </div>
               <div className="description">{cycle.description}</div>
 
-              {cycle.specifications && (
-                <div className="specifications">
-                  <h3>📋 Specifications</h3>
-                  <p>{cycle.specifications}</p>
-                </div>
-              )}
-
-              {selectedColor && (
-                <SelectedColorDisplay>
-                  Selected Color: {selectedColor}
-                </SelectedColorDisplay>
-              )}
-
               {cycle.colors && cycle.colors.length > 0 && (
                 <div className="colors">
                   <h3>🎨 Available Colors</h3>
@@ -768,12 +786,27 @@ const CycleDetail: React.FC = () => {
                 </div>
               )}
 
+              {selectedColor && (
+                <SelectedColorDisplay>
+                  Selected Color: {selectedColor}
+                </SelectedColorDisplay>
+              )}
+
               <BuyButton onClick={handleAddToCart} disabled={addedToCart}>
                 <i className="fas fa-shopping-cart"></i>
                 {addedToCart ? 'Added to Cart!' : 'Add to Cart'}
               </BuyButton>
             </CycleInfo>
           </CycleHeader>
+
+          {cycle.specifications && (
+            <SpecificationsSection>
+              <SpecCard>
+                <SpecTitle>🔧 Mechanical Specifications</SpecTitle>
+                <SpecContent>{cycle.specifications}</SpecContent>
+              </SpecCard>
+            </SpecificationsSection>
+          )}
 
         </CycleContainer>
       </Container>

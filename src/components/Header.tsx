@@ -17,9 +17,8 @@ const Nav = styled.nav`
 `
 
 const NavContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px 0 0;
+  width: 100%;
+  padding: 0 20px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -267,7 +266,7 @@ const Header: React.FC = () => {
               </NavLink>
               <DropdownMenu>
                 <DropdownItem><DropdownLink to="/ebikes" onClick={closeMenu}>eBikes</DropdownLink></DropdownItem>
-                <DropdownItem><DropdownLink to="/cycles" onClick={closeMenu}>Cycles</DropdownLink></DropdownItem>
+                <DropdownItem><DropdownLink to="/cycles" onClick={closeMenu}>mBikes</DropdownLink></DropdownItem>
                 <DropdownItem><DropdownLink to="/accessories" onClick={closeMenu}>Accessories</DropdownLink></DropdownItem>
               </DropdownMenu>
             </NavItem>

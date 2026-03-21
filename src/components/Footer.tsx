@@ -131,7 +131,8 @@ const Footer: React.FC = () => {
           <div>
             <FooterSectionSubtitle>Products</FooterSectionSubtitle>
             <FooterList>
-              <FooterListItem><FooterLink to="/ebikes">Ebikes</FooterLink></FooterListItem>
+              <FooterListItem><FooterLink to="/ebikes">eBikes</FooterLink></FooterListItem>
+              <FooterListItem><FooterLink to="/cycles">mBikes</FooterLink></FooterListItem>
               <FooterListItem><FooterLink to="/accessories">Accessories</FooterLink></FooterListItem>
               <FooterListItem><FooterLink to="/service">Service Plans</FooterLink></FooterListItem>
             </FooterList>

@@ -153,7 +153,7 @@ const CycleCard = styled.div`
 
 const CycleImage = styled.div`
   width: 100%;
-  height: 300px;
+  height: 200px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   margin-bottom: 0.5rem;
@@ -299,9 +299,9 @@ const Cycles: React.FC = () => {
           <BannerIcon>
             <i className="fas fa-bicycle"></i>
           </BannerIcon>
-          <BannerTitle>eSthira Cycles</BannerTitle>
+          <BannerTitle>RAPTRIC mBikes</BannerTitle>
           <BannerSubtitle>
-            Discover our range of premium urban bicycles designed for city commuting. Experience comfort, style, and performance with eSthira cycles.
+            Discover our range of revolutionary mechanical bicycles designed for performance and style. Experience the future of cycling with RAPTRIC mBikes.
           </BannerSubtitle>
         </BannerContent>
       </BannerSection>
@@ -309,9 +309,9 @@ const Cycles: React.FC = () => {
       <Container>
         <CyclesContainer>
           <CyclesHeader>
-            <CyclesTitle>Our Urban Cycle Collection</CyclesTitle>
+            <CyclesTitle>Our mBikes Collection</CyclesTitle>
             <CyclesSubtitle>
-              Choose from our range of urban bicycles designed for city commuting. All models come with warranty and free delivery in Bengaluru.
+              Choose from our range of revolutionary mechanical bicycles designed for performance. All models come with warranty and free delivery in Bengaluru.
             </CyclesSubtitle>
           </CyclesHeader>
 

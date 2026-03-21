@@ -70,7 +70,7 @@ const ProductFeatures: React.FC<ProductFeaturesProps> = ({ features }) => {
   return (
     <ProductFeaturesSection>
       <Container>
-        <SectionTitle>Discover the eSthira Raptric</SectionTitle>
+        <SectionTitle>Discover the RAPTRIC Bicycles</SectionTitle>
         <FeaturesGrid>
           {sortedFeatures.map((feature) => (
             <FeatureCard key={feature._id}>

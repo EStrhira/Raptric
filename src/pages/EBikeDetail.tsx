@@ -671,8 +671,7 @@ const EBikeDetail: React.FC = () => {
         <Container>
           <BannerContent>
             <BannerText>
-              <BannerTitle>⚡ Premium eBike</BannerTitle>
-              <BannerSubtitle>Advanced electric mobility solutions</BannerSubtitle>
+              <BannerTitle>⚡ {ebike.name}</BannerTitle>
             </BannerText>
             <BannerImage>
               <i className="fas fa-bolt"></i>

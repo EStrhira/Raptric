@@ -141,7 +141,7 @@ const EbikesGrid = styled.div`
 const EbikeCard = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  padding: 0.5rem;
+  padding: 0.25rem;
   border-left: 4px solid #00a652;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -153,7 +153,7 @@ const EbikeCard = styled.div`
 
 const EbikeImage = styled.div`
   width: 100%;
-  height: 300px;
+  height: 200px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   margin-bottom: 0.5rem;
@@ -161,7 +161,7 @@ const EbikeImage = styled.div`
   align-items: center;
   justify-content: center;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 2.5rem;
+  font-size: 2rem;
 
   img {
     width: 100%;
@@ -323,9 +323,9 @@ const Ebikes: React.FC = () => {
           <BannerIcon>
             <i className="fas fa-bicycle"></i>
           </BannerIcon>
-          <BannerTitle>eSthira eBikes</BannerTitle>
+          <BannerTitle>RAPTRIC eBikes</BannerTitle>
           <BannerSubtitle>
-            Discover our range of premium electric bicycles designed for urban commuting. Experience the future of sustainable mobility with eSthira.
+            Discover our range of premium electric bicycles designed for urban commuting. Experience the future of sustainable mobility with RAPTRIC.
           </BannerSubtitle>
         </BannerContent>
       </BannerSection>
@@ -335,7 +335,7 @@ const Ebikes: React.FC = () => {
           <EbikesHeader>
             <EbikesTitle>Our eBike Collection</EbikesTitle>
             <EbikesSubtitle>
-              Choose from our range of electric bicycles designed for different needs and budgets. All models come with warranty and free delivery in Bengaluru.
+              Choose from our range of electric bicycles designed for different needs and budgets. All models come with warranty and free delivery within Bengaluru.
             </EbikesSubtitle>
           </EbikesHeader>
 

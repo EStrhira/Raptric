@@ -52,7 +52,7 @@ const Benefits: React.FC<BenefitsProps> = ({ benefits }) => {
   return (
     <BenefitsSection>
       <Container>
-        <SectionTitle>Why Choose eBikes?</SectionTitle>
+        <SectionTitle>Why Choose RAPTRIC eBikes?</SectionTitle>
         <BenefitsGrid>
           {sortedBenefits.map((benefit) => (
             <BenefitCard key={benefit._id}>
