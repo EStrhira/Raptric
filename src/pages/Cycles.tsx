@@ -331,11 +331,11 @@ const Cycles: React.FC = () => {
                 <CyclePrice>
                   {cycle.discountPrice ? (
                     <>
-                      <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>{cycle.price}</span>
-                      <span style={{ color: '#00a652' }}>{cycle.discountPrice}</span>
+                      <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>₹{cycle.price}</span>
+                      <span style={{ color: '#00a652' }}>₹{cycle.discountPrice}</span>
                     </>
                   ) : (
-                    cycle.price
+                    <>₹{cycle.price}</>
                   )}
                 </CyclePrice>
                 {cycle.shortDescription && (

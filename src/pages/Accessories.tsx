@@ -153,7 +153,7 @@ const AccessoryCard = styled.div`
 
 const AccessoryImage = styled.div`
   width: 100%;
-  height: 300px;
+  height: 200px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   margin-bottom: 0.5rem;
@@ -296,11 +296,11 @@ const Accessories: React.FC = () => {
                 <AccessoryPrice>
                   {accessory.discountPrice ? (
                     <>
-                      <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>{accessory.price}</span>
-                      <span style={{ color: '#00a652' }}>{accessory.discountPrice}</span>
+                      <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>₹{accessory.price}</span>
+                      <span style={{ color: '#00a652' }}>₹{accessory.discountPrice}</span>
                     </>
                   ) : (
-                    accessory.price
+                    <>₹{accessory.price}</>
                   )}
                 </AccessoryPrice>
                 {accessory.shortDescription && (

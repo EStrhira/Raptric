@@ -744,11 +744,11 @@ const EBikeDetail: React.FC = () => {
               <div className="price-container">
                 {ebike.discountPrice ? (
                   <>
-                    <span className="original-price">{ebike.price}</span>
-                    <span className="discount-price">{ebike.discountPrice}</span>
+                    <span className="original-price">₹{ebike.price}</span>
+                    <span className="discount-price">₹{ebike.discountPrice}</span>
                   </>
                 ) : (
-                  <span className="regular-price">{ebike.price}</span>
+                  <span className="regular-price">₹{ebike.price}</span>
                 )}
               </div>
               <div className="description">
@@ -819,11 +819,11 @@ const EBikeDetail: React.FC = () => {
                   <RelatedPrice>
                     {relatedEbike.discountPrice ? (
                       <>
-                        <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>{relatedEbike.price}</span>
-                        <span style={{ color: '#00a652' }}>{relatedEbike.discountPrice}</span>
+                        <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>₹{relatedEbike.price}</span>
+                        <span style={{ color: '#00a652' }}>₹{relatedEbike.discountPrice}</span>
                       </>
                     ) : (
-                      relatedEbike.price
+                      <>₹{relatedEbike.price}</>
                     )}
                   </RelatedPrice>
                   <RelatedButton to={`/ebike/${relatedEbike.slug.current}`}>

@@ -355,11 +355,11 @@ const Ebikes: React.FC = () => {
                 <EbikePrice>
                   {ebike.discountPrice ? (
                     <>
-                      <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>{ebike.price}</span>
-                      <span style={{ color: '#00a652' }}>{ebike.discountPrice}</span>
+                      <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>₹{ebike.price}</span>
+                      <span style={{ color: '#00a652' }}>₹{ebike.discountPrice}</span>
                     </>
                   ) : (
-                    ebike.price
+                    <>₹{ebike.price}</>
                   )}
                 </EbikePrice>
                 {ebike.shortDescription && (

@@ -527,7 +527,7 @@ const Cart: React.FC = () => {
                     <ItemDetails>
                       <ItemName>{item.name}</ItemName>
                       <ItemCategory>{item.category}</ItemCategory>
-                      <ItemPrice>{item.price}</ItemPrice>
+                      <ItemPrice>₹{item.price}</ItemPrice>
                       {item.selectedColor && (
                         <SelectedColorDisplay>
                           Color: {item.selectedColor}

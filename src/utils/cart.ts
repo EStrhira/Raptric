@@ -20,6 +20,9 @@ export const addToCart = (item: Omit<CartItem, 'quantity'>) => {
   }
   
   localStorage.setItem('esthira-cart', JSON.stringify(existingCart))
+  
+  // Dispatch storage event to update cart count in header
+  window.dispatchEvent(new Event('storage'))
   return existingCart
 }
 
@@ -27,6 +30,9 @@ export const removeFromCart = (id: string) => {
   const existingCart = getCart()
   const updatedCart = existingCart.filter(item => item.id !== id)
   localStorage.setItem('esthira-cart', JSON.stringify(updatedCart))
+  
+  // Dispatch storage event to update cart count in header
+  window.dispatchEvent(new Event('storage'))
   return updatedCart
 }
 
@@ -37,6 +43,9 @@ export const updateQuantity = (id: string, quantity: number) => {
   if (itemIndex > -1 && quantity > 0) {
     existingCart[itemIndex].quantity = quantity
     localStorage.setItem('esthira-cart', JSON.stringify(existingCart))
+    
+    // Dispatch storage event to update cart count in header
+    window.dispatchEvent(new Event('storage'))
   }
   
   return existingCart

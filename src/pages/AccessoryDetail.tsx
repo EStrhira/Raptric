@@ -640,7 +640,7 @@ const AccessoryDetail: React.FC = () => {
 
             <AccessoryInfo>
               <h1>{accessory.name}</h1>
-              <div className="price">{accessory.price}</div>
+              <div className="price">₹{accessory.price}</div>
               <div className="description">
                 {accessory.description?.split('\n\n').map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
@@ -699,7 +699,7 @@ const AccessoryDetail: React.FC = () => {
                     )}
                   </RelatedImage>
                   <RelatedName>{relatedAccessory.name}</RelatedName>
-                  <RelatedPrice>{relatedAccessory.price}</RelatedPrice>
+                  <RelatedPrice>₹{relatedAccessory.price}</RelatedPrice>
                   <RelatedButton to={`/accessory/${relatedAccessory.slug.current}`}>
                     <i className="fas fa-arrow-right"></i>
                     Read More

@@ -755,11 +755,11 @@ const CycleDetail: React.FC = () => {
               <div className="price">
                 {cycle.discountPrice ? (
                   <>
-                    <span className="original-price">{cycle.price}</span>
-                    <span className="discount-price">{cycle.discountPrice}</span>
+                    <span className="original-price">₹{cycle.price}</span>
+                    <span className="discount-price">₹{cycle.discountPrice}</span>
                   </>
                 ) : (
-                  <span className="regular-price">{cycle.price}</span>
+                  <span className="regular-price">₹{cycle.price}</span>
                 )}
               </div>
               <div className="description">{cycle.description}</div>
@@ -829,11 +829,11 @@ const CycleDetail: React.FC = () => {
                   <RelatedPrice>
                     {relatedCycle.discountPrice ? (
                       <>
-                        <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>{relatedCycle.price}</span>
-                        <span style={{ color: '#00a652' }}>{relatedCycle.discountPrice}</span>
+                        <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>₹{relatedCycle.price}</span>
+                        <span style={{ color: '#00a652' }}>₹{relatedCycle.discountPrice}</span>
                       </>
                     ) : (
-                      relatedCycle.price
+                      <>₹{relatedCycle.price}</>
                     )}
                   </RelatedPrice>
                   <RelatedButton to={`/cycle/${relatedCycle.slug.current}`}>
