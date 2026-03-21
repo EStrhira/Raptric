@@ -1,13 +1,13 @@
 export const BUSINESS_INFO = {
   name: 'eSthira',
   address: {
-    line1: '367, 10T Main',
-    line2: 'Vidyapeeta Main Rd, Banashankari 3rd Stage',
+    line1: '367, 10T Main, Vidyapeeta Main Road',
+    line2: 'Banashankari 3rd Stage',
     city: 'Bengaluru',
     state: 'Karnataka',
     pincode: '560085',
     country: 'India',
-    full: '367, 10T Main, Vidyapeeta Main Rd, Banashankari 3rd Stage, Bengaluru, Karnataka 560085, India'
+    full: '367, 10T Main, Vidyapeeta Main Road, Banashankari 3rd Stage, Bengaluru, Karnataka 560085, India'
   },
   contact: {
     phone: '+91 93802 76355',
@@ -17,7 +17,8 @@ export const BUSINESS_INFO = {
   },
   hours: {
     weekdays: 'Monday - Sunday: 10:30am to 8:30pm',
-    display: '10:30am - 8:30pm (Daily)',
+    weekdays2: 'Monday - Saturday, 10:30am to 8:30pm',
+    display: '10:30am - 8:30pm',
     detailed: {
       monday: { open: '10:30am', close: '8:30pm' },
       tuesday: { open: '10:30am', close: '8:30pm' },

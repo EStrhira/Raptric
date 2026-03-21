@@ -83,7 +83,7 @@ const BannerIcon = styled.div`
 `
 
 const SafetyContainer = styled.div`
-  max-width: 800px;
+  max-width: 1400px;
   margin: 0 auto;
   background: #1a1a1a;
   border-radius: 12px;
@@ -122,19 +122,33 @@ const SafetySubtitle = styled.p`
 
 const SafetyTipsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
   margin-bottom: 3rem;
 
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 `
 
 const SafetyTipCard = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1rem;
   border-left: 4px solid #00a652;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -145,24 +159,25 @@ const SafetyTipCard = styled.div`
 `
 
 const TipIcon = styled.div`
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   color: #00a652;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-align: center;
 `
 
 const TipTitle = styled.h3`
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 1rem;
-  text-align: center;
+  margin-bottom: 0.5rem;
+  text-align: left;
 `
 
 const TipDescription = styled.p`
   color: rgba(255, 255, 255, 0.8);
-  line-height: 1.6;
-  font-size: 1rem;
+  line-height: 1.4;
+  font-size: 0.9rem;
+  text-align: left;
 `
 
 const SafetyMessage = styled.div`
@@ -199,42 +214,42 @@ const SafetyTips: React.FC = () => {
     {
       icon: 'fa-wrench',
       title: 'Check Your Bike Before Riding',
-      description: 'Perform a quick inspection of your e-bike before each ride. Ensure the brakes are working, the tires are properly inflated, and the battery is securely in place.'
+      description: 'Perform a quick inspection of your bike before each ride. Ensure the brakes are working, the tires are properly inflated, and the battery (in case of eBike) is securely in place.'
     },
     {
-      icon: 'fa-lightbulb',
-      title: 'Be Visible',
-      description: 'Use lights and reflective gear, especially when riding in low light conditions. Visibility can be a lifesaver.'
+      icon: 'fa-charging-station',
+      title: 'Use only RAPTRIC Charger',
+      description: 'Use only the RAPTRIC Charger for your eBike. Using any other charger could permanently damage your eBIke battery.'
     },
     {
-      icon: 'fa-traffic-light',
-      title: 'Follow Traffic Rules',
-      description: 'Obey all traffic signals and signage. Remember, e-bikes are subject to the same rules as traditional bicycles.'
+      icon: 'fa-battery-half',
+      title: 'Correct Battery Usage',
+      description: 'Charge the battery until the charger shows green indication. Also do not use the battery once the battery indication shows only red light on the battery.'
     },
     {
-      icon: 'fa-road',
-      title: 'Use Bike Lanes When Available',
-      description: 'Stick to bike lanes whenever possible. If there\'s no bike lane, ride on the right side of the road, with traffic.'
+      icon: 'fa-tint',
+      title: 'Pressure Wash',
+      description: 'Do not pressure wash the eBikes.'
     },
     {
-      icon: 'fa-eye',
-      title: 'Stay Alert',
-      description: 'Keep an eye out for road hazards like potholes, gravel, and wet surfaces. Also, be aware of cars and pedestrians around you.'
+      icon: 'fa-wrench',
+      title: 'Regular Maintenance of your Bikes',
+      description: 'Make sure to get your bikes regularly serviced at RAPTRIC or any other retail partner service centers. Recommended interval is 3-4 months.'
     },
     {
-      icon: 'fa-hand-paper',
-      title: 'Signal Your Intentions',
-      description: 'Use hand signals to indicate turns and lane changes. Clear communication can prevent accidents.'
-    },
-    {
-      icon: 'fa-car',
-      title: 'Keep a Safe Distance',
-      description: 'Maintain a safe distance from other vehicles. This gives you more time to react in case of sudden stops.'
+      icon: 'fa-cog',
+      title: 'eBike Settings',
+      description: 'Do not change the eBike settings by yourself as this could lead to permanent damage to the elctronics of your eBike. By doing so, you will also void the warranty of your product.'
     },
     {
       icon: 'fa-tachometer-alt',
       title: 'Do Not Speed',
       description: 'Maintain a safe, controllable speed. Remember, faster speeds make it harder to react in time.'
+    },
+    {
+      icon: 'fa-cogs',
+      title: 'Changing of Gears',
+      description: 'Change the gears only while pedalling and in the combinations as recommended by our sales representative.'
     },
     {
       icon: 'fa-lock',
@@ -262,9 +277,9 @@ const SafetyTips: React.FC = () => {
       <Container>
         <SafetyContainer>
           <SafetyHeader>
-            <SafetyTitle>Safety Tips for eSthira eBike Riders</SafetyTitle>
+            <SafetyTitle>Safety Tips for RAPTRIC Bike Riders</SafetyTitle>
             <SafetySubtitle>
-              Welcome to the eSthira family! As you embark on your journey with your new eSthira e-bike, safety is our top priority. Follow these essential tips to ensure a safe and enjoyable ride every time.
+              Welcome to the RAPTRIC family! As you embark on your journey with your new RAPTRIC Bikes, safety is our top priority. Follow these essential tips to ensure a safe and enjoyable ride every time.
             </SafetySubtitle>
           </SafetyHeader>
 

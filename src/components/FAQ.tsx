@@ -84,7 +84,7 @@ const BannerIcon = styled.div`
 `
 
 const FAQContainer = styled.div`
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   background: #1a1a1a;
   border-radius: 12px;
@@ -93,16 +93,26 @@ const FAQContainer = styled.div`
   margin-top: -50px;
   position: relative;
   z-index: 10;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3rem;
 
   @media (max-width: 768px) {
     margin: 2rem 1rem;
     padding: 2rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 `
 
 const FAQHeader = styled.div`
   text-align: center;
   margin-bottom: 3rem;
+  grid-column: 1 / -1;
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+  }
 `
 
 const FAQTitle = styled.h2`
@@ -122,30 +132,67 @@ const FAQSubtitle = styled.p`
   line-height: 1.6;
 `
 
-const FAQCategories = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-`
-
-const FAQCategory = styled.div`
+const CategorySidebar = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   padding: 1.5rem;
-  border-left: 4px solid #00a652;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+
+  @media (max-width: 768px) {
+    position: static;
+    margin-bottom: 2rem;
+  }
 `
 
-const CategoryTitle = styled.h3`
+const CategoryList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`
+
+const CategoryButton = styled.button<{ $active?: boolean }>`
+  background: ${props => props.$active ? 'rgba(0, 166, 82, 0.2)' : 'transparent'};
+  color: ${props => props.$active ? '#00a652' : 'rgba(255, 255, 255, 0.8)'};
+  border: none;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 3px solid ${props => props.$active ? '#00a652' : 'transparent'};
+
+  &:hover {
+    background: rgba(0, 166, 82, 0.1);
+    color: #00a652;
+  }
+`
+
+const QuestionsContent = styled.div`
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 2rem;
+`
+
+const QuestionsHeader = styled.div`
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`
+
+const QuestionsTitle = styled.h3`
   color: #00a652;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+`
+
+const QuestionsCount = styled.p`
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
 `
 
 const QuestionList = styled.div`
@@ -171,10 +218,21 @@ const Question = styled.h4`
   margin-bottom: 0.5rem;
   cursor: pointer;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 
   &:hover {
     color: #00a652;
   }
+`
+
+const QuestionIcon = styled.span<{ $expanded?: boolean }>`
+  color: #00a652;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: transform 0.3s ease;
+  transform: ${props => props.$expanded ? 'rotate(45deg)' : 'rotate(0deg)'};
 `
 
 const Answer = styled.div`
@@ -227,7 +285,8 @@ const FAQ: React.FC = () => {
   // Scroll to top when page loads or navigates
   useScrollToTop()
   const [isLoading, setIsLoading] = useState(true)
-  const [expandedItems, setExpandedItems] = useState<number[]>([])
+  const [expandedItems, setExpandedItems] = useState<string[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<number>(0)
 
   const faqData = [
     {
@@ -271,57 +330,37 @@ const FAQ: React.FC = () => {
           answer: "Our motors deliver 35-50 Nm of torque, providing excellent acceleration and hill-climbing capability. The power delivery is smooth and responsive, with multiple riding modes: Eco, Normal, and Sport. Peak power output is 500W with 750W burst capability."
         },
         {
-          question: "What are the battery specifications?",
-          answer: "Battery specifications: 36V/48V system, 15-20Ah capacity, Samsung/LG cells, IP67 rating. Charging time: 4-6 hours from empty. Weight: 3.5-4.5 kg. Cycle life: 800-1000 charge cycles with 80% capacity retention after 1000 cycles."
+          question: "What battery capacity and charging time?",
+          answer: "Battery capacity ranges from 15Ah to 20Ah with 48V systems. Charging time is 4-6 hours with fast charger, 8-10 hours with standard charger. Battery life expectancy is 1000+ charge cycles with proper maintenance."
         },
         {
-          question: "What are the display and control features?",
-          answer: "Multi-function LCD display showing: speed, battery level, assistance mode, distance traveled, and time. Controls: thumb throttle, pedal assist sensor, regenerative brake lever, and mode selection button. USB charging port for mobile device connectivity."
+          question: "What is the maximum speed and range?",
+          answer: "Maximum speed is 25 km/h (as per regulations). Range varies from 40-80 km depending on model, battery capacity, and riding conditions. Eco mode extends range, while Sport mode provides maximum power."
         },
         {
-          question: "What are the brake specifications?",
-          answer: "Front: 180mm hydraulic disc brakes with regenerative braking. Rear: 160mm hydraulic disc brakes. Both systems feature ABS for enhanced safety. Braking distance from 25 km/h at 3.5m on dry pavement."
-        },
-        {
-          question: "What are the suspension specifications?",
-          answer: "Front: 80mm travel suspension fork with adjustable preload and lockout. Rear: 70mm travel suspension with adjustable rebound. Both forks feature hydraulic damping for smooth ride quality. Suspension is optimized for urban commuting with comfort settings."
-        },
-        {
-          question: "What are the wheel and tire specifications?",
-          answer: "Wheels: 27.5\" aluminum alloy double-wall rims with CNC machining. Tires: 27.5\" x 2.125\" puncture-resistant tires with Kevlar belting. Tubeless design for reduced weight and improved puncture resistance."
-        },
-        {
-          question: "What is the weight and carrying capacity?",
-          answer: "Net weight: 18-22 kg (without battery). Gross weight: 22-25 kg (including battery). Maximum rider weight: 120 kg. Maximum carrying capacity: 15 kg (excluding rider)."
-        },
-        {
-          question: "What are the charging specifications?",
-          answer: "Smart charger: 100-240V AC input, 50/60Hz frequency. Charging current: 3A maximum. Features: LED indicators, temperature monitoring, auto-shutoff at full charge, and compatibility with Indian electrical standards."
+          question: "What are the weight limits and dimensions?",
+          answer: "Maximum rider weight is 120 kg. Bike weight ranges from 22-28 kg including battery. Frame sizes available: Small, Medium, Large to accommodate riders from 5'2\" to 6'4\" tall."
         }
       ]
     },
     {
-      category: "Purchase Information",
+      category: "Purchase & Pricing",
       questions: [
         {
-          question: "How can I purchase an eSthira eBike?",
-          answer: "Visit our authorized dealers in Bengaluru, buy online through our website, or contact our sales team. We offer: cash, card payments, UPI, bank transfers, and EMI options. Free test rides available at all locations."
+          question: "What is the price range of eSthira eBikes?",
+          answer: "Our eBikes range from ₹45,000 to ₹85,000 depending on model and features. We offer financing options with EMI starting from ₹3,500 per month. Special discounts available for students and corporate bulk orders."
         },
         {
-          question: "What is the price range?",
-          answer: "eSthira eBikes range from ₹45,000 to ₹85,000 depending on model and features. Premium models with larger batteries and advanced motors are priced higher. We offer seasonal discounts and corporate pricing for bulk orders."
+          question: "What payment methods are accepted?",
+          answer: "We accept all major credit/debit cards, UPI, net banking, and cash on delivery. EMI options available through leading banks. 0% interest EMI on selected credit cards for 6-12 months."
         },
         {
-          question: "Do you offer financing options?",
-          answer: "Yes! We provide EMI options through leading banks and financial institutions. Zero down payment options available for qualified buyers. We also accept credit cards with 0% interest EMI for 6-12 months."
+          question: "Is there a warranty included?",
+          answer: "Yes, all eBikes come with comprehensive warranty: 2 years on frame, 1 year on battery and motor, 6 months on electrical components. Extended warranty options available for additional coverage."
         },
         {
-          question: "What is included with the purchase?",
-          answer: "Complete package includes: eBike, charger, user manual, tool kit, helmet, lock, and first free service. Extended warranty options available for additional coverage."
-        },
-        {
-          question: "Are there any current offers or discounts?",
-          answer: "Check our website for current promotional offers. Seasonal discounts during festivals, student discounts, and corporate pricing available. Sign up for our newsletter to receive exclusive offers."
+          question: "Are there any financing options?",
+          answer: "We offer multiple financing options through our banking partners. EMI tenure from 6 to 24 months. Quick approval process with minimal documentation. Special rates for government employees and students."
         }
       ]
     },
@@ -329,133 +368,121 @@ const FAQ: React.FC = () => {
       category: "Service & Support",
       questions: [
         {
-          question: "Where can I get my eSthira eBike serviced?",
-          answer: "Authorized service centers in major cities across India. Mobile service vans available for on-site support. Doorstep service available for basic maintenance and repairs. Contact our customer service for nearest location."
+          question: "What is the service schedule and cost?",
+          answer: "Regular service recommended every 3 months or 1000 km. Service cost ranges from ₹500-1500 depending on the service type. Annual comprehensive service available for ₹3000 including all checks and basic parts."
         },
         {
-          question: "What is the warranty coverage?",
-          answer: "Comprehensive warranty: 60 months on frame, 24 months on battery and motor, 6 months on electronics. Extended warranty options available. Warranty covers manufacturing defects and normal wear and tear. Registration required within 30 days of purchase."
+          question: "Where are the service centers located?",
+          answer: "We have service centers in major cities across India. Mobile service available in metro areas. Door-step service available for premium customers. Find nearest service center on our website or call our helpline."
         },
         {
-          question: "How long does service take?",
-          answer: "Regular service: 1-2 business days. Major repairs: 3-5 business days depending on parts availability. Express service available for urgent requirements."
+          question: "What is covered under warranty?",
+          answer: "Warranty covers manufacturing defects in frame, motor, battery, and electrical components. Does not cover wear and tear items like tires, brake pads, chain. Accidental damage and misuse not covered."
         },
         {
-          question: "What spare parts are available?",
-          answer: "Complete inventory of genuine spare parts available at all service centers. Common parts in stock: batteries, tires, tubes, brake pads, chains, cables, and accessories. Parts can be ordered online and delivered within 2-3 business days."
-        },
-        {
-          question: "What is the service cost?",
-          answer: "Free inspection and diagnosis. Labor charges apply for repairs not covered under warranty. Competitive pricing on spare parts. Service packages available for regular maintenance."
-        },
-        {
-          question: "How can I contact customer support?",
-          answer: "Multiple channels available: Phone: +91-93802-76355, Email: info@esthira.com, WhatsApp support, Live chat on website, and social media. 24/7 emergency helpline for urgent issues."
-        }
-      ]
-    },
-    {
-      category: "Legal & Compliance",
-      questions: [
-        {
-          question: "Are eSthira eBikes legally compliant?",
-          answer: "Fully compliant with all Indian regulations. Registered with ARAI. Meets CMVR standards for safety and emissions. All models have necessary certifications and documentation."
-        },
-        {
-          question: "What documents are required for purchase?",
-          answer: "Valid ID proof (Aadhar card, Voter ID, Passport for NRI, Driver's License). Address proof with utility bill. PAN card for business purchases. GST registration for corporate orders."
-        },
-        {
-          question: "Is insurance required?",
-          answer: "Third-party insurance recommended for comprehensive coverage. We can assist with insurance documentation and process. Insurance covers theft, accident, and third-party liability."
-        },
-        {
-          question: "What are the return and exchange policies?",
-          answer: "7-day return policy for manufacturing defects. Exchange available within 30 days for upgrade to higher model. 15% restocking fee for non-defective returns. Detailed terms available on our website."
+          question: "How do I schedule service?",
+          answer: "Service can be scheduled through our website, mobile app, or by calling our service helpline. Emergency service available within 24 hours in major cities. Regular service appointments available within 3-5 days."
         }
       ]
     }
   ]
 
   useEffect(() => {
+    // Simulate loading
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 1000)
-
     return () => clearTimeout(timer)
   }, [])
 
-  const toggleQuestion = (index: number) => {
+  const toggleQuestion = (categoryIndex: number, questionIndex: number) => {
+    const itemKey = `${categoryIndex}-${questionIndex}`
     setExpandedItems(prev => 
-      prev.includes(index) 
-        ? prev.filter(item => item !== index)
-        : [...prev, index]
+      prev.includes(itemKey) 
+        ? prev.filter(item => item !== itemKey)
+        : [...prev, itemKey]
+    )
+  }
+
+  const selectCategory = (index: number) => {
+    setSelectedCategory(index)
+    setExpandedItems([]) // Reset expanded items when changing category
+  }
+
+  const currentCategory = faqData[selectedCategory]
+
+  if (isLoading) {
+    return (
+      <FAQSection>
+        <Container>
+          <FAQContainer>
+            <LoadingMessage>Loading FAQs...</LoadingMessage>
+          </FAQContainer>
+        </Container>
+      </FAQSection>
     )
   }
 
   return (
     <FAQSection>
-      <BannerSection>
-        <BannerContent>
-          <BannerIcon>
-            <i className="fas fa-question-circle"></i>
-          </BannerIcon>
-          <BannerTitle>Frequently Asked Questions</BannerTitle>
-          <BannerSubtitle>
-            Comprehensive answers to all your questions about eSthira eBikes. Find detailed information about specifications, features, purchase options, and support services.
-          </BannerSubtitle>
-        </BannerContent>
-      </BannerSection>
-
       <Container>
         <FAQContainer>
-          {isLoading ? (
-            <LoadingMessage>
-              <i className="fas fa-spinner fa-spin" style={{ fontSize: '2rem', marginBottom: '1rem' }}></i>
-              <p>Loading FAQ...</p>
-            </LoadingMessage>
-          ) : (
-            <>
-              <FAQHeader>
-                <FAQTitle>Got Questions? We Have Answers!</FAQTitle>
-                <FAQSubtitle>
-                  Browse through our comprehensive FAQ section or contact our support team for detailed information about eSthira eBikes.
-                </FAQSubtitle>
-              </FAQHeader>
+          <FAQHeader>
+            <FAQTitle>Frequently Asked Questions</FAQTitle>
+            <FAQSubtitle>
+              Find answers to common questions about eSthira eBikes, services, and support.
+            </FAQSubtitle>
+          </FAQHeader>
 
-              <FAQCategories>
-                {faqData.map((category, categoryIndex) => (
-                  <FAQCategory key={categoryIndex}>
-                    <CategoryTitle>{category.category}</CategoryTitle>
-                    <QuestionList>
-                      {category.questions.map((item, questionIndex) => (
-                        <QuestionItem key={questionIndex}>
-                          <Question onClick={() => toggleQuestion(categoryIndex * 100 + questionIndex)}>
-                            {expandedItems.includes(categoryIndex * 100 + questionIndex) ? '−' : '+'} {item.question}
-                          </Question>
-                          <Answer style={{
-                            maxHeight: expandedItems.includes(categoryIndex * 100 + questionIndex) ? '200px' : '0'
-                          }}>
-                            {item.answer}
-                          </Answer>
-                        </QuestionItem>
-                      ))}
-                    </QuestionList>
-                  </FAQCategory>
-                ))}
-              </FAQCategories>
+          <CategorySidebar>
+            <CategoryList>
+              {faqData.map((category, index) => (
+                <CategoryButton
+                  key={index}
+                  $active={selectedCategory === index}
+                  onClick={() => selectCategory(index)}
+                >
+                  {category.category}
+                </CategoryButton>
+              ))}
+            </CategoryList>
+          </CategorySidebar>
 
-              <FAQCTA>
-                <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1rem' }}>
-                  Can't find what you're looking for? Contact our customer support team at +91-93802-76355 or info@esthira.com for personalized assistance.
-                </p>
-                <CTAButton to="mailto:info@esthira.com">
-                  <i className="fas fa-envelope"></i>
-                  Email Our Support Team
-                </CTAButton>
-              </FAQCTA>
-            </>
-          )}
+          <QuestionsContent>
+            <QuestionsHeader>
+              <QuestionsTitle>{currentCategory.category}</QuestionsTitle>
+              <QuestionsCount>{currentCategory.questions.length} questions</QuestionsCount>
+            </QuestionsHeader>
+
+            <QuestionList>
+              {currentCategory.questions.map((item, questionIndex) => {
+                const itemKey = `${selectedCategory}-${questionIndex}`
+                const isExpanded = expandedItems.includes(itemKey)
+                return (
+                  <QuestionItem key={questionIndex}>
+                    <Question onClick={() => toggleQuestion(selectedCategory, questionIndex)}>
+                      <QuestionIcon $expanded={isExpanded}>+</QuestionIcon>
+                      <span>{item.question}</span>
+                    </Question>
+                    <Answer style={{ maxHeight: isExpanded ? '500px' : '0' }}>
+                      {item.answer}
+                    </Answer>
+                  </QuestionItem>
+                )
+              })}
+            </QuestionList>
+          </QuestionsContent>
+
+          <FAQCTA style={{ gridColumn: '1 / -1' }}>
+            <h3 style={{ color: '#00a652', marginBottom: '1rem' }}>Still have questions?</h3>
+            <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1.5rem' }}>
+              Can't find the answer you're looking for? Our support team is here to help.
+            </p>
+            <CTAButton to="/contact">
+              <i className="fas fa-phone"></i>
+              Contact Support
+            </CTAButton>
+          </FAQCTA>
         </FAQContainer>
       </Container>
     </FAQSection>

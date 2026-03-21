@@ -139,7 +139,7 @@ const ServiceGrid = styled.div`
 const ServiceCard = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
   border-left: 4px solid #00a652;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -151,15 +151,15 @@ const ServiceCard = styled.div`
 
 const ServiceIcon = styled.div`
   width: 100%;
-  height: 200px;
+  height: 120px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 3rem;
+  font-size: 2.5rem;
 
   img {
     width: 100%;
@@ -270,7 +270,7 @@ const ContactGrid = styled.div`
 const ContactCard = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: transform 0.3s ease;
@@ -282,15 +282,15 @@ const ContactCard = styled.div`
 
 const ContactIcon = styled.div`
   width: 100%;
-  height: 80px;
+  height: 60px;
   background: rgba(0, 166, 82, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #00a652;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
 `
 
 const ContactName = styled.h3`
@@ -325,13 +325,13 @@ const Service: React.FC = () => {
     {
       name: "Regular Maintenance",
       icon: "fas fa-wrench",
-      description: "Keep your eSthira eBike in top condition with our comprehensive maintenance service. Includes battery check, brake adjustment, gear tuning, and general inspection.",
+      description: "Keep your RAPTRIC Bikes in top condition with our comprehensive maintenance service",
       features: [
-        "Battery Health Check",
-        "Brake System Inspection",
-        "Gear Adjustment",
+        "General Electrical/Mechanical Inspection",
+        "Battery Health Check & Charging",
+        "Gear Adjustment (if applicable)",
         "Chain Cleaning & Lubrication",
-        "Tire Pressure Check"
+        "Washing and Polishing"
       ]
     },
     {
@@ -339,6 +339,7 @@ const Service: React.FC = () => {
       icon: "fas fa-bolt",
       description: "Quick maintenance and repair service for when you're in a hurry. Perfect for busy professionals who need fast turnaround.",
       features: [
+        "Regular Maintenance +",
         "Same-Day Service",
         "Priority Booking",
         "Mobile Service Available",
@@ -350,22 +351,18 @@ const Service: React.FC = () => {
       icon: "fas fa-calendar-check",
       description: "Complete annual maintenance package with all essential services at a discounted price. Ideal for regular eBike owners who want peace of mind.",
       features: [
-        "Full Annual Service",
-        "Battery Replacement",
-        "Brake Overhaul",
-        "Complete Tune-Up",
-        "24/7 Support"
+        "Regular Maintenance +",
+        "Door-Step Service",
+        "Discounted Price on Spares"
       ]
     },
     {
       name: "Emergency Support",
       icon: "fas fa-phone-alt",
-      description: "24/7 emergency assistance for breakdowns and urgent repairs. Our team is always ready to help you get back on the road.",
+      description: "Emergency assistance for breakdowns and urgent repairs. Our team is always ready to help you get back on the road.",
       features: [
-        "24/7 Hotline",
         "Roadside Assistance",
-        "Towing Service",
-        "Temporary Bike Replacement"
+        "Temporary Parts Replacement"
       ]
     }
   ]
@@ -377,9 +374,9 @@ const Service: React.FC = () => {
           <BannerIcon>
             <i className="fas fa-tools"></i>
           </BannerIcon>
-          <BannerTitle>eSthira Service Center</BannerTitle>
+          <BannerTitle>RAPTRIC Service Center</BannerTitle>
           <BannerSubtitle>
-            Professional maintenance and support services for your eSthira eBike. Keep your ride smooth and reliable with our expert team.
+            Professional maintenance and support services for your RAPTRIC Bikes. Keep your ride smooth and reliable with our expert team.
           </BannerSubtitle>
         </BannerContent>
       </BannerSection>
@@ -389,7 +386,7 @@ const Service: React.FC = () => {
           <ServiceHeader>
             <ServiceTitle>Our Services</ServiceTitle>
             <ServiceSubtitle>
-              Choose from our range of professional services designed to keep your eSthira eBike running perfectly.
+              Choose from our range of professional services designed to keep your RAPTRIC Bikes running perfectly.
             </ServiceSubtitle>
           </ServiceHeader>
 
@@ -424,10 +421,8 @@ const Service: React.FC = () => {
                 </ContactIcon>
                 <ContactName>Service Center Address</ContactName>
                 <ContactInfo>
-                  {BUSINESS_INFO.address.line1}<br />
-                  {BUSINESS_INFO.address.line2}<br />
-                  {BUSINESS_INFO.address.city}, {BUSINESS_INFO.address.state}<br />
-                  {BUSINESS_INFO.address.pincode}<br />
+                  {BUSINESS_INFO.address.line1}, {BUSINESS_INFO.address.line2}<br />
+                  {BUSINESS_INFO.address.city}, {BUSINESS_INFO.address.state}, {BUSINESS_INFO.address.pincode}<br />
                   {BUSINESS_INFO.address.country}
                 </ContactInfo>
               </ContactCard>
@@ -440,7 +435,7 @@ const Service: React.FC = () => {
                 <ContactInfo>
                   <strong>Phone:</strong> {BUSINESS_INFO.contact.phone}<br />
                   <strong>Email:</strong> {BUSINESS_INFO.contact.email}<br />
-                  <strong>Hours:</strong> {BUSINESS_INFO.hours.weekdays}
+                  <strong>Hours:</strong> {BUSINESS_INFO.hours.weekdays2}
                 </ContactInfo>
                 
               </ContactCard>
@@ -451,8 +446,7 @@ const Service: React.FC = () => {
                 </ContactIcon>
                 <ContactName>Service Hours</ContactName>
                 <ContactInfo>
-                  <strong>Monday - Sunday:</strong> {BUSINESS_INFO.hours.display}<br />
-                  <strong>Emergency Support:</strong> 24/7 Available<br />
+                  <strong>Monday - Saturday:</strong> {BUSINESS_INFO.hours.display}<br />
                   <strong>Appointment:</strong> Recommended
                 </ContactInfo>
               </ContactCard>

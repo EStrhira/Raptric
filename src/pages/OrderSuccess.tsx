@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
 import { Container } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
+import { usePayment } from '../context/PaymentContext'
 
 const SuccessSection = styled.section`
   padding: 80px 0;
@@ -127,12 +128,21 @@ const Button = styled(Link)<{ $variant?: 'primary' | 'secondary' }>`
 
 const OrderSuccess: React.FC = () => {
   const navigate = useNavigate()
+  const { state } = usePayment()
   
   // Scroll to top when page loads
   useScrollToTop()
 
-  // Generate random order number
-  const orderNumber = `EST${Date.now().toString().slice(-8)}`
+  // If no payment success data, redirect to home
+  if (!state.lastPayment) {
+    navigate('/')
+    return null
+  }
+
+  const paymentSuccess = state.lastPayment
+
+  // Generate order number from payment timestamp
+  const orderNumber = `EST${paymentSuccess.timestamp ? new Date(paymentSuccess.timestamp).getTime().toString().slice(-8) : Date.now().toString().slice(-8)}`
 
   return (
     <SuccessSection>
@@ -151,7 +161,10 @@ const OrderSuccess: React.FC = () => {
           <OrderInfo>
             <OrderNumber>Order #{orderNumber}</OrderNumber>
             <OrderDetails>
-              You will receive an email confirmation shortly with your order details and tracking information.
+              <strong>Payment ID:</strong> {paymentSuccess.id || 'N/A'}<br />
+              <strong>Total Amount:</strong> ₹{paymentSuccess.totalAmount || '0.00'}<br />
+              <strong>Items Purchased:</strong> {paymentSuccess.items?.length || 0}<br />
+              <strong>Payment Date:</strong> {paymentSuccess.timestamp ? new Date(paymentSuccess.timestamp).toLocaleString() : new Date().toLocaleString()}
             </OrderDetails>
           </OrderInfo>
           
