@@ -183,7 +183,7 @@ const Showcase: React.FC = () => {
               </ShowcaseImage>
             </ShowcaseLeft>
             <ShowcaseRight>
-              <ShowcaseTitle>eSthira Raptric</ShowcaseTitle>
+              <ShowcaseTitle>RAPTRIC eBikes</ShowcaseTitle>
               <ShowcaseSubtitle>Revolutionary Electric Bicycle</ShowcaseSubtitle>
               <ShowcaseDescription>
                 Experience the future of urban mobility with our cutting-edge electric bicycle. Designed for performance, comfort, and sustainability.
@@ -204,6 +204,14 @@ const Showcase: React.FC = () => {
                 <FeatureItem>
                   <i className="fas fa-route"></i>
                   Range: 40-60 km per charge
+                </FeatureItem>
+                <FeatureItem>
+                  <i className="fas fa-sun"></i>
+                  Headlight+Horn Combo
+                </FeatureItem>
+                <FeatureItem>
+                  <i className="fas fa-lock"></i>
+                  Power Lock
                 </FeatureItem>
               </FeatureList>
               <ShowcaseButton to="/ebikes">Learn More</ShowcaseButton>

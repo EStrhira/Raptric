@@ -26,12 +26,13 @@ const fallbackHero = {
 const fallbackFeatures = [
   { _id: '1', title: 'Aesthetic Design', description: 'Sleek and modern design that turns heads wherever you go', icon: 'fas fa-palette', order: 1 },
   { _id: '2', title: '250W BLDC Hub Motor', description: 'Powerful and efficient motor for smooth acceleration', icon: 'fas fa-bolt', order: 2 },
-  { _id: '3', title: '36V 7.8 & 10.4Ah Lithium-Ion Battery', description: 'Long-lasting battery for extended rides', icon: 'fas fa-battery-full', order: 3 },
+  { _id: '3', title: 'Lithium-Ion Battery', description: 'Long-lasting battery for extended rides', icon: 'fas fa-battery-full', order: 3 },
   { _id: '4', title: 'Safety & Comfort Functions', description: 'Multiple safety features for secure riding', icon: 'fas fa-shield-alt', order: 4 },
-  { _id: '5', title: 'High Tensile 26" & 27.5" Steel Frame', description: 'Durable frame built for all terrains', icon: 'fas fa-tools', order: 5 },
-  { _id: '6', title: 'Dedicated Service Center', description: 'Expert service and maintenance support', icon: 'fas fa-wrench', order: 6 },
-  { _id: '7', title: 'Covered with Warranty', description: 'Comprehensive warranty for peace of mind', icon: 'fas fa-certificate', order: 7 },
-  { _id: '8', title: 'EMI Options Available', description: 'Flexible payment options to suit your budget', icon: 'fas fa-credit-card', order: 8 }
+  { _id: '5', title: 'High Tensile Steel Frame', description: 'Durable frame built for all terrains', icon: 'fas fa-tools', order: 5 },
+  { _id: '6', title: 'Easy Test Drives', description: 'Experience the Power - Ride before you Decide', icon: 'fas fa-route', order: 6 },
+  { _id: '7', title: 'Dedicated Service Center', description: 'Expert service and maintenance support', icon: 'fas fa-wrench', order: 6 },
+  { _id: '8', title: 'Covered with Warranty', description: 'Comprehensive warranty for peace of mind', icon: 'fas fa-shield-alt', order: 7 },
+  { _id: '9', title: 'EMI Options Available', description: 'Flexible payment options to suit your budget', icon: 'fas fa-calendar-alt', order: 8 }
 ]
 
 const fallbackBenefits = [

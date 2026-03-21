@@ -12,7 +12,7 @@ export const BUSINESS_INFO = {
   contact: {
     phone: '+91 93802 76355',
     phoneFormatted: '+919380276355',
-    email: 'info@esthira.com',
+    email: 'info.esthira@gmail.com',
     website: 'https://esthira.com'
   },
   hours: {

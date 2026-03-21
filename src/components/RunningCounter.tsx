@@ -28,11 +28,12 @@ const CounterTitle = styled.div`
 
 const SpecsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
-  align-items: center;
+  align-items: start;
+  align-content: start;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
   }
@@ -50,6 +51,12 @@ const SpecsContainer = styled.div`
 
 const SpecItem = styled.div`
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 120px;
+  padding: 10px 0;
 `
 
 const SpecValue = styled.div<{ $animating?: boolean }>`
@@ -59,6 +66,16 @@ const SpecValue = styled.div<{ $animating?: boolean }>`
   line-height: 1;
   margin-bottom: 8px;
   transition: all 0.5s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  white-space: nowrap;
+
+  span {
+    font-size: 60%;
+    font-weight: 500;
+  }
 
   ${props => props.$animating && `
     transform: scale(1.1);
@@ -84,6 +101,12 @@ const SpecLabel = styled.div`
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  line-height: 1.2;
 
   @media (max-width: 768px) {
     font-size: 12px;
@@ -97,7 +120,11 @@ const SpecLabel = styled.div`
 const SpecIcon = styled.div`
   font-size: 24px;
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `
 
 const CounterLabel = styled.div`
@@ -141,6 +168,7 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
     speed: 0,
     battery: 0,
     motor: 0,
+    pas:0,
     gear: 0
   })
   const [isAnimating, setIsAnimating] = useState(false)
@@ -153,6 +181,7 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
     speed: 25,
     battery: 13,
     motor: 250,
+    pas: 5,
     gear: 7
   }
 
@@ -186,6 +215,13 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
       icon: "fas fa-bolt"
     },
     {
+      value: currentValues.pas,
+      target: targetValues.pas,
+      label: "Pedal Assist Levels",
+      unit: "",
+      icon: "fas fa-circle-dot"
+    },
+    {
       value: currentValues.gear,
       target: targetValues.gear,
       label: "Gears",
@@ -204,6 +240,7 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
       speed: 0,
       battery: 0,
       motor: 0,
+      pas: 0,
       gear: 0
     })
     animateToTargets()
@@ -234,6 +271,7 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
         newValues.speed = Math.ceil(targetValues.speed * progress)
         newValues.battery = Math.ceil(targetValues.battery * progress)
         newValues.motor = Math.ceil(targetValues.motor * progress)
+        newValues.pas = Math.ceil(targetValues.pas * progress)
         newValues.gear = Math.ceil(targetValues.gear * progress)
 
         return newValues
@@ -295,7 +333,7 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
               <i className={spec.icon}></i>
             </SpecIcon>
             <SpecValue $animating={isAnimating}>
-              {formatNumber(spec.value)} {spec.unit}
+              {formatNumber(spec.value)} <span>{spec.unit}</span>
             </SpecValue>
             <SpecLabel>{spec.label}</SpecLabel>
             

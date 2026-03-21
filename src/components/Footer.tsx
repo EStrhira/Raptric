@@ -12,7 +12,7 @@ const FooterSection = styled.footer`
 const FooterContent = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: 1rem;
   margin-bottom: 2rem;
 
   @media (max-width: 768px) {
@@ -29,6 +29,7 @@ const FooterSectionTitle = styled.h3`
 const FooterSectionSubtitle = styled.h4`
   margin-bottom: 1rem;
   color: #00a652;
+  text-align: left;
 `
 
 const FooterText = styled.p`
@@ -39,6 +40,9 @@ const FooterText = styled.p`
 
 const FooterList = styled.ul`
   list-style: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
 `
 
 const FooterListItem = styled.li`
@@ -100,7 +104,7 @@ const Footer: React.FC = () => {
           <div>
             <FooterSectionTitle>eSthira Mobility</FooterSectionTitle>
             <FooterText>
-              Leading the electric revolution in sustainable mobility. Experience the future of commuting with our premium eBikes.
+              Mobility Built With Passion <br /> <strong>Vision</strong>: To provide world class personal mobility experience.
             </FooterText>
             <SocialLinks>
               <SocialLink href="https://instagram.com/esthiramobility" target="_blank" rel="noopener noreferrer">
@@ -130,8 +134,6 @@ const Footer: React.FC = () => {
               <FooterListItem><FooterLink to="/ebikes">Ebikes</FooterLink></FooterListItem>
               <FooterListItem><FooterLink to="/accessories">Accessories</FooterLink></FooterListItem>
               <FooterListItem><FooterLink to="/service">Service Plans</FooterLink></FooterListItem>
-              <FooterListItem><FooterLink to="/warranty">Warranty</FooterLink></FooterListItem>
-              <FooterListItem><FooterLink to="#warranty">Warranty Activation</FooterLink></FooterListItem>
             </FooterList>
           </div>
           
@@ -143,12 +145,14 @@ const Footer: React.FC = () => {
               <FooterListItem><FooterLink to="/terms-conditions">Terms & Conditions</FooterLink></FooterListItem>
               <FooterListItem><FooterLink to="/cancellation-refund-replacement">Cancellation, Refund & Replacement</FooterLink></FooterListItem>
               <FooterListItem><FooterLink to="/shipping-delivery">Shipping & Delivery Policy</FooterLink></FooterListItem>
+              <FooterListItem><FooterLink to="/warranty">Warranty</FooterLink></FooterListItem>
+              <FooterListItem><FooterLink to="#warranty">Warranty Activation</FooterLink></FooterListItem>
             </FooterList>
           </div>
         </FooterContent>
         
         <FooterBottom>
-          <p>&copy; 2024 eSthira Mobility. All rights reserved. | Powered by Sustainable Energy</p>
+          <p>&copy; 2026 eSthira Mobility Pvt. Ltd.. All Rights Reserved. | Mobility Built With Passion</p>
         </FooterBottom>
       </Container>
     </FooterSection>

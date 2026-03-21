@@ -48,12 +48,12 @@ const ContactIcon = styled.div`
 
 const ContactDetails = styled.div`
   h3 {
-    color: #333;
+    color: #ffffff;
     margin-bottom: 0.5rem;
   }
 
   p {
-    color: #666;
+    color: #ffffff;
     line-height: 1.6;
   }
 

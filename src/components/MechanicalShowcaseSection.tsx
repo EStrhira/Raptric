@@ -127,6 +127,7 @@ const FeatureList = styled.ul`
 const FeatureItem = styled.li`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   margin-bottom: 1rem;
   font-size: 1rem;
   color: #ffffff;
@@ -135,6 +136,13 @@ const FeatureItem = styled.li`
     color: #ffffff;
     margin-right: 1rem;
     font-size: 1.2rem;
+    flex-shrink: 0;
+    min-width: 20px;
+  }
+
+  span {
+    text-align: left;
+    flex: 1;
   }
 `
 
@@ -183,7 +191,7 @@ const Showcase: React.FC = () => {
               </ShowcaseImage>
             </ShowcaseLeft>
             <ShowcaseRight>
-              <ShowcaseTitle>eSthira Raptric</ShowcaseTitle>
+              <ShowcaseTitle>RAPTRIC mBikes</ShowcaseTitle>
               <ShowcaseSubtitle>Revolutionary Mechanical Bicycle</ShowcaseSubtitle>
               <ShowcaseDescription>
                 Experience the future of Cycling with our cutting-edge convertible Mechanical Bicycle. Designed for performance, comfort, and sustainability.
@@ -191,35 +199,31 @@ const Showcase: React.FC = () => {
               <FeatureList>
                 <FeatureItem>
                   <i className="fas fa-bolt"></i>
-                  Convertible Bicycle from Mechanical to Electric
+                  <span>Convertible Bicycle from Mechanical to Electric</span>
                 </FeatureItem>
                 <FeatureItem>
-                  <i className="fas fa-cycle-frame"></i>
-                  27.5" High Tensile Steel Frame
+                  <i className="fas fa-bicycle"></i>
+                  <span>27.5" High Tensile Steel Frame</span>
                 </FeatureItem>
                 <FeatureItem>
-                  <i className="fas fa-cycle-rim"></i>
-                  Double wall Alloy Rims
+                  <i className="fas fa-bullseye"></i>
+                  <span>Double wall Alloy Rims</span>
                 </FeatureItem>
                 <FeatureItem>
-                  <i className="fas fa-gear"></i>
-                  21-Speed Microshift gears
+                  <i className="fas fa-cogs"></i>
+                  <span>21-Speed Microshift gears</span>
                 </FeatureItem>
                 <FeatureItem>
-                  <i className="fas fa-brakes"></i>
-                  Dual Disc Brakes
+                  <i className="fas fa-compact-disc"></i>
+                  <span>Dual Disc Brakes</span>
                 </FeatureItem>
                 <FeatureItem>
-                  <i className="fas fa-suspension"></i>
-                  Fork Suspension
+                  <i className="fas fa-arrows-alt-v"></i>
+                  <span>Fork Suspension</span>
                 </FeatureItem>
                 <FeatureItem>
-                  <i className="fas fa-gear"></i>
-                  Microshift Derailleur
-                </FeatureItem>
-                <FeatureItem>
-                  <i className="fas fa-tire"></i>
-                  Hartex MTB Tires
+                  <i className="fas fa-dot-circle"></i>
+                  <span>Ralson/Hartex MTB Tires</span>
                 </FeatureItem>
               </FeatureList>
               <ShowcaseButton to="/cycles">Learn More</ShowcaseButton>
