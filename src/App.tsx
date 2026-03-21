@@ -25,6 +25,7 @@ import PrivacyPolicy from './components/PrivacyPolicy'
 import ShippingDelivery from './components/ShippingDelivery'
 import TermsConditions from './components/TermsConditions'
 import WarrantyManual from './components/WarrantyManual'
+import WarrantyActivation from './components/WarrantyActivation'
 import SafetyTips from './components/SafetyTips'
 import FAQ from './components/FAQ'
 import Manual from './components/Manual'
@@ -57,6 +58,7 @@ function App() {
           <Route path="/shipping-delivery" element={<ShippingDelivery />} />
         <Route path="/cancellation-refund-replacement" element={<CancellationRefundReplacement />} />
         <Route path="/warranty" element={<WarrantyManual />} />
+        <Route path="/warrantyactivation" element={<WarrantyActivation />} />
         <Route path="/safety-tips" element={<SafetyTips />} />
         <Route path="/manual" element={<Manual />} />
         <Route path="/faq" element={<FAQ />} />

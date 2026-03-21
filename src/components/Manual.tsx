@@ -261,9 +261,9 @@ const Manual: React.FC = () => {
           <BannerIcon>
             <i className="fas fa-book"></i>
           </BannerIcon>
-          <BannerTitle>eSthira Raptric Manual</BannerTitle>
+          <BannerTitle>RAPTRIC eBike Manual</BannerTitle>
           <BannerSubtitle>
-            Complete user manual for your eSthira Raptric eBike. Browse through the interactive PDF viewer or download for offline reference.
+            Complete user manual for your RAPTRIC eBike. Browse through the interactive PDF viewer or download for offline reference.
           </BannerSubtitle>
         </BannerContent>
       </BannerSection>
