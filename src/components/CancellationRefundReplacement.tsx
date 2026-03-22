@@ -145,18 +145,21 @@ const SectionContent = styled.div`
   ul {
     margin-left: 1.5rem;
     margin-bottom: 1rem;
+    list-style: none;
+    padding-left: 0;
   }
 
   li {
     margin-bottom: 0.5rem;
     position: relative;
-    padding-left: 1rem;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
 
     &:before {
       content: "•";
       position: absolute;
       left: 0;
-      color: #00a652;
+      color: rgba(255, 255, 255, 0.6);
       font-weight: bold;
     }
   }
@@ -224,7 +227,7 @@ const CancellationRefundReplacement: React.FC = () => {
           <PolicyHeader>
             <PolicyTitle>Cancellation, Refund & Replacement Policy</PolicyTitle>
             <PolicySubtitle>
-              At Raptric, customer satisfaction is our top priority. We strive to deliver high-quality electric bikes and accessories with dependable service.
+              At RAPTRIC, customer satisfaction is our top priority. We strive to deliver high-quality electric bikes and accessories with dependable service.
             </PolicySubtitle>
           </PolicyHeader>
 
@@ -241,7 +244,7 @@ const CancellationRefundReplacement: React.FC = () => {
               </ul>
               <div className="contact-info">
                 <p>
-                  <strong>To request a cancellation:</strong> Please contact our support team at <strong>info.esthira@gmail.com</strong> or <strong>9380276355</strong> with your order ID.
+                  To request a cancellation: Please contact our support team at <strong>info.esthira@gmail.com</strong> or <strong>+91-9380276355</strong> with your order ID.
                 </p>
               </div>
             </SectionContent>
@@ -255,7 +258,7 @@ const CancellationRefundReplacement: React.FC = () => {
               </p>
               <div className="highlight-box">
                 <p>
-                  <strong>Please read the Replacement Policy below</strong> in case of delivery damage.
+                  Please read the Replacement Policy below in case of delivery damage.
                 </p>
               </div>
             </SectionContent>
@@ -273,7 +276,7 @@ const CancellationRefundReplacement: React.FC = () => {
               </ul>
               <div className="contact-info">
                 <p>
-                  If you believe you are eligible for a refund, please reach out to <strong>info.esthira@gmail.com</strong> or <strong>9380276355</strong> with your order details.
+                  If you believe you are eligible for a refund, please reach out to <strong>info.esthira@gmail.com</strong> or <strong>+91-9380276355</strong> with your order details.
                 </p>
               </div>
             </SectionContent>
@@ -312,7 +315,7 @@ const CancellationRefundReplacement: React.FC = () => {
             <SectionHeading>Support Contact</SectionHeading>
             <SectionContent>
               <p>
-                For support regarding cancellations, refunds, or replacements, email us at <strong>info.esthira@gmail.com</strong> or call our helpline at <strong>9380276355</strong>.
+                For support regarding cancellations, refunds, or replacements, email us at <strong>info.esthira@gmail.com</strong> or call our helpline at <strong>+91-9380276355</strong>.
               </p>
             </SectionContent>
           </PolicySection>

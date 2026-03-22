@@ -294,7 +294,7 @@ const Manual: React.FC = () => {
               <PDFViewer>
                 <PDFIframe
                   src="/eSthira_Raptric_Manual.pdf#view=FitV&toolbar=1&navpanes=1&scrollbar=1"
-                  title="eSthira Raptric Manual"
+                  title="eSthira RAPTRIC Manual"
                   onLoad={handlePDFLoad}
                   onError={handlePDFError}
                 />

@@ -18,12 +18,11 @@ const CounterContainer = styled.div`
 
 const CounterTitle = styled.div`
   color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
   letter-spacing: 1px;
-  margin-bottom: 20px;
-  opacity: 0.8;
 `
 
 const SpecsContainer = styled.div`

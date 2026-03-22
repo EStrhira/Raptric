@@ -315,7 +315,7 @@ const FAQ: React.FC = () => {
         },
         {
           question: "Does an eBike come with user manual?",
-          answer: "In order to go green and save environment, all our documentation is digital. You can find the user manual here which gives you all information related to the vehicle use, ride, safety, service & warranty."
+          answer: "In order to go green and save environment, all our documentation is digital. You can find the user manual <a href='/manual' style='color: #00a652; text-decoration: underline;'>here</a> which gives you all information related to the vehicle use, ride, safety, service & warranty."
         },
         {
           question: "Is it legal for kids/minors to use eBikes?",
@@ -704,7 +704,7 @@ const FAQ: React.FC = () => {
                         <span>{item.question}</span>
                       </Question>
                       <Answer style={{ maxHeight: isExpanded ? '500px' : '0' }}>
-                        {item.answer}
+                        <div dangerouslySetInnerHTML={{ __html: item.answer }} />
                       </Answer>
                     </QuestionItem>
                   )

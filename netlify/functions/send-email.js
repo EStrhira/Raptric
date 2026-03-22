@@ -41,7 +41,7 @@ exports.handler = async (event) => {
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4;">
           <div style="background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
             <div style="text-align: center; margin-bottom: 30px;">
-              <h1 style="color: #00a652; margin: 0; font-size: 28px;">eSthira Raptric</h1>
+              <h1 style="color: #00a652; margin: 0; font-size: 28px;">eSthira RAPTRIC</h1>
               <p style="color: #666; margin: 5px 0 0;">New Contact Form Submission</p>
             </div>
             
@@ -99,21 +99,21 @@ exports.handler = async (event) => {
     // Send auto-reply to customer
     try {
       await resend.emails.send({
-        from: 'eSthira Raptric <onboarding@resend.dev>',
+        from: 'eSthira RAPTRIC <onboarding@resend.dev>',
         to: [email],
-        subject: 'Thank you for contacting eSthira Raptric!',
+        subject: 'Thank you for contacting eSthira RAPTRIC!',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4;">
             <div style="background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
               <div style="text-align: center; margin-bottom: 30px;">
-                <h1 style="color: #00a652; margin: 0; font-size: 28px;">eSthira Raptric</h1>
+                <h1 style="color: #00a652; margin: 0; font-size: 28px;">eSthira RAPTRIC</h1>
                 <p style="color: #666; margin: 5px 0 0;">Thank you for getting in touch!</p>
               </div>
               
               <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
                 <h2 style="color: #333; margin: 0 0 15px; font-size: 18px;">Dear ${name},</h2>
                 <p style="color: #333; line-height: 1.6; margin: 0 0 15px;">
-                  Thank you for contacting eSthira Raptric! We have received your message and our team will get back to you as soon as possible.
+                  Thank you for contacting eSthira RAPTRIC! We have received your message and our team will get back to you as soon as possible.
                 </p>
                 <p style="color: #333; line-height: 1.6; margin: 0 0 15px;">
                   While you wait, feel free to explore our premium bicycles and eBikes on our website. We offer the perfect blend of traditional cycling excellence and modern innovation.

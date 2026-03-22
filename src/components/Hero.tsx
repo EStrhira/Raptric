@@ -253,7 +253,7 @@ const Hero: React.FC<HeroProps> = ({ hero }) => {
   const carouselSlides: SlideData[] = [
     {
       id: '1',
-      title: 'eSthira Raptric: The Future of Commuting',
+      title: 'eSthira RAPTRIC: The Future of Commuting',
       subtitle: 'Packed with Cutting-Edge Features for an Unmatched Riding Experience',
       primaryButtonText: 'Buy Now',
       primaryButtonLink: '/ebikes',
@@ -284,7 +284,7 @@ const Hero: React.FC<HeroProps> = ({ hero }) => {
     {
       id: '4',
       title: '🎊 Ugadhi Festive Offer - Celebrate with eSthira!',
-      subtitle: 'Special festive discounts on all eSthira Raptric eBikes! Limited time offer with exclusive benefits and free accessories. Make this Ugadhi memorable with sustainable mobility.',
+      subtitle: 'Special festive discounts on all eSthira RAPTRIC eBikes! Limited time offer with exclusive benefits and free accessories. Make this Ugadhi memorable with sustainable mobility.',
       primaryButtonText: 'Grab Offer',
       primaryButtonLink: '/ebikes',
       secondaryButtonText: 'Learn More',

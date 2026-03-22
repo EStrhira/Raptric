@@ -215,14 +215,15 @@ const Contact: React.FC = () => {
       address: BUSINESS_INFO.address.full,
       phone: BUSINESS_INFO.contact.phoneFormatted,
       email: BUSINESS_INFO.contact.email,
-      hours: BUSINESS_INFO.hours.weekdays
+      hours: BUSINESS_INFO.hours.weekdays2,
+      locateUs: "https://maps.app.goo.gl/gweZK6bb3bZzGMaG7"
     },
     {
       name: "Customer Support",
       icon: "fas fa-headset",
       phone: BUSINESS_INFO.contact.phoneFormatted,
       email: BUSINESS_INFO.contact.email,
-      hours: "24/7 Customer Support Available"
+      hours: BUSINESS_INFO.hours.weekdays2
     },
     {
       name: "Service Center",
@@ -230,14 +231,14 @@ const Contact: React.FC = () => {
       address: BUSINESS_INFO.address.full,
       phone: BUSINESS_INFO.contact.phoneFormatted,
       email: BUSINESS_INFO.contact.email,
-      hours: BUSINESS_INFO.hours.weekdays
+      hours: BUSINESS_INFO.hours.weekdays2
     },
     {
       name: "Sales Inquiries",
       icon: "fas fa-shopping-cart",
       phone: BUSINESS_INFO.contact.phoneFormatted,
       email: BUSINESS_INFO.contact.email,
-      hours: "Monday - Friday: 9:00 AM - 6:00 PM"
+      hours: BUSINESS_INFO.hours.weekdays2
     }
   ]
 
@@ -276,6 +277,20 @@ const Contact: React.FC = () => {
                   <strong>Phone:</strong> {contact.phone}<br />
                   <strong>Email:</strong> {contact.email}<br />
                   <strong>Hours:</strong> {contact.hours}
+                  {contact.locateUs && (
+                    <>
+                      <br />
+                      <strong>Locate Us:</strong>{' '}
+                      <a 
+                        href={contact.locateUs} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style={{ color: '#00a652', textDecoration: 'underline' }}
+                      >
+                        Click here for directions
+                      </a>
+                    </>
+                  )}
                 </ContactInfo>
                 
               </ContactCard>

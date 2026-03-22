@@ -90,7 +90,7 @@ esthira-react/
 - Gradient background with animated elements
 
 ### Product Features
-- 8 key features of the eSthira Raptric
+- 8 key features of the eSthira RAPTRIC
 - Interactive cards with hover effects
 - Icon-based visual representation
 

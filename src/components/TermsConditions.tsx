@@ -145,18 +145,21 @@ const SectionContent = styled.div`
   ul {
     margin-left: 1.5rem;
     margin-bottom: 1rem;
+    list-style: none;
+    padding-left: 0;
   }
 
   li {
     margin-bottom: 0.5rem;
     position: relative;
-    padding-left: 1rem;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
 
     &:before {
       content: "•";
       position: absolute;
       left: 0;
-      color: #00a652;
+      color: rgba(255, 255, 255, 0.6);
       font-weight: bold;
     }
   }
@@ -311,7 +314,7 @@ const TermsConditions: React.FC = () => {
             <SectionHeading>Contact Us</SectionHeading>
             <SectionContent>
               <p>
-                If you have any questions or concerns about our Terms & Conditions, please contact us at <strong>info@esthira.com</strong>.
+                If you have any questions or concerns about our Terms & Conditions, please contact us at <strong>info.esthira@gmail.com</strong>.
               </p>
             </SectionContent>
           </TermsSection>

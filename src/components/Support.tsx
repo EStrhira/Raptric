@@ -92,7 +92,7 @@ const Support: React.FC = () => {
     {
       icon: 'fas fa-book',
       title: 'Manual',
-      description: 'Download the complete user manual for your eSthira Raptric.',
+      description: 'Download the complete user manual for your eSthira RAPTRIC.',
       link: '/manual'
     }
   ]

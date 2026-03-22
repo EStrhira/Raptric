@@ -145,20 +145,27 @@ const SectionContent = styled.div`
   ul {
     margin-left: 1.5rem;
     margin-bottom: 1rem;
+    list-style: none;
+    padding-left: 0;
   }
 
   li {
     margin-bottom: 0.5rem;
     position: relative;
-    padding-left: 1rem;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
 
     &:before {
       content: "•";
       position: absolute;
       left: 0;
-      color: #00a652;
+      color: rgba(255, 255, 255, 0.6);
       font-weight: bold;
     }
+  }
+
+  strong {
+    color: #00a652;
   }
 `
 
@@ -192,7 +199,7 @@ const PricingPolicy: React.FC = () => {
             </BannerIcon>
             <BannerTitle>Pricing Policy</BannerTitle>
             <BannerSubtitle>
-              Transparent pricing for your eBike journey. Clear, fair, and straightforward costs with no hidden fees.
+              Transparent pricing for your RAPTRIC journey. Clear, fair, and straightforward costs with no hidden fees.
             </BannerSubtitle>
           </BannerContent>
         </Container>
@@ -208,10 +215,10 @@ const PricingPolicy: React.FC = () => {
           </PolicyHeader>
 
           <PolicySection>
-            <SectionHeading>eSthira Raptric electric cycle Price</SectionHeading>
+            <SectionHeading>RAPTRIC eBikes Price</SectionHeading>
             <SectionContent>
               <p>
-                esthira.com offers multiple variants of Raptric eBikes. Please check Shop page for pricing details. This price includes the following:
+                esthira.com offers multiple variants of RAPTRIC electric cycles (eBikes). Please check <a href="/ebikes" style={{ color: '#00a652', textDecoration: 'underline' }}>eBikes</a> page for pricing details. This price includes the following:
               </p>
               <ul>
                 <li>eBike frame, motor, battery, and other electronics</li>
@@ -221,10 +228,10 @@ const PricingPolicy: React.FC = () => {
           </PolicySection>
 
           <PolicySection>
-            <SectionHeading>eSthira Raptric Mechanical cycle Price</SectionHeading>
+            <SectionHeading>RAPTRIC mBikes Price</SectionHeading>
             <SectionContent>
               <p>
-                esthira.com offers multiple variants of Raptric Mechanical Cycles. Please check Shop page for pricing details. This price includes the following:
+                esthira.com offers multiple variants of RAPTRIC mechanical cycles (mBikes). Please check <a href="/mbikes" style={{ color: '#00a652', textDecoration: 'underline' }}>mBikes</a> page for pricing details. This price includes the following:
               </p>
               <ul>
                 <li>Mechanical bicycle parts</li>
@@ -236,7 +243,7 @@ const PricingPolicy: React.FC = () => {
             <SectionHeading>Add-Ons and Accessories</SectionHeading>
             <SectionContent>
               <p>
-                esthira.com offers a variety of add-ons and accessories to customize your e-bike and enhance your riding experience. These items are sold separately at store and are not included in the base price of the e-bike. You can find a complete list of add-ons and their individual prices here.
+                esthira.com offers a variety of add-ons and accessories to customize your bikes and enhance your riding experience. These items are sold separately at store and are not included in the base price of the bikes. You can find a complete list of add-ons and their individual prices in our <a href="/accessories" style={{ color: '#00a652', textDecoration: 'underline' }}>accessory</a> page.
               </p>
             </SectionContent>
           </PolicySection>
@@ -270,7 +277,7 @@ const PricingPolicy: React.FC = () => {
             <SectionHeading>Price Changes</SectionHeading>
             <SectionContent>
               <p>
-                esthira.com reserves the right to change prices at any time without prior notice. However, the price of your e-bike or add-ons will be locked in at the time you place your order.
+                esthira.com reserves the right to change prices at any time without prior notice. However, the price of your bike or add-ons will be locked in at the time you place your order.
               </p>
             </SectionContent>
           </PolicySection>
@@ -288,7 +295,7 @@ const PricingPolicy: React.FC = () => {
             <SectionHeading>Contact Us</SectionHeading>
             <SectionContent>
               <p>
-                If you have any questions about our pricing policy, please don't hesitate to contact us at +91-93802-76355 or info@esthira.com.
+                If you have any questions about our pricing policy, please don't hesitate to contact us at <strong>+91-93802-76355</strong> or <strong>info.esthira@gmail.com</strong>.
               </p>
             </SectionContent>
           </PolicySection>

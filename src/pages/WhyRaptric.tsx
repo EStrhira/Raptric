@@ -361,7 +361,7 @@ const WhyRaptric: React.FC = () => {
       <BannerSection>
         <BannerContent>
           <BannerIcon>🚴‍♂️</BannerIcon>
-          <BannerTitle>Why Choose Raptric?</BannerTitle>
+          <BannerTitle>Why Choose RAPTRIC?</BannerTitle>
           <BannerSubtitle>
             Experience the perfect blend of traditional cycling excellence and modern innovation, 
             designed specifically for Indian roads and riding conditions.
@@ -372,17 +372,17 @@ const WhyRaptric: React.FC = () => {
       <Container>
         <WhyRaptricContainer>
           <HeroContent>
-            <HeroTitle>The Raptric Advantage</HeroTitle>
+            <HeroTitle>The RAPTRIC Advantage</HeroTitle>
             <HeroSubtitle>
-              While the Indian bicycle market offers numerous options, Raptric stands out with its unique convertible design 
+              While the Indian bicycle market offers numerous options, RAPTRIC stands out with its unique convertible design 
               and premium features that cater to both traditional cyclists and modern riders.
             </HeroSubtitle>
           </HeroContent>
 
           <IntroSection>
             <IntroText>
-              The Raptric represents a revolutionary approach to cycling in India. Unlike conventional bicycles that limit you to either 
-              mechanical or electric options, Raptric offers the flexibility to start with a premium mechanical bicycle 
+              The RAPTRIC represents a revolutionary approach to cycling in India. Unlike conventional bicycles that limit you to either 
+              mechanical or electric options, RAPTRIC offers the flexibility to start with a premium mechanical bicycle 
               and upgrade to electric whenever you choose. This future-proof design, combined with superior build quality 
               and advanced features, makes it the ideal choice for Indian cyclists who value both tradition and innovation.
             </IntroText>
@@ -401,16 +401,16 @@ const WhyRaptric: React.FC = () => {
           </FeatureGrid>
 
           <ComparisonSection>
-            <SectionTitle>Raptric vs Indian Market Competition</SectionTitle>
+            <SectionTitle>RAPTRIC vs Indian Market Competition</SectionTitle>
             <IntroText>
-              See how Raptric compares with other bicycles available in the Indian market across key features and specifications.
+              See how RAPTRIC compares with other bicycles available in the Indian market across key features and specifications.
             </IntroText>
             <ComparisonTable>
               <Table>
                 <thead>
                   <tr>
                     <TableHeader>Feature</TableHeader>
-                    <TableHeader>eSthira Raptric</TableHeader>
+                    <TableHeader>eSthira RAPTRIC</TableHeader>
                     <TableHeader>Standard Indian Bicycles</TableHeader>
                     <TableHeader>Advantage</TableHeader>
                   </tr>
@@ -431,7 +431,7 @@ const WhyRaptric: React.FC = () => {
 
           <CTASection>
             <CTAButton to="/cycles">
-              Explore Raptric Bicycles
+              Explore RAPTRIC Bicycles
             </CTAButton>
           </CTASection>
         </WhyRaptricContainer>

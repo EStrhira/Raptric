@@ -15,7 +15,7 @@ import BUSINESS_INFO from '../constants/businessInfo'
 // Fallback data to ensure the app works even without Sanity
 const fallbackHero = {
   _id: 'fallback',
-  title: 'eSthira Raptric: The Future of Commuting',
+  title: 'eSthira RAPTRIC: The Future of Commuting',
   subtitle: 'Packed with Cutting-Edge Features for an Unmatched Riding Experience',
   primaryButtonText: 'Buy Now',
   primaryButtonLink: '/ebikes',
@@ -48,7 +48,7 @@ const fallbackBenefits = [
 ]
 
 const fallbackTestimonials = [
-  { _id: '1', quote: 'Har ride ko bana do premium… Raptric ke sath.', authorName: 'Happy Customer', authorTitle: 'Verified Buyer', order: 1 },
+  { _id: '1', quote: 'Har ride ko bana do premium… RAPTRIC ke sath.', authorName: 'Happy Customer', authorTitle: 'Verified Buyer', order: 1 },
   { _id: '2', quote: 'Another customer, another electric smile ⚡ Welcome to the eSthira family!', authorName: 'New Rider', authorTitle: 'Bangalore', order: 2 },
   { _id: '3', quote: 'Not just riding… FLYING on wheels 🚴‍♂️💥', authorName: 'Enthusiast', authorTitle: 'Regular Commuter', order: 3 }
 ]

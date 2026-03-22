@@ -200,7 +200,7 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
     e.preventDefault()
     
     // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.subject || !formData.message) {
       setNotification({ type: 'error', message: 'Please fill in all required fields.' })
       setTimeout(() => setNotification(null), 5000)
       return
@@ -285,6 +285,15 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
               </ContactItem>
               <ContactItem>
                 <ContactIcon>
+                  <i className="fas fa-map"></i>
+                </ContactIcon>
+                <ContactDetails>
+                  <h3>Locate Us</h3>
+                  <p><a href="https://maps.app.goo.gl/gweZK6bb3bZzGMaG7" target="_blank" rel="noopener noreferrer" style={{ color: '#00a652', textDecoration: 'underline' }}>Click here for directions</a></p>
+                </ContactDetails>
+              </ContactItem>
+              <ContactItem>
+                <ContactIcon>
                   <i className="fas fa-phone"></i>
                 </ContactIcon>
                 <ContactDetails>
@@ -335,28 +344,31 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
                 />
               </FormGroup>
               <FormGroup>
-                <FormLabel htmlFor="phone">Phone</FormLabel>
+                <FormLabel htmlFor="phone">Phone *</FormLabel>
                 <FormInput
                   type="tel"
                   id="phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
+                  required
                 />
               </FormGroup>
               <FormGroup>
-                <FormLabel htmlFor="subject">Subject</FormLabel>
+                <FormLabel htmlFor="subject">Subject *</FormLabel>
                 <FormSelect
                   id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
+                  required
                 >
                   <option value="">Select a subject</option>
                   <option value="general">General Inquiry</option>
                   <option value="sales">Sales</option>
                   <option value="service">Service</option>
                   <option value="test-ride">Test Ride</option>
+                  <option value="others">Others</option>
                 </FormSelect>
               </FormGroup>
               <FormGroup>

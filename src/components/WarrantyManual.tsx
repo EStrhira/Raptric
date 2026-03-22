@@ -156,8 +156,7 @@ const SectionContent = styled.div`
       content: "•";
       position: absolute;
       left: 0;
-      color: #00a652;
-      font-weight: bold;
+      color: #ffffff;
     }
   }
 
@@ -205,6 +204,26 @@ const SectionContent = styled.div`
     padding: 1rem;
     margin: 1rem 0;
     border-radius: 4px;
+
+    ul {
+      color: rgba(255, 255, 255, 0.8);
+      list-style: none;
+      padding-left: 0;
+      
+      li {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.5rem;
+        position: relative;
+        padding-left: 1.5rem;
+        
+        &::before {
+          content: "•";
+          position: absolute;
+          left: 0;
+          color: rgba(255, 255, 255, 0.6);
+        }
+      }
+    }
   }
 
   .contact-info {
@@ -274,7 +293,7 @@ const WarrantyManual: React.FC = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Frame (Steel)</td>
+                    <td>Frame</td>
                     <td>60 months from the date of purchase</td>
                   </tr>
                   <tr>
@@ -286,11 +305,7 @@ const WarrantyManual: React.FC = () => {
                     <td>24 months from the date of purchase</td>
                   </tr>
                   <tr>
-                    <td>Motor Controller</td>
-                    <td>6 months from the date of purchase</td>
-                  </tr>
-                  <tr>
-                    <td>Electronic Handlebar Controls, Electrical Connections, Battery Charger, Throttle, PAS Sensor, Front Light, Tail Light</td>
+                    <td>All Other Electronics</td>
                     <td>6 months from the date of purchase</td>
                   </tr>
                 </tbody>
@@ -409,6 +424,7 @@ const WarrantyManual: React.FC = () => {
                   <li>Modified/altered components for any specific use other than a personal transport.</li>
                   <li>Transportation, delivery, labor and handling charges incurred in the replacement of parts are not covered under this warranty, and shall be borne by the customer.</li>
                   <li>This warranty is void in its entirety by any modification of the frame, fork or components</li>
+                  <li>Any kind of settings changed</li>
                 </ul>
               </div>
             </SectionContent>
@@ -417,12 +433,27 @@ const WarrantyManual: React.FC = () => {
           <WarrantySection>
             <SectionHeading>Additional Terms</SectionHeading>
             <SectionContent>
-              <ul>
-                <li><strong>Resold to any other person/company</strong></li>
-                <li><strong>Damage caused by an accident or malfunction or misuse</strong> caused to the Product by acts of persons, intentional or otherwise, including but not limited to misuse or mishandling, fire or any act of God</li>
-                <li><strong>Nonfunctional due to natural wear and tear, ageing, defect resulted from misuse/ improper handling or negligence by the rider</strong></li>
-                <li><strong>Product is altered by component parts substitution or used for rental or any other commercial uses</strong></li>
-                <li><strong>Not operated, not charged or maintained as per guidelines</strong></li>
+              <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
+                <li style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '0.5rem', position: 'relative', paddingLeft: '1.5rem' }}>
+                  <span style={{ position: 'absolute', left: '0', color: 'rgba(255, 255, 255, 0.6)' }}>•</span>
+                  Resold to any other person/company
+                </li>
+                <li style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '0.5rem', position: 'relative', paddingLeft: '1.5rem' }}>
+                  <span style={{ position: 'absolute', left: '0', color: 'rgba(255, 255, 255, 0.6)' }}>•</span>
+                  Damage caused by an accident or malfunction or misuse caused to the Product by acts of persons, intentional or otherwise, including but not limited to misuse or mishandling, fire or any act of God
+                </li>
+                <li style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '0.5rem', position: 'relative', paddingLeft: '1.5rem' }}>
+                  <span style={{ position: 'absolute', left: '0', color: 'rgba(255, 255, 255, 0.6)' }}>•</span>
+                  Nonfunctional due to natural wear and tear, ageing, defect resulted from misuse/ improper handling or negligence by the rider
+                </li>
+                <li style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '0.5rem', position: 'relative', paddingLeft: '1.5rem' }}>
+                  <span style={{ position: 'absolute', left: '0', color: 'rgba(255, 255, 255, 0.6)' }}>•</span>
+                  Product is altered by component parts substitution or used for rental or any other commercial uses
+                </li>
+                <li style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '0.5rem', position: 'relative', paddingLeft: '1.5rem' }}>
+                  <span style={{ position: 'absolute', left: '0', color: 'rgba(255, 255, 255, 0.6)' }}>•</span>
+                  Not operated, not charged or maintained as per guidelines
+                </li>
               </ul>
             </SectionContent>
           </WarrantySection>
