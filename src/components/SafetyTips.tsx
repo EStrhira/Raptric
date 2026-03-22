@@ -253,8 +253,8 @@ const SafetyTips: React.FC = () => {
     },
     {
       icon: 'fa-lock',
-      title: 'Secure Your E-Bike',
-      description: 'Always lock your e-bike securely when not in use. Theft prevention is part of being a responsible e-bike owner.'
+      title: 'Secure Your Bike',
+      description: 'Always lock your bike securely when not in use. Theft prevention is part of being a responsible RAPTRIC owner.'
     }
   ]
 

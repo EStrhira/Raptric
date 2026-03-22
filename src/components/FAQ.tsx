@@ -242,6 +242,7 @@ const Answer = styled.div`
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
+  white-space: pre-line;
 `
 
 const FAQCTA = styled.div`
@@ -290,98 +291,319 @@ const FAQ: React.FC = () => {
 
   const faqData = [
     {
-      category: "About eSthira eBikes",
+      category: "General",
       questions: [
         {
-          question: "What makes eSthira eBikes different from other electric bikes?",
-          answer: "eSthira eBikes are designed with superior battery technology, advanced motor systems, and premium components. Our bikes feature: high-capacity lithium-ion batteries with intelligent BMS, brushless DC motors for higher efficiency, regenerative braking, and premium aluminum alloy frames. We use only genuine components from trusted manufacturers and conduct rigorous quality testing."
+          question: "How can I try the RAPTRIC Bikes before I buy it?",
+          answer: "At eSthira, we believe in giving 100% confidence to our customers with their purchase. So please visit our store to test drive any RAPTRIC of your choice."
         },
         {
-          question: "What is the battery technology used in eSthira eBikes?",
-          answer: "We use advanced lithium-ion battery packs with Battery Management System (BMS) for optimal performance and safety. Our batteries feature: 21700/21700 cells, IP67 waterproof rating, smart charging technology, and thermal management systems. Battery capacity ranges from 15Ah to 20Ah depending on model."
+          question: "What's the point of an eBike?",
+          answer: "eBikes come with a battery-powered assist that comes via pedalling and a throttle. When you push the pedals on a pedal-assist eBike, a motor engages & gives you a boost, so you can ride uphill without tiring yourself. The throttle mode engages the motor when twisted. The throttle allows you to take a break while your eBike continues to move ahead with the help of the motor. This is most useful in Stop-and-Go traffic."
         },
         {
-          question: "What is the motor power and type?",
-          answer: "eSthira eBikes are equipped with high-performance brushless DC motors ranging from 250W to 500W. We use hub motors for better weight distribution and efficiency. All motors are IP65 rated for weather protection and feature intelligent torque sensors for smooth power delivery."
+          question: "Do eBike require a licence or registration?",
+          answer: "eBikes with speed limit of 25kmph and power limit of 250 watts, require no registration. RAPTRIC by eSthira Mobility qualifies under this criteria and hence doesn't need registration or license to ride."
         },
         {
-          question: "What is the frame material and design?",
-          answer: "Our frames are crafted from 6061 aluminum alloy for optimal strength-to-weight ratio. We use TIG welding for stronger joints, hydroformed tubes for better aerodynamics, and integrate the battery seamlessly into the downtube. All frames undergo stress testing and come with a lifetime warranty."
+          question: "How fast can I go on an eBike?",
+          answer: "The assistance from the motor cuts off at the speed of 25kmph, but you can go faster by combining your pedal power in the pedal-assist mode. We suggest that every time you hit the pedal, wear the essential biking gear for your safety and follow the state and city rules."
         },
         {
-          question: "What safety features are included?",
-          answer: "eSthira eBikes come with comprehensive safety features including: LED lighting systems, disc brakes with regenerative capability, GPS tracking, anti-theft immobilizer, and smart display panels. We also include reflectors, horn, and emergency stop systems as per regulatory requirements."
+          question: "What is the use of gears on an eBikes?",
+          answer: "Though an eBike is sufficient to make your ride easy by itself, you can still opt for gears on our eBike to make that extra difference in comfort of riding when electric assist is switched off."
         },
         {
-          question: "What is the range of eSthira eBikes?",
-          answer: "Range varies by model from 40-80 km per charge. Our extended-range models can achieve up to 80 km with pedal assist mode. Actual range depends on rider weight, terrain, weather conditions, and assistance level used."
+          question: "Does an eBike come with user manual?",
+          answer: "In order to go green and save environment, all our documentation is digital. You can find the user manual here which gives you all information related to the vehicle use, ride, safety, service & warranty."
         },
         {
-          question: "Are eSthira eBikes street legal?",
-          answer: "Yes, all eSthira eBikes are fully compliant with Indian regulations for electric bicycles. They are registered with ARAI, have required safety certifications, and meet all local transport authority requirements. Maximum speed is limited to 25 km/h as per regulations."
+          question: "Is it legal for kids/minors to use eBikes?",
+          answer: "There is no legal regulations in India that prevents kids/minors from using the eBike. So, definitely, kids/minors can ride eBike. However, caution should be exercised (wear the essential biking gear for your safety and follow the state and city rules) as the cycle is powered with a battery and can reach a speed of up to 25kmph."
+        },
+        {
+          question: "Are there any accessories available for my eBike?",
+          answer: "There are several accessories readily available for use. Check our accessories section on the website to take your pick. The eBike comes with a wide range of accessories to choose from as per your requirement. You could also visit the eSthira store to check them out!"
+        },
+        {
+          question: "Can I ride eBikes in the monsoons?",
+          answer: "Yes, you can ride your eBikes in the monsoon. You have to take some precautions like you should not ride in deep water or heavy rains. After riding, the eBike should be parked in a dry place or under a covered place. After the ride, make sure the eBike and components are kept dry."
+        },
+        {
+          question: "Can I wash my eBike with water?",
+          answer: "Yes, you can wash your e-cycle with water but do not put pressure-wash."
+        },
+        {
+          question: "How much does an eBike weigh and how much weight it can carry?",
+          answer: "Net weight - 22-25kg; Capacity - 120kg"
+        },
+        {
+          question: "Can I retrofit any other motor or battery or modify my eBike?",
+          answer: "No, you cannot do any kind of electrical modification on the eBike. If done, you will void the warranty."
+        },
+        {
+          question: "What are the perks of riding an eBike?",
+          answer: "Owning a eBike in India has many advantages, including being economical and friendly to the environment:\n• Low cost of maintenance\n• Beneficial to the environment\n• Regular use keeps you in shape\n• Simple to use\n• eBike's portable battery design makes charging incredibly simple\n• eBikes also have warranties that ensure peace of mind\n• There is no need for a license or registration\n• Dedicated service station is an added advantage of buying an eSthira's eBike."
+        },
+        {
+          question: "How much money can I really save if I use eBikes for regular commuting?",
+          answer: "Based on the average range, cost of charging and average commuting distance, you will recover the cost of eBike in 3 years when compared to any other petrol 2 wheeler."
+        },
+        {
+          question: "What do I do if something is not working or goes wrong with my RAPTRIC?",
+          answer: "If you encounter any issue with your RAPTRIC Bike, please refer to the YouTube videos for assistance. If you are not able to find any solution to the issue, then please email us at info.esthira@gmail.com or Whatsapp us at +919380276355 and we will help you out. Additionally, you could either take your RAPTRIC to the nearest service store or have help at your doorstep."
+        },
+        {
+          question: "What if my RAPTRIC is delivered faulty or damaged in transit?",
+          answer: "We hope you never have to experience that as all our bikes go through high-quality manufacturing tests before they are dispatched. However, such things can happen and if it does, just get in touch with us and we will arrange for the replacement to be delivered."
         }
       ]
     },
     {
-      category: "Technical Specifications",
+      category: "eBikes",
       questions: [
         {
-          question: "What is the motor power and torque?",
-          answer: "Our motors deliver 35-50 Nm of torque, providing excellent acceleration and hill-climbing capability. The power delivery is smooth and responsive, with multiple riding modes: Eco, Normal, and Sport. Peak power output is 500W with 750W burst capability."
+          question: "What riding modes does the RAPTRIC eBike offer?",
+          answer: "All RAPTRIC eBike models run on regular pedalling and electric power modes. The RAPTRIC is powered by a 36V 7.8/10.4 Ah Li-on battery and gives you two modes to work with - Pedal Assist and Throttle."
         },
         {
-          question: "What battery capacity and charging time?",
-          answer: "Battery capacity ranges from 15Ah to 20Ah with 48V systems. Charging time is 4-6 hours with fast charger, 8-10 hours with standard charger. Battery life expectancy is 1000+ charge cycles with proper maintenance."
+          question: "How does the Pedal Assist mode work?",
+          answer: "To ride on Pedal Assist mode, choose any of the PAS Levels (1..5) and start pedalling. The power boost kicks in as soon as you start pedalling. You can change the power assist levels on the move."
         },
         {
-          question: "What is the maximum speed and range?",
-          answer: "Maximum speed is 25 km/h (as per regulations). Range varies from 40-80 km depending on model, battery capacity, and riding conditions. Eco mode extends range, while Sport mode provides maximum power."
+          question: "How does the Throttle mode work?",
+          answer: "To ride on the throttle mode, twist the throttle to power ahead without pedalling."
         },
         {
-          question: "What are the weight limits and dimensions?",
-          answer: "Maximum rider weight is 120 kg. Bike weight ranges from 22-28 kg including battery. Frame sizes available: Small, Medium, Large to accommodate riders from 5'2\" to 6'4\" tall."
+          question: "Can I ride an eBike without pedalling?",
+          answer: "Yes, eBikes can be used without pedalling when you shift to the throttle mode. Although, it is not recommended to do this for a long duration as it will considerably reduce the range and of course, it will beat the whole purpose of cycling. Pedal-assist mode is much more fun than throttle mode."
+        },
+        {
+          question: "Do eBikes work without battery?",
+          answer: "You can ride an eBikes without the use of battery just like a normal cycle. The effort required will be slightly more than normal cycles because the battery and other electronics tends to increase the overall weight by 6-7kgs."
+        },
+        {
+          question: "Do RAPTRIC eBikes come with a removable Battery?",
+          answer: "Yes, the battery is fully removable from the RAPTRIC eBike and you can carry it with you. It makes it easier for you to charge it anytime, anywhere."
+        },
+        {
+          question: "Is the battery on a RAPTRIC eBike interchangeable with another RAPTRIC?",
+          answer: "Yes, the battery across all RAPTRIC eBikes are structurally the same and interchangeable. You can use a battery pack of another RAPTRIC ebike on yours or buy a spare one at any point of time."
+        },
+        {
+          question: "How long does it take the battery to charge fully and what sort of charging point do I need to recharge?",
+          answer: "With the default 2A charger that comes with the bicycle, it takes approximately 3.5 to 4 hours to charge a 7.8Ah battery. And it will take 4-5 hours to charge a 10.4Ah battery. You can charge the battery with a 5 Amps electrical wall socket. If you would like to speed up the charging, you can also buy a 3A charger during purchase or from our accessories section."
+        },
+        {
+          question: "Does the battery charge while pedalling?",
+          answer: "No, it does not charge during pedaling. Pedaling is used normally to climb uphill and to increase mileage."
+        },
+        {
+          question: "How often should I charge the battery?",
+          answer: "Well, it depends upon your travel plan and state of charge. Otherwise, it is recommended to charge the battery full once in a month if not in use. The battery can also be kept idle for a period of 1 month without charging."
+        },
+        {
+          question: "Is there a way to know the charge level of the battery at any point?",
+          answer: "You can always check the battery charge level on the LED display console on the battery. When you only see the red LED, its time to charge your battery."
+        },
+        {
+          question: "What is the range of RAPTRIC's Li-on battery?",
+          answer: "Under ideal condition (limited usage of throttle, pedal assist level of 1 or 2 and rider weight of 70kg), the 7.8Ah battery offers a range of 40+ kms and a 10.4Ah battery offers a range of 50+ kms"
+        },
+        {
+          question: "Can I buy an additional battery along with a RAPTRIC eBike?",
+          answer: "Yes, you can buy any number of additional batteries at any point of time."
+        },
+        {
+          question: "What is the life of the battery?",
+          answer: "The life of a Li-on battery is measured in charge cycles. The RAPTRIC battery comes with 700 charge cycles. However, we have found the actual life in test conditions to be 9000+ charge cycles. You can be rest assured of a life of 4-5 years minimum. Essentially, the battery life depends on how often you charge it. Even after the 700 charge cycles, the battery can still be used with a drop in range."
+        },
+        {
+          question: "Can I lock the battery?",
+          answer: "Yes, the battery is locked to the bike and a key should be used to remove it."
+        },
+        {
+          question: "How to handle a removed battery?",
+          answer: "Please handle the removed battery carefully without dropping it. Please store it in a cool and dry place. Make sure that there is no metal objects near the battery connectors. Keep it away from kids and liquid items."
+        },
+        {
+          question: "Can I continue to use my eBike after meeting with an accident?",
+          answer: "We wish you a very safe ride. However, if you come across an accident, then we recommend you to please visit our store for a health checkup to ensure your safety, while continuing to use the eBike in future."
+        },
+        {
+          question: "What if I loose my battery or eBike keys?",
+          answer: "Replacement keys needs to be ordered at our store at additional cost."
+        },
+        {
+          question: "What are the specs of the motor?",
+          answer: "The RAPTRIC eBike is equipped with a CE & UL certified, 36V 250W BLDC motor. The motor is programmed to deliver a maximum speed of 25 kmph as a measure of rider safety (ARAI certification requirement)"
+        },
+        {
+          question: "What is the life of the motor?",
+          answer: "With good care, the motor has a minimum life of 5 years and can go well beyond"
+        },
+        {
+          question: "Does cycling with a motor make sense at all?",
+          answer: "In pedal-assist mode, the motor gives a boost to your pedalling effort. The idea of providing a motor is to reduce tension in your body when you are tired. You can easily push back to the pedal-assist mode and continue pedalling. So, riding an eBike is definitely not cheating. It just enables you to do a lot more."
+        },
+        {
+          question: "How do I switch on the RAPTRIC eBike?",
+          answer: "RAPTRIC eBike has a power lock on the handle bar. You will be provided keys using which you can power it on. Additionally, you might have to press the ON/OFF switch on the Display module (based on the model). Please remember to turn on the battery before the above steps."
+        },
+        {
+          question: "What happens if I forget to switch off the eBike?",
+          answer: "While it does not cause any damage to the vehicle, it does drain the battery and the cycle might accelerate if somebody accidentally touches the throttle."
         }
       ]
     },
     {
-      category: "Purchase & Pricing",
+      category: "Payment",
       questions: [
         {
-          question: "What is the price range of eSthira eBikes?",
-          answer: "Our eBikes range from ₹45,000 to ₹85,000 depending on model and features. We offer financing options with EMI starting from ₹3,500 per month. Special discounts available for students and corporate bulk orders."
+          question: "Is it safe to make payment online on the eSthira's website?",
+          answer: "You can pay online on our website with complete peace of mind. When you make the payment on our website, the payment is processed through our fully secured and PCI DSS compliant payment gateway (Razorpay). Your transaction is fully protected and eSthira does not access or keep any of your card, netbanking details."
         },
         {
-          question: "What payment methods are accepted?",
-          answer: "We accept all major credit/debit cards, UPI, net banking, and cash on delivery. EMI options available through leading banks. 0% interest EMI on selected credit cards for 6-12 months."
+          question: "What modes are payment are accepted?",
+          answer: "We only accept payments by UPI, credit, debit cards and netbanking.We accept cash payments only in our store."
         },
         {
-          question: "Is there a warranty included?",
-          answer: "Yes, all eBikes come with comprehensive warranty: 2 years on frame, 1 year on battery and motor, 6 months on electrical components. Extended warranty options available for additional coverage."
+          question: "Do you have an option for cash-on-delivery (COD)?",
+          answer: "Unfortunately, we do not support COD. Please make your payment online using your UPI, credit, debit or netbanking accounts. Or pay cash at our store."
         },
         {
-          question: "Are there any financing options?",
-          answer: "We offer multiple financing options through our banking partners. EMI tenure from 6 to 24 months. Quick approval process with minimal documentation. Special rates for government employees and students."
+          question: "Do you have EMI options available?",
+          answer: "Yes, we have easy EMI options available. You will find them during the checkout stage, on the payment gateway page. Do browse the options and select the one that suits you."
+        },
+        {
+          question: "How can I track my order?",
+          answer: "Congratulations on your purchase of eBike. You can log in to your account to track your order and get all your updates. You can also click here: Track My Order to track your order and estimate the delivery."
+        },
+        {
+          question: "What should I do for the payment that got deducted from my account, but the transaction failed on the website?",
+          answer: "Do not worry. Please call us at +91-93802-76355 and confirm the payment status with us. If we have not received the payment, then usually the amount will get reversed to the same payment method. You can check with your bank for more details."
         }
       ]
     },
     {
-      category: "Service & Support",
+      category: "Store & Service",
       questions: [
         {
-          question: "What is the service schedule and cost?",
-          answer: "Regular service recommended every 3 months or 1000 km. Service cost ranges from ₹500-1500 depending on the service type. Annual comprehensive service available for ₹3000 including all checks and basic parts."
+          question: "When can I collect my RAPTRIC from store?",
+          answer: "If the store already has the model that you have chosen/placed order for, you can take on-the-spot delivery. We suggest calling the store before leaving the house. In case of non-availability, you can still place your order at the store and the RAPTRIC will be delivered to you within 5-10 working days."
         },
         {
-          question: "Where are the service centers located?",
-          answer: "We have service centers in major cities across India. Mobile service available in metro areas. Door-step service available for premium customers. Find nearest service center on our website or call our helpline."
+          question: "Do you have any stores near my location?",
+          answer: "Our store is located here. Additionally, you can check if there is any of our retail partners near to you here."
         },
         {
-          question: "What is covered under warranty?",
-          answer: "Warranty covers manufacturing defects in frame, motor, battery, and electrical components. Does not cover wear and tear items like tires, brake pads, chain. Accidental damage and misuse not covered."
+          question: "Does RAPTRIC have service facilities for its Bikes?",
+          answer: "RAPTRIC has an authorised service centre in Bengaluru, giving you complete piece of mind. Please visit us at the store here for servicing your Bike."
         },
         {
-          question: "How do I schedule service?",
-          answer: "Service can be scheduled through our website, mobile app, or by calling our service helpline. Emergency service available within 24 hours in major cities. Regular service appointments available within 3-5 days."
+          question: "How often does an RAPTRIC need servicing?",
+          answer: "Usually our Bikes are maintenance free. However, we recommend to get regular health checkup at least once in 3 months."
+        }
+      ]
+    },
+    {
+      category: "Assembly",
+      questions: [
+        {
+          question: "Does the RAPTRICc Bikes come fully assembled or is there any assembling required?",
+          answer: "The eBike comes to you 90% assembled, in a well-packaged carton box. You will need very little assembly to do before your RAPTRIC is ready to ride. You will receive a video link for detailed step-by-step assembly instructions and assembling your RAPTRIC won't be difficult at all. In fact you will love doing it."
+        },
+        {
+          question: "Can I get physical help to have the RAPTRIC eBike assembled when delivered onsite?",
+          answer: "As the assembly is simple and only mechanical, you can also visit your local cycle store for getting it assembled."
+        },
+        {
+          question: "How long will it take for the assembly of the bike after delivery?",
+          answer: "As Each RAPTRIC bike comes to you 90% assembled, the assembly of the bike shouldn't take more than an 30 mins, if done by an expert."
+        }
+      ]
+    },
+    {
+      category: "Return or Exchange",
+      questions: [
+        {
+          question: "What is your Returns / exchange policy?",
+          answer: "Every RAPTRIC Bike is manufactured and tested with the highest quality standard. We are proud to say that finding a flaw in our cycle is quite rare. For any manufacturing defect or missing/defective components, you can drop us an email at info.esthira@gmail.com. We don't accept return/exchange but we will support you for any issue/defect with your RAPTRIC Bike."
+        }
+      ]
+    },
+    {
+      category: "Health & Fitness",
+      questions: [
+        {
+          question: "Does cycling help you in reducing weight?",
+          answer: "Cycling is a great form of exercise to reduce weight. It can be adopted by those who are struggling in the gym or even those who prefer outdoor activities over gym workouts. Cycling helps burn calories within the first 30 minutes of hitting the pedal, so it is a great way to stay in form."
+        },
+        {
+          question: "Can I burn fat by cycling?",
+          answer: "Yes, cycling is a great way to burn fat and lose calories. The outdoor activity is an excellent physical activity as well as aids mental wellness."
+        },
+        {
+          question: "Can you lose belly fat by cycling?",
+          answer: "Cycling is one of the top three ways of losing belly fat. The stubborn belly fat is extremely difficult to get rid of however, cycling remains an effective way to lose it. Cycling not only gets your heart rate up but also has the capacity to burn a significant number of calories. Health experts suggest that regular cycling can burn more calories and thereby help you lose weight."
+        },
+        {
+          question: "How many calories are burnt while cycling?",
+          answer: "It is recommended that you must at least cycle for a span of 30 minutes for your body to start burning calories. According to Harvard Health Publishing, a 70-KG person can burn 446 calories in just 30 minutes by cycling at a speed of 25 to 30 kmph. Burning excess calories aids weight loss. Cycling is a great form of workout to help you lose weight and also give you a break from the monotony of life."
+        },
+        {
+          question: "Are eBikes better for my joints?",
+          answer: "eBike make bike riding fun and more convenient especially when you are on a steep slope and want to reduce the pressure on your knees and joints. With a motor that takes up for you when you need a break, you can easily shift to the throttle mode if you are too tired. This helps relieve stress on your knees, hips and joints."
+        },
+        {
+          question: "How does riding a cycle help in child development?",
+          answer: "Cycling will help your child develop their leg muscles and strengthen their bones. The continued exercise will help build their stamina and improve their cardiovascular development. It will also increase their coordination and balance. Riding a bicycle is something all children should be able to experience. Moreover, cycling is a great teacher of different life lessons that children can learn and apply to their growth."
+        },
+        {
+          question: "If my motivation is to exercise, a conventional bike is a better choice. Then why should I buy an eBike?",
+          answer: "eBikes brings the best of both worlds together (option of cycling in the traditional form or using a motor when needed). For someone who is motivated from fitness perspective, one can still use an eBike in traditional form. But due to the various road and weather scenarios (like steep gradients, stop and go traffic, etc), an eBike can make your exercise more joyful."
+        },
+        {
+          question: "I want to exercise but do not have time for it. How can an eBike help me?",
+          answer: "Our recommendation - you can use the eBike on electric mode while going to work/study/to meet someone so that you are still fresh and energetic. While returning, you can either completely switch off the assist or lower the assist (based on your need) and return back home, completing your exercise for the day. In this way, you do not have to reserve time specifically for exercise."
+        }
+      ]
+    },
+    {
+      category: "Delivery",
+      questions: [
+        {
+          question: "What is the delivery time frame?",
+          answer: "We are currently delivering the RAPTRIC Bikes within 10 working days"
+        },
+        {
+          question: "How is the RAPTRIC delivered to me and from where?",
+          answer: "We will deliver your RAPTRIC Bike right at your doorstep, in a safe and well-packaged condition from our Bengaluru office."
+        },
+        {
+          question: "Can the Bike be delivered sooner?",
+          answer: "We are trying our best to reduce the delivery time. However, due to various dependencies on third party logistics providers for delivery, it wouldn't be possible to deliver sooner for now. But we would still recommend you to call once at our sales number +91-9380276355 and check."
+        },
+        {
+          question: "Do you ship all across the country?",
+          answer: "In order to provide the best in class service to our customers, we are only delivering within Bengaluru for now. We will soon be expanding to other cities too. Please check our store locations here for more details."
+        }
+      ]
+    },
+    {
+      category: "Company",
+      questions: [
+        {
+          question: "How old is your brand?",
+          answer: "eSthira Mobility is a startup which was founded in 2018. In the last 5 years, we have studied the market, analyzed all the existing eBikes and perfected our product RAPTRIC eBikes, that offers a very safe and quality product to our consumers."
+        },
+        {
+          question: "Where is your company based out of?",
+          answer: "The headquarters of eSthira Mobility is located in the garden and silicon city - Bengaluru"
+        },
+        {
+          question: "I would like to order a RAPTRIC Bike. How do I do that?",
+          answer: "Firstly, congratulations!!! You are going to have a great riding experience with your RAPTRIC Bike, get ready to create some fun riding memories. You can order a RAPTRIC here on our website or visit our store. Order your RAPTRIC and in most cases you will have your bike delivered within 5-10 working days."
         }
       ]
     }
@@ -397,11 +619,14 @@ const FAQ: React.FC = () => {
 
   const toggleQuestion = (categoryIndex: number, questionIndex: number) => {
     const itemKey = `${categoryIndex}-${questionIndex}`
-    setExpandedItems(prev => 
-      prev.includes(itemKey) 
-        ? prev.filter(item => item !== itemKey)
-        : [...prev, itemKey]
-    )
+    setExpandedItems(prev => {
+      // If clicking on already expanded item, collapse it
+      if (prev.includes(itemKey)) {
+        return []
+      }
+      // Otherwise, collapse all others and expand only this one
+      return [itemKey]
+    })
   }
 
   const selectCategory = (index: number) => {
@@ -424,56 +649,71 @@ const FAQ: React.FC = () => {
   }
 
   return (
-    <FAQSection>
-      <Container>
-        <FAQContainer>
-          <FAQHeader>
-            <FAQTitle>Frequently Asked Questions</FAQTitle>
-            <FAQSubtitle>
+    <>
+      <BannerSection>
+        <Container>
+          <BannerContent>
+            <BannerIcon>
+  <i className="fas fa-question-circle"></i>
+</BannerIcon>
+            <BannerTitle>Frequently Asked Questions</BannerTitle>
+            <BannerSubtitle>
               Find answers to common questions about eSthira eBikes, services, and support.
-            </FAQSubtitle>
-          </FAQHeader>
+            </BannerSubtitle>
+          </BannerContent>
+        </Container>
+      </BannerSection>
+      <FAQSection>
+        <Container>
+          <FAQContainer>
+            <FAQHeader>
+              <FAQTitle>Browse by Category</FAQTitle>
+              <FAQSubtitle>
+                Select a category to view related questions and answers.
+              </FAQSubtitle>
+            </FAQHeader>
 
-          <CategorySidebar>
-            <CategoryList>
-              {faqData.map((category, index) => (
-                <CategoryButton
-                  key={index}
-                  $active={selectedCategory === index}
-                  onClick={() => selectCategory(index)}
-                >
-                  {category.category}
-                </CategoryButton>
-              ))}
-            </CategoryList>
-          </CategorySidebar>
+            <CategorySidebar>
+              <CategoryList>
+                {faqData.map((category, index) => (
+                  <CategoryButton
+                    key={index}
+                    $active={selectedCategory === index}
+                    onClick={() => selectCategory(index)}
+                  >
+                    {category.category}
+                  </CategoryButton>
+                ))}
+              </CategoryList>
+            </CategorySidebar>
 
-          <QuestionsContent>
-            <QuestionsHeader>
-              <QuestionsTitle>{currentCategory.category}</QuestionsTitle>
-              <QuestionsCount>{currentCategory.questions.length} questions</QuestionsCount>
-            </QuestionsHeader>
+            <QuestionsContent>
+              <QuestionsHeader>
+                <QuestionsTitle>{currentCategory.category}</QuestionsTitle>
+                <QuestionsCount>{currentCategory.questions.length} questions</QuestionsCount>
+              </QuestionsHeader>
 
-            <QuestionList>
-              {currentCategory.questions.map((item, questionIndex) => {
-                const itemKey = `${selectedCategory}-${questionIndex}`
-                const isExpanded = expandedItems.includes(itemKey)
-                return (
-                  <QuestionItem key={questionIndex}>
-                    <Question onClick={() => toggleQuestion(selectedCategory, questionIndex)}>
-                      <QuestionIcon $expanded={isExpanded}>+</QuestionIcon>
-                      <span>{item.question}</span>
-                    </Question>
-                    <Answer style={{ maxHeight: isExpanded ? '500px' : '0' }}>
-                      {item.answer}
-                    </Answer>
-                  </QuestionItem>
-                )
-              })}
-            </QuestionList>
-          </QuestionsContent>
-
-          <FAQCTA style={{ gridColumn: '1 / -1' }}>
+              <QuestionList>
+                {currentCategory.questions.map((item, questionIndex) => {
+                  const itemKey = `${selectedCategory}-${questionIndex}`
+                  const isExpanded = expandedItems.includes(itemKey)
+                  return (
+                    <QuestionItem key={questionIndex}>
+                      <Question onClick={() => toggleQuestion(selectedCategory, questionIndex)}>
+                        <QuestionIcon $expanded={isExpanded}>+</QuestionIcon>
+                        <span>{item.question}</span>
+                      </Question>
+                      <Answer style={{ maxHeight: isExpanded ? '500px' : '0' }}>
+                        {item.answer}
+                      </Answer>
+                    </QuestionItem>
+                  )
+                })}
+              </QuestionList>
+            </QuestionsContent>
+          </FAQContainer>
+          
+          <FAQCTA>
             <h3 style={{ color: '#00a652', marginBottom: '1rem' }}>Still have questions?</h3>
             <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1.5rem' }}>
               Can't find the answer you're looking for? Our support team is here to help.
@@ -483,9 +723,9 @@ const FAQ: React.FC = () => {
               Contact Support
             </CTAButton>
           </FAQCTA>
-        </FAQContainer>
-      </Container>
-    </FAQSection>
+        </Container>
+      </FAQSection>
+    </>
   )
 }
 
