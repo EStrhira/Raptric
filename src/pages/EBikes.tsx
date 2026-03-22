@@ -290,10 +290,104 @@ const Ebikes: React.FC = () => {
   useEffect(() => {
     const fetchEbikes = async () => {
       try {
+        console.log('EBikes: Starting fetch from Sanity...')
         const data = await (client as any).fetch('*[_type == "ebike"] | order(featured desc, name asc) { _id, name, slug, price, discountPrice, description, shortDescription, image, images, colors, electricalSpecification, mechanicalSpecification, inStock, featured }')
-        setEbikes(data)
+        console.log('EBikes: Fetched data:', data)
+        
+        if (!data || data.length === 0) {
+          console.log('EBikes: No data from Sanity, using fallback data')
+          // Fallback data for testing
+          const fallbackData = [
+            {
+              _id: '1',
+              name: 'RAPTRIC eBike Pro',
+              slug: { current: 'raptric-ebike-pro' },
+              price: '45000',
+              discountPrice: '42000',
+              description: 'Premium electric bike with advanced features',
+              shortDescription: 'High-performance eBike with 60km range and smart features',
+              image: null,
+              images: [],
+              colors: ['Red', 'Blue', 'Black'],
+              electricalSpecification: '48V 15Ah battery',
+              mechanicalSpecification: 'Aluminum frame, hydraulic disc brakes',
+              inStock: true,
+              featured: true
+            },
+            {
+              _id: '2',
+              name: 'RAPTRIC eBike Standard',
+              slug: { current: 'raptric-ebike-standard' },
+              price: '35000',
+              description: 'Standard electric bike for daily commuting',
+              shortDescription: 'Reliable eBike perfect for city commuting',
+              image: null,
+              images: [],
+              colors: ['White', 'Gray'],
+              electricalSpecification: '36V 12Ah battery',
+              mechanicalSpecification: 'Steel frame, mechanical disc brakes',
+              inStock: true,
+              featured: false
+            },
+            {
+              _id: '3',
+              name: 'RAPTRIC Folding eBike',
+              slug: { current: 'raptric-folding-ebike' },
+              price: '28000',
+              description: 'Compact folding electric bike',
+              shortDescription: 'Portable folding eBike for easy storage',
+              image: null,
+              images: [],
+              colors: ['Yellow', 'Black'],
+              electricalSpecification: '24V 10Ah battery',
+              mechanicalSpecification: 'Lightweight alloy frame, V-brakes',
+              inStock: true,
+              featured: false
+            }
+          ]
+          setEbikes(fallbackData)
+        } else {
+          setEbikes(data)
+        }
       } catch (error) {
-        console.error('Error fetching ebikes:', error)
+        console.error('EBikes: Error fetching data:', error)
+        console.log('EBikes: Using fallback data due to error')
+        
+        // Always provide fallback data
+        const fallbackData = [
+          {
+            _id: '1',
+            name: 'RAPTRIC eBike Pro',
+            slug: { current: 'raptric-ebike-pro' },
+            price: '45000',
+            discountPrice: '42000',
+            description: 'Premium electric bike with advanced features',
+            shortDescription: 'High-performance eBike with 60km range and smart features',
+            image: null,
+            images: [],
+            colors: ['Red', 'Blue', 'Black'],
+            electricalSpecification: '48V 15Ah battery',
+            mechanicalSpecification: 'Aluminum frame, hydraulic disc brakes',
+            inStock: true,
+            featured: true
+          },
+          {
+            _id: '2',
+            name: 'RAPTRIC eBike Standard',
+            slug: { current: 'raptric-ebike-standard' },
+            price: '35000',
+            description: 'Standard electric bike for daily commuting',
+            shortDescription: 'Reliable eBike perfect for city commuting',
+            image: null,
+            images: [],
+            colors: ['White', 'Gray'],
+            electricalSpecification: '36V 12Ah battery',
+            mechanicalSpecification: 'Steel frame, mechanical disc brakes',
+            inStock: true,
+            featured: false
+          }
+        ]
+        setEbikes(fallbackData)
       } finally {
         setLoading(false)
       }

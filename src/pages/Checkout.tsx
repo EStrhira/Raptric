@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Container } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 import ProtectedRoute from '../components/ProtectedRoute'
+import { getCart, getCartTotal, CartItem } from '../utils/cart'
 
 const CheckoutSection = styled.section`
   padding: 0;
@@ -169,6 +170,73 @@ const Form = styled.form`
   gap: 1.5rem;
 `
 
+const OrderSummary = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+`
+
+const OrderItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  
+  span {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+  }
+  
+  span:last-child {
+    font-weight: 600;
+    color: #ffffff;
+  }
+`
+
+const OrderDivider = styled.div`
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 1rem 0;
+`
+
+const OrderTotal = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 2px solid #00a652;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #00a652;
+`
+
+const PaymentInfo = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  
+  h4 {
+    color: #00a652;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+    
+    strong {
+      color: #00a652;
+    }
+  }
+`
+
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -240,37 +308,6 @@ const Button = styled.button`
   }
 `
 
-const OrderSummary = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-`
-
-const OrderItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-  &:last-child {
-    border-bottom: none;
-  }
-`
-
-const OrderTotal = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-top: 2px solid #00a652;
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #00a652;
-`
-
 const Checkout: React.FC = () => {
   useScrollToTop()
   const navigate = useNavigate()
@@ -283,11 +320,19 @@ const Checkout: React.FC = () => {
     notes: ''
   })
   const [isProcessing, setIsProcessing] = useState(false)
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
 
   const userEmail = localStorage.getItem('userEmail')
   const userName = localStorage.getItem('userName')
   const userPicture = localStorage.getItem('userPicture')
   const [savedAddresses, setSavedAddresses] = useState<any>(null)
+
+  // Load cart data
+  useEffect(() => {
+    const items = getCart()
+    setCartItems(items)
+    console.log('Checkout: Loaded cart items:', items)
+  }, [])
 
   useEffect(() => {
     // Load saved addresses if user is logged in
@@ -354,13 +399,18 @@ const Checkout: React.FC = () => {
       // Store order data
       const orderData = {
         user: localStorage.getItem('userEmail'),
+        items: cartItems,
+        total: getCartTotal(),
         shippingAddress: formData,
         orderDate: new Date().toISOString(),
         status: 'pending'
       }
       
       localStorage.setItem('currentOrder', JSON.stringify(orderData))
-
+      
+      // Clear cart after order placement
+      localStorage.removeItem('esthira-cart')
+      
       // Redirect to order confirmation
       window.location.href = '/order-confirmation'
 
@@ -619,33 +669,37 @@ const Checkout: React.FC = () => {
                 </CheckoutSectionTitle>
                 
                 <OrderSummary>
-                  <OrderItem>
-                    <span>RAPTRIC eBike Pro</span>
-                    <span>₹45,000</span>
-                  </OrderItem>
-                  <OrderItem>
-                    <span>Accessory Kit</span>
-                    <span>₹3,500</span>
-                  </OrderItem>
-                  <OrderItem>
-                    <span>Shipping</span>
-                    <span>Free</span>
-                  </OrderItem>
+                  {cartItems.map((item) => (
+                    <OrderItem key={item.id}>
+                      <span>{item.name} {item.selectedColor && `(${item.selectedColor})`} x {item.quantity}</span>
+                      <span>₹{(parseFloat(item.price.replace(/[^0-9.-]+/g, '')) * item.quantity).toLocaleString()}</span>
+                    </OrderItem>
+                  ))}
+                  <OrderDivider />
                   <OrderTotal>
                     <span>Total</span>
-                    <span>₹48,500</span>
+                    <span>₹{getCartTotal().toLocaleString()}</span>
                   </OrderTotal>
                 </OrderSummary>
 
-                <div style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '1rem', borderRadius: '8px' }}>
-                  <h4 style={{ color: '#00a652', marginBottom: '0.5rem' }}>Payment Options</h4>
+                <PaymentInfo>
+                  <h4 style={{ color: '#00a652', marginBottom: '1rem' }}>
+                    <i className="fas fa-credit-card"></i>
+                    Payment Information
+                  </h4>
                   <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.9rem' }}>
-                    • Credit/Debit Card<br/>
-                    • Net Banking<br/>
-                    • UPI<br/>
-                    • Cash on Delivery (Available in select cities)
+                    <strong>Payment Methods Accepted:</strong>
                   </p>
-                </div>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '1rem', borderRadius: '8px' }}>
+                    <h4 style={{ color: '#00a652', marginBottom: '0.5rem' }}>Payment Options</h4>
+                    <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.9rem' }}>
+                      • Credit/Debit Card<br/>
+                      • Net Banking<br/>
+                      • UPI<br/>
+                      • Cash on Delivery (Available in select cities)
+                    </p>
+                  </div>
+                </PaymentInfo>
               </Section>
             </CheckoutGrid>
           </CheckoutContainer>
