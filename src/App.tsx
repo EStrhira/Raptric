@@ -29,6 +29,9 @@ import WarrantyActivation from './components/WarrantyActivation'
 import SafetyTips from './components/SafetyTips'
 import FAQ from './components/FAQ'
 import Manual from './components/Manual'
+import UserAccount from './pages/UserAccount'
+import Checkout from './pages/Checkout'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
@@ -56,15 +59,18 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-conditions" element={<TermsConditions />} />
           <Route path="/shipping-delivery" element={<ShippingDelivery />} />
-        <Route path="/cancellation-refund-replacement" element={<CancellationRefundReplacement />} />
-        <Route path="/warranty" element={<WarrantyManual />} />
-        <Route path="/warrantyactivation" element={<WarrantyActivation />} />
-        <Route path="/safety-tips" element={<SafetyTips />} />
-        <Route path="/manual" element={<Manual />} />
-        <Route path="/faq" element={<FAQ />} />
-      </Routes>
-      <Footer />
-    </Router>
+          <Route path="/cancellation-refund-replacement" element={<CancellationRefundReplacement />} />
+          <Route path="/warranty" element={<WarrantyManual />} />
+          <Route path="/warrantyactivation" element={<WarrantyActivation />} />
+          <Route path="/safety-tips" element={<SafetyTips />} />
+          <Route path="/manual" element={<Manual />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/login" element={<UserAccount />} />
+          <Route path="/account" element={<ProtectedRoute><UserAccount /></ProtectedRoute>} />
+          <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+        </Routes>
+        <Footer />
+      </Router>
     </PaymentProvider>
   )
 }

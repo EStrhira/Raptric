@@ -286,6 +286,11 @@ const Header: React.FC = () => {
               <NavLink to="/contact" onClick={closeMenu}>Contact Us</NavLink>
             </NavItem>
             <NavItem>
+              <NavLink to="/login" onClick={closeMenu}>
+                <i className="fas fa-user-circle"></i> Account
+              </NavLink>
+            </NavItem>
+            <NavItem>
               <CartIcon to="/cart" onClick={closeMenu}>
                 <i className="fas fa-shopping-cart"></i>
                 {cartCount > 0 && <CartBadge>{cartCount}</CartBadge>}
