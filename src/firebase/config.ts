@@ -5,16 +5,31 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-// Your web app's Firebase configuration
+// Firebase configuration from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyBqDlkTbxnSspi6YE3magsTBl9fyF4vjfo",
-  authDomain: "esthira-raptric.firebaseapp.com",
-  projectId: "esthira-raptric",
-  storageBucket: "esthira-raptric.firebasestorage.app",
-  messagingSenderId: "296648703385",
-  appId: "1:296648703385:web:55a45b235b9cb486d9e708",
-  measurementId: "G-F5L1D7JM1F"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
+
+// Validate required environment variables
+const requiredEnvVars = [
+  'REACT_APP_FIREBASE_API_KEY',
+  'REACT_APP_FIREBASE_AUTH_DOMAIN',
+  'REACT_APP_FIREBASE_PROJECT_ID',
+  'REACT_APP_FIREBASE_APP_ID'
+];
+
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+  console.error('Missing required Firebase environment variables:', missingEnvVars);
+  throw new Error(`Missing Firebase configuration: ${missingEnvVars.join(', ')}`);
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -27,6 +42,11 @@ export const storage = getStorage(app);
 
 // Google Auth Provider
 export const googleProvider = new GoogleAuthProvider();
+
+// Configure Google Provider
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
 
 // Export the app instance
 export default app;
