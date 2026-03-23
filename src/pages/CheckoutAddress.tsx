@@ -509,20 +509,15 @@ const CheckoutAddress: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle form submission
-    console.log('Checkout data:', formData)
     // Payment will be handled by PaymentButton
   }
 
   const handlePaymentSuccess = async (paymentResponse: any) => {
-    console.log('CheckoutAddress - Payment success handler called:', paymentResponse)
-    
     if (!currentUser) {
-      console.error('❌ No current user found!')
       return
     }
 
     try {
-      console.log('📝 Saving addresses to Firebase...')
       // Save addresses to Firebase if user is logged in
       let billingAddressId = ''
       let shippingAddressId = ''
@@ -544,7 +539,6 @@ const CheckoutAddress: React.FC = () => {
         isDefault: true
       })
       billingAddressId = billingAddress.id
-      console.log('✅ Billing address saved:', billingAddressId)
 
       // Save shipping address if different from billing
       if (!formData.sameAsBilling) {
@@ -563,10 +557,8 @@ const CheckoutAddress: React.FC = () => {
           isDefault: false
         })
         shippingAddressId = shippingAddress.id
-        console.log('✅ Shipping address saved:', shippingAddressId)
       }
 
-      console.log('🛒 Creating order...')
       // Save order to Firebase
       if (!currentUser) {
         throw new Error('User not authenticated');
@@ -621,7 +613,6 @@ const CheckoutAddress: React.FC = () => {
         status: 'pending' as const,
         paymentStatus: 'completed' as const
       })
-      console.log('✅ Order saved to Firebase:', order)
 
       // Store payment details with address information
       const paymentData = {
@@ -675,25 +666,15 @@ const CheckoutAddress: React.FC = () => {
         orderNumber: order.orderNumber
       }
 
-      console.log('💾 Setting payment success data:', paymentData)
-
       // Set payment success data first
       setPaymentSuccess(paymentData)
-      console.log('✅ Payment success data set in context')
 
       // Small delay to ensure state is updated before navigation
-      console.log('🚀 Preparing to navigate to order-success...')
       setTimeout(() => {
-        console.log('🔄 Navigating to /order-success')
         navigate('/order-success')
       }, 100)
     } catch (error: any) {
-      console.error('❌ Error processing payment success:', error)
-      console.error('❌ Error details:', {
-        message: error.message,
-        code: error.code,
-        stack: error.stack
-      })
+      console.error('Error processing payment success:', error)
       
       // More specific error messages
       if (error.code === 'permission-denied') {

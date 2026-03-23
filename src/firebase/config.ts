@@ -16,7 +16,7 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
-// Validate required environment variables
+// Validate required environment variables (production only)
 const requiredEnvVars = [
   'REACT_APP_FIREBASE_API_KEY',
   'REACT_APP_FIREBASE_AUTH_DOMAIN',
@@ -24,11 +24,14 @@ const requiredEnvVars = [
   'REACT_APP_FIREBASE_APP_ID'
 ];
 
-const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
-
-if (missingEnvVars.length > 0) {
-  console.error('Missing required Firebase environment variables:', missingEnvVars);
-  throw new Error(`Missing Firebase configuration: ${missingEnvVars.join(', ')}`);
+// Only validate in development to avoid production logs
+if (process.env.NODE_ENV === 'development') {
+  const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+  
+  if (missingEnvVars.length > 0) {
+    console.error('Missing required Firebase environment variables:', missingEnvVars);
+    throw new Error(`Missing Firebase configuration: ${missingEnvVars.join(', ')}`);
+  }
 }
 
 // Initialize Firebase
@@ -48,5 +51,5 @@ googleProvider.setCustomParameters({
   prompt: 'select_account'
 });
 
-// Export the app instance
+// Export app instance
 export default app;
