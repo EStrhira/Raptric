@@ -1,5 +1,7 @@
 import React from 'react'
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
+
+// Temporarily disabled due to @react-oauth/google module resolution issues
+// import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
 
 const GoogleAuthDebug: React.FC = () => {
   return (
@@ -12,25 +14,11 @@ const GoogleAuthDebug: React.FC = () => {
         <p>Current Origin: {window.location.origin}</p>
       </div>
 
-      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || "test-client-id"}>
-        <div>
-          <h3>Test Google Login:</h3>
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              console.log('Google Login Success:', credentialResponse)
-              alert('Google Login Success! Check console for details.')
-            }}
-            onError={() => {
-              console.error('Google Login Error')
-              alert('Google Login Error: Check console for details')
-            }}
-            text="signin_with"
-            theme="filled_black"
-            size="large"
-            width="300"
-          />
-        </div>
-      </GoogleOAuthProvider>
+      <div style={{ padding: '20px', background: '#ff6b6b', borderRadius: '8px', textAlign: 'center' }}>
+        <h3>Google OAuth Temporarily Disabled</h3>
+        <p>Google OAuth integration is temporarily disabled due to module resolution issues.</p>
+        <p>Please check back later or contact development team.</p>
+      </div>
 
       <div style={{ marginTop: '20px', fontSize: '14px', opacity: '0.7' }}>
         <h4>Debugging Steps:</h4>

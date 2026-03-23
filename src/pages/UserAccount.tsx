@@ -3,11 +3,9 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Container } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
-// import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google'
-// import GoogleAuthDebug from '../components/GoogleAuthDebug'
-import AddressCollection from '../components/AddressCollection'
-import ProfileEdit from '../components/ProfileEdit'
-import AddressEdit from '../components/AddressEdit'
+import { useAuth } from '../context/AuthContext'
+import LoginButton from '../components/LoginButton'
+import { Timestamp } from 'firebase/firestore'
 
 const UserAccountSection = styled.section`
   padding: 0;
@@ -48,14 +46,16 @@ const BannerSection = styled.div`
 const BannerContent = styled.div`
   position: relative;
   z-index: 3;
-  color: #ffffff;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
 `
 
 const BannerTitle = styled.h1`
   font-size: 3rem;
   font-weight: 700;
+  color: #ffffff;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 
   @media (max-width: 768px) {
     font-size: 2rem;
@@ -64,51 +64,92 @@ const BannerTitle = styled.h1`
 
 const BannerSubtitle = styled.p`
   font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 2rem;
-  opacity: 0.9;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-`
-
-const BannerIcon = styled.div`
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-  color: #ffffff;
 `
 
 const AccountContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  background: #1a1a1a;
-  border-radius: 12px;
-  padding: 3rem;
-  box-shadow: 0 4px 6px rgba(255,255,255,0.1);
-  margin-top: -50px;
-  position: relative;
-  z-index: 10;
+  padding: 3rem 2rem;
+`
 
-  @media (max-width: 768px) {
-    margin: 2rem 1rem;
-    padding: 2rem;
+const AccountGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
   }
+`
+
+const ProfileCard = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+`
+
+const ProfileHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+`
+
+const ProfileAvatar = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00a652;
+`
+
+const ProfileInfo = styled.div`
+  flex: 1;
+`
+
+const ProfileName = styled.h3`
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+`
+
+const ProfileEmail = styled.p`
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+`
+
+const ContentCard = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+`
+
+const ContentTitle = styled.h2`
+  color: #00a652;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
 `
 
 const TabContainer = styled.div`
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `
 
-const TabButton = styled.button<{ $active: boolean }>`
-  background: none;
+const TabButton = styled.button<{ active: boolean }>`
+  background: transparent;
+  color: ${props => props.active ? '#00a652' : 'rgba(255, 255, 255, 0.7)'};
   border: none;
-  color: ${props => props.$active ? '#00a652' : 'rgba(255, 255, 255, 0.7)'};
   padding: 1rem 2rem;
-  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  border-bottom: 2px solid ${props => props.$active ? '#00a652' : 'transparent'};
+  border-bottom: 2px solid ${props => props.active ? '#00a652' : 'transparent'};
   transition: all 0.3s ease;
 
   &:hover {
@@ -116,289 +157,119 @@ const TabButton = styled.button<{ $active: boolean }>`
   }
 `
 
-const FormContainer = styled.div<{ $active: boolean }>`
-  display: ${props => props.$active ? 'block' : 'none'};
-`
-
-const Form = styled.form`
+const OrderList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 `
 
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`
-
-const FormLabel = styled.label`
-  color: #ffffff;
-  font-weight: 500;
-`
-
-const FormInput = styled.input`
-  padding: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+const OrderCard = styled.div`
   background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  font-size: 1rem;
-
-  &:focus {
-    outline: none;
-    border-color: #00a652;
-  }
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
-`
-
-const FormButton = styled.button`
-  background: linear-gradient(135deg, #00a652, #008040);
-  color: #ffffff;
-  border: none;
-  padding: 1rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 166, 82, 0.3);
-  }
-
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
+  padding: 1.5rem;
 `
 
-const ErrorMessage = styled.div`
-  color: #ff6b6b;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-`
-
-const SuccessMessage = styled.div`
-  color: #00a652;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-`
-
-const Divider = styled.div`
+const OrderHeader = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin: 1.5rem 0;
-  
-  &::before,
-  &::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.2);
-  }
-  
-  span {
-    padding: 0 1rem;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
-  }
+  margin-bottom: 1rem;
 `
 
-const GoogleLoginContainer = styled.div`
-  display: flex;
-  justify-content: center;
+const OrderNumber = styled.div`
+  color: #00a652;
+  font-weight: 600;
+`
+
+const OrderStatus = styled.div<{ status: string }>`
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: ${props => {
+    switch (props.status) {
+      case 'pending': return 'rgba(255, 193, 7, 0.2)';
+      case 'processing': return 'rgba(0, 166, 82, 0.2)';
+      case 'shipped': return 'rgba(33, 150, 243, 0.2)';
+      case 'delivered': return 'rgba(76, 175, 80, 0.2)';
+      default: return 'rgba(255, 255, 255, 0.1)';
+    }
+  }};
+  color: ${props => {
+    switch (props.status) {
+      case 'pending': return '#ffc107';
+      case 'processing': return '#00a652';
+      case 'shipped': return '#2196f3';
+      case 'delivered': return '#4caf50';
+      default: return '#ffffff';
+    }
+  }};
+`
+
+const OrderDetails = styled.div`
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.6;
+`
+
+const OrderTotal = styled.div`
+  color: #00a652;
+  font-weight: 600;
   margin-top: 1rem;
 `
 
-const AccountHeader = styled.div`
-  text-align: center;
-  margin-bottom: 3rem;
-`
-
-const ProfilePicture = styled.img<{ $hasPicture: boolean }>`
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-bottom: 1rem;
-  border: 3px solid #00a652;
-  object-fit: cover;
-  display: ${props => props.$hasPicture ? 'block' : 'none'};
-`
-
-const DefaultAvatar = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-bottom: 1rem;
-  border: 3px solid #00a652;
-  background: linear-gradient(135deg, #00a652, #008040);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: #ffffff;
-  margin-left: auto;
-  margin-right: auto;
-`
-
-const AccountTitle = styled.h2`
-  color: #ffffff;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-`
-
-const AccountSubtitle = styled.p`
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-`
-
-const LogoutButton = styled.button`
-  background: linear-gradient(135deg, #ff6b6b, #ff5252);
-  color: #ffffff;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
-  }
-`
-
-const AccountGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`
-
-const AccountSection = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 2rem;
-`
-
-const SectionTitle = styled.h3`
-  color: #ffffff;
-  font-size: 1.3rem;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  i {
-    color: #00a652;
-  }
-`
-
-const ProfileInfo = styled.div`
+const AddressList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `
 
-const InfoRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 6px;
-`
-
-const InfoLabel = styled.span`
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 500;
-`
-
-const InfoValue = styled.span`
-  color: #ffffff;
-`
-
-const OrderHistory = styled.div`
-  min-height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const ActionButtons = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-`
-
-const ActionButton = styled.a`
-  background: rgba(0, 166, 82, 0.1);
-  border: 1px solid rgba(0, 166, 82, 0.3);
-  color: #00a652;
-  text-decoration: none;
-  padding: 1rem;
+const AddressCard = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  text-align: center;
-
-  &:hover {
-    background: rgba(0, 166, 82, 0.2);
-    transform: translateY(-2px);
-  }
+  padding: 1.5rem;
 `
 
-const EditButton = styled.button`
-  background: linear-gradient(135deg, #00a652, #008040);
-  color: #ffffff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+const AddressType = styled.div`
+  color: #00a652;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+`
+
+const AddressText = styled.div`
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-line;
+`
+
+const EmptyState = styled.div`
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.6);
+`
+
+const EmptyIcon = styled.div`
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+`
+
+const SignOutButton = styled.button`
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  width: 100%;
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 166, 82, 0.3);
-  }
-`
-
-const SectionHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-
-  h3 {
-    color: #ffffff;
-    font-size: 1.3rem;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    i {
-      color: #00a652;
-    }
+    background: #c82333;
   }
 `
 
@@ -406,687 +277,162 @@ const UserAccount: React.FC = () => {
   useScrollToTop()
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState<'login' | 'register'>('login')
-  const [showAddressCollection, setShowAddressCollection] = useState(false)
-  const [editMode, setEditMode] = useState<'profile' | 'addresses' | null>(null)
-  const [profileData, setProfileData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    bio: '',
-    profilePicture: ''
-  })
-  const [addressData, setAddressData] = useState<any>(null)
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    name: '',
-    confirmPassword: ''
-  })
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const { currentUser, userProfile, userAddresses, userOrders, signOut, loading } = useAuth()
+  const [activeTab, setActiveTab] = useState<'orders' | 'addresses'>('orders')
 
   const returnUrl = searchParams.get('returnUrl') || '/account'
-  const isLoggedIn = localStorage.getItem('authToken') !== null
-  const userEmail = localStorage.getItem('userEmail')
-  const userName = localStorage.getItem('userName')
-  const userPicture = localStorage.getItem('userPicture')
 
   useEffect(() => {
-    // Check if user is already logged in
-    const token = localStorage.getItem('authToken')
-    if (token && !returnUrl.includes('/checkout')) {
-      // If not returning from checkout, check if addresses are collected
-      const userEmail = localStorage.getItem('userEmail')
-      const existingAddresses = localStorage.getItem(`addresses_${userEmail}`)
-      
-      if (!existingAddresses) {
-        setShowAddressCollection(true)
-      } else {
-        // Load profile and address data
-        loadUserData()
-      }
-      return
-    } else if (token) {
-      // Redirect to return URL or account dashboard
-      navigate(returnUrl)
+    if (!loading && !currentUser) {
+      navigate('/login')
     }
-  }, [navigate, returnUrl])
+  }, [currentUser, loading, navigate])
 
-  const loadUserData = () => {
-    if (userEmail) {
-      // Load profile data
-      const savedProfile = localStorage.getItem(`profile_${userEmail}`)
-      if (savedProfile) {
-        const profile = JSON.parse(savedProfile)
-        setProfileData({
-          name: profile.name || userName || '',
-          email: profile.email || userEmail || '',
-          phone: profile.phone || '',
-          bio: profile.bio || '',
-          profilePicture: profile.profilePicture || userPicture || ''
-        })
-      } else {
-        setProfileData({
-          name: userName || '',
-          email: userEmail || '',
-          phone: '',
-          bio: '',
-          profilePicture: userPicture || ''
-        })
-      }
-
-      // Load address data
-      const savedAddresses = localStorage.getItem(`addresses_${userEmail}`)
-      if (savedAddresses) {
-        setAddressData(JSON.parse(savedAddresses))
-      }
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+      navigate('/')
+    } catch (error) {
+      console.error('Error signing out:', error)
     }
   }
 
-  useEffect(() => {
-    if (isLoggedIn && !showAddressCollection) {
-      loadUserData()
-    }
-  }, [isLoggedIn, showAddressCollection, userEmail, userName, userPicture])
-
-  const handleAddressCollectionComplete = () => {
-    setShowAddressCollection(false)
-    loadUserData()
-    // Show success message or redirect
-    setSuccess('Addresses saved successfully! You can now proceed with checkout.')
-  }
-
-  const handleProfileUpdate = (newProfileData: any) => {
-    setProfileData(newProfileData)
-    
-    // Update userPicture in localStorage if it changed
-    if (newProfileData.profilePicture && newProfileData.profilePicture !== userPicture) {
-      localStorage.setItem('userPicture', newProfileData.profilePicture)
-    }
-    
-    setEditMode(null)
-  }
-
-  const handleAddressUpdate = (newAddressData: any) => {
-    setAddressData(newAddressData)
-    setEditMode(null)
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem('authToken')
-    localStorage.removeItem('userEmail')
-    localStorage.removeItem('userName')
-    navigate('/')
-  }
-
-  // If user is logged in and not being redirected, show account info
-  if (isLoggedIn && !returnUrl.includes('/checkout')) {
+  if (loading) {
     return (
       <UserAccountSection>
-        <BannerSection>
-          <Container>
-            <BannerContent>
-              <BannerIcon>
-                <i className="fas fa-user-circle"></i>
-              </BannerIcon>
-              <BannerTitle>My Account</BannerTitle>
-              <BannerSubtitle>
-                Manage your account settings and view your order history.
-              </BannerSubtitle>
-            </BannerContent>
-          </Container>
-        </BannerSection>
-
-        <Container>
-          <AccountContainer>
-            <AccountHeader>
-              {profileData.profilePicture ? (
-                <ProfilePicture src={profileData.profilePicture} alt="Profile" $hasPicture={true} />
-              ) : (
-                <DefaultAvatar>
-                  <i className="fas fa-user"></i>
-                </DefaultAvatar>
-              )}
-              <AccountTitle>Welcome, {profileData.name || 'User'}!</AccountTitle>
-              <AccountSubtitle>{profileData.email}</AccountSubtitle>
-              <LogoutButton onClick={handleLogout}>
-                <i className="fas fa-sign-out-alt"></i>
-                Logout
-              </LogoutButton>
-            </AccountHeader>
-
-            <AccountGrid>
-              <AccountSection>
-                <SectionHeader>
-                  <h3>
-                    <i className="fas fa-user"></i>
-                    Profile Information
-                  </h3>
-                  <EditButton onClick={() => setEditMode('profile')}>
-                    <i className="fas fa-edit"></i>
-                    Edit
-                  </EditButton>
-                </SectionHeader>
-                
-                {editMode === 'profile' ? (
-                  <ProfileEdit
-                    userEmail={userEmail || ''}
-                    currentData={profileData}
-                    onUpdate={handleProfileUpdate}
-                  />
-                ) : (
-                  <ProfileInfo>
-                    <InfoRow>
-                      <InfoLabel>Name:</InfoLabel>
-                      <InfoValue>{profileData.name || 'Not set'}</InfoValue>
-                    </InfoRow>
-                    <InfoRow>
-                      <InfoLabel>Email:</InfoLabel>
-                      <InfoValue>{profileData.email}</InfoValue>
-                    </InfoRow>
-                    <InfoRow>
-                      <InfoLabel>Phone:</InfoLabel>
-                      <InfoValue>{profileData.phone || 'Not set'}</InfoValue>
-                    </InfoRow>
-                    <InfoRow>
-                      <InfoLabel>Bio:</InfoLabel>
-                      <InfoValue>{profileData.bio || 'Not set'}</InfoValue>
-                    </InfoRow>
-                    <InfoRow>
-                      <InfoLabel>Member Since:</InfoLabel>
-                      <InfoValue>{new Date().toLocaleDateString()}</InfoValue>
-                    </InfoRow>
-                  </ProfileInfo>
-                )}
-              </AccountSection>
-
-              <AccountSection>
-                <SectionTitle>
-                  <i className="fas fa-shopping-bag"></i>
-                  Recent Orders
-                </SectionTitle>
-                <OrderHistory>
-                  <p style={{ color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', padding: '2rem' }}>
-                    No orders yet. Start shopping to see your order history here!
-                  </p>
-                </OrderHistory>
-              </AccountSection>
-
-              <AccountSection>
-                <SectionHeader>
-                  <h3>
-                    <i className="fas fa-map-marked-alt"></i>
-                    Saved Addresses
-                  </h3>
-                  <EditButton onClick={() => setEditMode('addresses')}>
-                    <i className="fas fa-edit"></i>
-                    Edit
-                  </EditButton>
-                </SectionHeader>
-                
-                {editMode === 'addresses' ? (
-                  <AddressEdit
-                    userEmail={userEmail || ''}
-                    currentData={addressData || {
-                      billingAddress: {
-                        street: '',
-                        city: '',
-                        state: '',
-                        pincode: '',
-                        phone: ''
-                      },
-                      shippingAddress: {
-                        street: '',
-                        city: '',
-                        state: '',
-                        pincode: '',
-                        phone: ''
-                      },
-                      sameAsBilling: true
-                    }}
-                    onUpdate={handleAddressUpdate}
-                  />
-                ) : (
-                  <div>
-                    {addressData ? (
-                      <>
-                        <div style={{ 
-                          background: 'rgba(255, 255, 255, 0.05)', 
-                          border: '1px solid rgba(255, 255, 255, 0.1)', 
-                          borderRadius: '8px', 
-                          padding: '1rem', 
-                          marginBottom: '1.5rem' 
-                        }}>
-                          <h4 style={{ color: '#00a652', marginBottom: '0.5rem', fontSize: '1rem' }}>
-                            <i className="fas fa-file-invoice"></i> Billing Address
-                          </h4>
-                          {addressData.billingAddress.companyName && (
-                            <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                              Company: {addressData.billingAddress.companyName}
-                            </p>
-                          )}
-                          {addressData.billingAddress.gstNumber && (
-                            <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                              GST: {addressData.billingAddress.gstNumber}
-                            </p>
-                          )}
-                          <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                            {addressData.billingAddress.street}
-                          </p>
-                          <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                            {addressData.billingAddress.city}, {addressData.billingAddress.state} - {addressData.billingAddress.pincode}
-                          </p>
-                          <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                            Phone: {addressData.billingAddress.phone}
-                          </p>
-                        </div>
-                        
-                        <div style={{ 
-                          background: 'rgba(255, 255, 255, 0.05)', 
-                          border: '1px solid rgba(255, 255, 255, 0.1)', 
-                          borderRadius: '8px', 
-                          padding: '1rem', 
-                          marginBottom: '1.5rem' 
-                        }}>
-                          <h4 style={{ color: '#00a652', marginBottom: '0.5rem', fontSize: '1rem' }}>
-                            <i className="fas fa-truck"></i> Shipping Address
-                          </h4>
-                          {addressData.sameAsBilling ? (
-                            <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                              Same as billing address
-                            </p>
-                          ) : (
-                            <>
-                              {addressData.shippingAddress.companyName && (
-                                <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                                  Company: {addressData.shippingAddress.companyName}
-                                </p>
-                              )}
-                              {addressData.shippingAddress.gstNumber && (
-                                <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                                  GST: {addressData.shippingAddress.gstNumber}
-                                </p>
-                              )}
-                              <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                                {addressData.shippingAddress.street}
-                              </p>
-                              <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                                {addressData.shippingAddress.city}, {addressData.shippingAddress.state} - {addressData.shippingAddress.pincode}
-                              </p>
-                              <p style={{ color: 'rgba(255, 255, 255, 0.8)', margin: '0.25rem 0', fontSize: '0.9rem' }}>
-                                Phone: {addressData.shippingAddress.phone}
-                              </p>
-                            </>
-                          )}
-                        </div>
-                      </>
-                    ) : (
-                      <p style={{ color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', padding: '2rem' }}>
-                        No addresses saved yet.
-                      </p>
-                    )}
-                  </div>
-                )}
-              </AccountSection>
-            </AccountGrid>
-
-            <AccountSection style={{ gridColumn: '1 / -1' }}>
-              <SectionTitle>
-                <i className="fas fa-cog"></i>
-                Quick Actions
-              </SectionTitle>
-              <ActionButtons>
-                <ActionButton href="/ebikes">
-                  <i className="fas fa-bicycle"></i>
-                  Shop eBikes
-                </ActionButton>
-                <ActionButton href="/cycles">
-                  <i className="fas fa-bicycle"></i>
-                  Shop mBikes
-                </ActionButton>
-                <ActionButton href="/accessories">
-                  <i className="fas fa-tools"></i>
-                  Accessories
-                </ActionButton>
-                <ActionButton href="/contact">
-                  <i className="fas fa-headset"></i>
-                  Contact Support
-                </ActionButton>
-              </ActionButtons>
-            </AccountSection>
-          </AccountContainer>
-        </Container>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+          <div>Loading...</div>
+        </div>
       </UserAccountSection>
     )
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-    setError('')
-    setSuccess('')
-  }
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setSuccess('')
-    setIsLoading(true)
-
-    try {
-      // Basic validation
-      if (!formData.email || !formData.password) {
-        setError('Please fill in all fields')
-        return
-      }
-
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(formData.email)) {
-        setError('Please enter a valid email address')
-        return
-      }
-
-      // Check if user exists in localStorage
-      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
-      const existingUser = registeredUsers.find((user: any) => user.email === formData.email)
-
-      if (!existingUser) {
-        setError('This email is not registered. Please sign up first.')
-        return
-      }
-
-      // Verify password (in a real app, this would be done on the server with hashed passwords)
-      if (existingUser.password !== formData.password) {
-        setError('Incorrect password. Please try again.')
-        return
-      }
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-
-      // Store auth token (in real app, this would come from server)
-      localStorage.setItem('authToken', 'dummy-token')
-      localStorage.setItem('userEmail', formData.email)
-      localStorage.setItem('userName', existingUser.name)
-
-      setSuccess('Login successful! Redirecting...')
-      
-      // Check if user needs to provide addresses
-      const existingAddresses = localStorage.getItem(`addresses_${formData.email}`)
-      if (!existingAddresses && !returnUrl.includes('/checkout')) {
-        setTimeout(() => {
-          setShowAddressCollection(true)
-        }, 1000)
-      } else {
-        // Redirect to return URL or account dashboard after delay
-        setTimeout(() => {
-          navigate(returnUrl)
-        }, 2000)
-      }
-
-    } catch (err) {
-      setError('Login failed. Please try again.')
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  // const handleGoogleLogin = async (credentialResponse: CredentialResponse) => {
-  //   setError('')
-  //   setSuccess('')
-  //   setIsLoading(true)
-
-  //   try {
-  //     if (credentialResponse.credential) {
-  //       // Decode the JWT token (in a real app, this would be verified on the server)
-  //       const payload = JSON.parse(atob(credentialResponse.credential.split('.')[1]))
-        
-  //       // Store user info
-  //       localStorage.setItem('authToken', credentialResponse.credential)
-  //       localStorage.setItem('userEmail', payload.email)
-  //       localStorage.setItem('userName', payload.name)
-  //       localStorage.setItem('userPicture', payload.picture)
-
-  //       setSuccess('Google login successful! Redirecting...')
-        
-  //       // Redirect to return URL or account dashboard after delay
-  //       setTimeout(() => {
-  //         navigate(returnUrl)
-  //       }, 2000)
-  //     }
-  //   } catch (err) {
-  //     setError('Google login failed. Please try again.')
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
-
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setSuccess('')
-    setIsLoading(true)
-
-    try {
-      // Basic validation
-      if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-        setError('Please fill in all fields')
-        return
-      }
-
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(formData.email)) {
-        setError('Please enter a valid email address')
-        return
-      }
-
-      // Password validation
-      if (formData.password.length < 6) {
-        setError('Password must be at least 6 characters long')
-        return
-      }
-
-      // Confirm password validation
-      if (formData.password !== formData.confirmPassword) {
-        setError('Passwords do not match')
-        return
-      }
-
-      // Check if user already exists
-      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
-      const existingUser = registeredUsers.find((user: any) => user.email === formData.email)
-
-      if (existingUser) {
-        setError('This email is already registered. Please sign in instead.')
-        return
-      }
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-
-      // Store new user in localStorage
-      const newUser = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password, // In production, this should be hashed
-        createdAt: new Date().toISOString()
-      }
-
-      registeredUsers.push(newUser)
-      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers))
-
-      // Store auth token (in real app, this would come from server)
-      localStorage.setItem('authToken', 'dummy-token')
-      localStorage.setItem('userName', formData.name)
-      localStorage.setItem('userEmail', formData.email)
-
-      setSuccess('Registration successful! Redirecting...')
-      
-      // New users need to provide addresses
-      if (!returnUrl.includes('/checkout')) {
-        setTimeout(() => {
-          setShowAddressCollection(true)
-        }, 1000)
-      } else {
-        // Redirect to return URL or account dashboard after delay
-        setTimeout(() => {
-          navigate(returnUrl)
-        }, 2000)
-      }
-
-    } catch (err) {
-      setError('Registration failed. Please try again.')
-    } finally {
-      setIsLoading(false)
-    }
+  if (!currentUser || !userProfile) {
+    return (
+      <UserAccountSection>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+          <LoginButton />
+        </div>
+      </UserAccountSection>
+    )
   }
 
   return (
-    // <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID_HERE"}>
-      <UserAccountSection>
+    <UserAccountSection>
       <BannerSection>
-        <Container>
-          <BannerContent>
-            <BannerIcon>
-              <i className="fas fa-user-circle"></i>
-            </BannerIcon>
-            <BannerTitle>User Account</BannerTitle>
-            <BannerSubtitle>
-              Sign in to your account or create a new one to access exclusive features and track your orders.
-            </BannerSubtitle>
-          </BannerContent>
-        </Container>
+        <BannerContent>
+          <BannerTitle>My Account</BannerTitle>
+          <BannerSubtitle>Manage your profile, orders, and addresses</BannerSubtitle>
+        </BannerContent>
       </BannerSection>
 
-      <Container>
-        <AccountContainer>
-          <TabContainer>
-            <TabButton 
-              $active={activeTab === 'login'} 
-              onClick={() => setActiveTab('login')}
-            >
-              Sign In
-            </TabButton>
-            <TabButton 
-              $active={activeTab === 'register'} 
-              onClick={() => setActiveTab('register')}
-            >
-              Register
-            </TabButton>
-          </TabContainer>
+      <AccountContainer>
+        <AccountGrid>
+          <ProfileCard>
+            <ProfileHeader>
+              <ProfileAvatar 
+                src={userProfile.photoURL || '/favicon.ico'} 
+                alt={userProfile.displayName || 'User'} 
+              />
+              <ProfileInfo>
+                <ProfileName>{userProfile.displayName || 'User'}</ProfileName>
+                <ProfileEmail>{userProfile.email}</ProfileEmail>
+              </ProfileInfo>
+            </ProfileHeader>
 
-          {/* Login Form */}
-          <FormContainer $active={activeTab === 'login'}>
-            <Form onSubmit={handleLogin}>
-              <FormGroup>
-                <FormLabel htmlFor="email">Email *</FormLabel>
-                <FormInput
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Enter your email"
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="password">Password *</FormLabel>
-                <FormInput
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  placeholder="Enter your password"
-                  required
-                />
-              </FormGroup>
-              {error && <ErrorMessage>{error}</ErrorMessage>}
-              {success && <SuccessMessage>{success}</SuccessMessage>}
-              <FormButton type="submit" disabled={isLoading}>
-                {isLoading ? 'Signing In...' : 'Sign In'}
-              </FormButton>
-            </Form>
-          </FormContainer>
+            <SignOutButton onClick={handleSignOut}>
+              <i className="fas fa-sign-out-alt"></i> Sign Out
+            </SignOutButton>
+          </ProfileCard>
 
-          {/* Register Form */}
-          <FormContainer $active={activeTab === 'register'}>
-            <Form onSubmit={handleRegister}>
-              <FormGroup>
-                <FormLabel htmlFor="name">Full Name *</FormLabel>
-                <FormInput
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Enter your full name"
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="email">Email *</FormLabel>
-                <FormInput
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Enter your email"
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="password">Password *</FormLabel>
-                <FormInput
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  placeholder="Enter your password (min 6 characters)"
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="confirmPassword">Confirm Password *</FormLabel>
-                <FormInput
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  placeholder="Confirm your password"
-                  required
-                />
-              </FormGroup>
-              {error && <ErrorMessage>{error}</ErrorMessage>}
-              {success && <SuccessMessage>{success}</SuccessMessage>}
-              <FormButton type="submit" disabled={isLoading}>
-                {isLoading ? 'Creating Account...' : 'Create Account'}
-              </FormButton>
-            </Form>
-          </FormContainer>
-        </AccountContainer>
-      </Container>
-      
-      {showAddressCollection && (
-        <Container>
-          <AddressCollection 
-            userEmail={userEmail || ''} 
-            onComplete={handleAddressCollectionComplete}
-          />
-        </Container>
-      )}
+          <div>
+            <ContentCard>
+              <TabContainer>
+                <TabButton 
+                  active={activeTab === 'orders'}
+                  onClick={() => setActiveTab('orders')}
+                >
+                  Orders ({userOrders.length})
+                </TabButton>
+                <TabButton 
+                  active={activeTab === 'addresses'}
+                  onClick={() => setActiveTab('addresses')}
+                >
+                  Addresses ({userAddresses.length})
+                </TabButton>
+              </TabContainer>
+
+              {activeTab === 'orders' && (
+                <>
+                  {userOrders.length === 0 ? (
+                    <EmptyState>
+                      <EmptyIcon>
+                        <i className="fas fa-shopping-bag"></i>
+                      </EmptyIcon>
+                      <h3>No orders yet</h3>
+                      <p>When you place orders, they will appear here</p>
+                    </EmptyState>
+                  ) : (
+                    <OrderList>
+                      {userOrders.map((order) => (
+                        <OrderCard key={order.id}>
+                          <OrderHeader>
+                            <OrderNumber>#{order.orderNumber}</OrderNumber>
+                            <OrderStatus status={order.status}>
+                              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                            </OrderStatus>
+                          </OrderHeader>
+                          <OrderDetails>
+                            <div><strong>Date:</strong> {new Date(order.createdAt.toDate()).toLocaleDateString()}</div>
+                            <div><strong>Items:</strong> {order.items.length}</div>
+                            <div><strong>Payment:</strong> {order.paymentStatus}</div>
+                          </OrderDetails>
+                          <OrderTotal>Total: ₹{order.totalAmount.toFixed(2)}</OrderTotal>
+                        </OrderCard>
+                      ))}
+                    </OrderList>
+                  )}
+                </>
+              )}
+
+              {activeTab === 'addresses' && (
+                <>
+                  {userAddresses.length === 0 ? (
+                    <EmptyState>
+                      <EmptyIcon>
+                        <i className="fas fa-map-marker-alt"></i>
+                      </EmptyIcon>
+                      <h3>No addresses saved</h3>
+                      <p>Add addresses during checkout for faster ordering</p>
+                    </EmptyState>
+                  ) : (
+                    <AddressList>
+                      {userAddresses.map((address) => (
+                        <AddressCard key={address.id}>
+                          <AddressType>
+                            {address.type === 'billing' ? 'Billing' : 'Shipping'} Address
+                            {address.isDefault && ' (Default)'}
+                          </AddressType>
+                          <AddressText>
+                            {address.companyName && `${address.companyName}\n`}
+                            {address.firstName} {address.lastName}\n
+                            {address.address}\n
+                            {address.city}, {address.state} {address.pincode}\n
+                            {address.country}\n
+                            {address.phone && `Phone: ${address.phone}\n`}
+                            {address.gst && `GST: ${address.gst}`}
+                          </AddressText>
+                        </AddressCard>
+                      ))}
+                    </AddressList>
+                  )}
+                </>
+              )}
+            </ContentCard>
+          </div>
+        </AccountGrid>
+      </AccountContainer>
     </UserAccountSection>
-    // </GoogleOAuthProvider>
   )
 }
 

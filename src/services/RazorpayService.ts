@@ -116,6 +116,7 @@ export class RazorpayService {
     })
   }
 
+  // Verify payment (optional)
   async verifyPayment(paymentId: string, orderId: string, signature: string): Promise<boolean> {
     try {
       const response = await fetch('/api/verify-payment', {

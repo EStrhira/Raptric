@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { getCartCount } from '../utils/cart'
+import { useAuth } from '../context/AuthContext'
 
 const HeaderContainer = styled.header`
   background: #000000;
@@ -221,10 +222,61 @@ const CartBadge = styled.span`
   padding: 0 4px;
 `
 
+const LoginLink = styled(Link)`
+  background: #4285f4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #357ae8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+  }
+`;
+
+const UserAvatar = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const UserEmail = styled.span`
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+`;
+
+const SignOutButton = styled.button`
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #ffffff;
+    color: #000000;
+  }
+`;
+
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [cartCount, setCartCount] = useState(0)
   const location = useLocation()
+  const { currentUser, userProfile, signOut } = useAuth()
 
   useEffect(() => {
     setCartCount(getCartCount())
@@ -246,6 +298,14 @@ const Header: React.FC = () => {
 
   const closeMenu = () => {
     setIsMenuOpen(false)
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
   }
 
   return (
@@ -286,9 +346,20 @@ const Header: React.FC = () => {
               <NavLink to="/contact" onClick={closeMenu}>Contact Us</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/login" onClick={closeMenu}>
-                <i className="fas fa-user-circle"></i> Account
-              </NavLink>
+              {currentUser && userProfile ? (
+                <>
+                  {userProfile.photoURL && (
+                    <UserAvatar src={userProfile.photoURL} alt={userProfile.displayName || 'User'} />
+                  )}
+                  <UserEmail>{userProfile.email}</UserEmail>
+                  <SignOutButton onClick={handleSignOut}>Sign Out</SignOutButton>
+                </>
+              ) : (
+                <LoginLink to="/login" onClick={closeMenu}>
+                  <i className="fas fa-user-circle"></i>
+                  Login
+                </LoginLink>
+              )}
             </NavItem>
             <NavItem>
               <CartIcon to="/cart" onClick={closeMenu}>

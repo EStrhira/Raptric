@@ -36,6 +36,7 @@ const paymentReducer = (state: PaymentState, action: PaymentAction): PaymentStat
       }
     
     case 'SET_PAYMENT_SUCCESS':
+      console.log('PaymentReducer - SET_PAYMENT_SUCCESS:', action.payload)
       return {
         ...state,
         isLoading: false,
@@ -85,6 +86,7 @@ export const PaymentProvider: React.FC<{ children: ReactNode }> = ({ children })
   }
 
   const setPaymentSuccess = (payment: any) => {
+    console.log('PaymentContext - Setting payment success:', payment)
     dispatch({ type: 'SET_PAYMENT_SUCCESS', payload: payment })
   }
 

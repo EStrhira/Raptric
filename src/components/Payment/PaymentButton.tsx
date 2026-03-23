@@ -118,10 +118,24 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false)
 
+  console.log('🔧 PaymentButton initialized with props:', {
+    amount,
+    productName,
+    customerInfo,
+    hasOnSuccess: !!onSuccess,
+    hasOnFailure: !!onFailure,
+    disabled
+  })
+
   const handlePayment = async () => {
-    if (isLoading || disabled) return
+    console.log('🚀 PaymentButton handlePayment called')
+    if (isLoading || disabled) {
+      console.log('❌ Payment blocked - loading:', isLoading, 'disabled:', disabled)
+      return
+    }
 
     setIsLoading(true)
+    console.log('⏳ Payment started...')
 
     try {
       const razorpayService = RazorpayService.getInstance()
@@ -165,7 +179,9 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
       )
 
       if (isVerified) {
+        console.log('🎉 Payment verified successfully!', response)
         if (onSuccess) {
+          console.log('📞 Calling onSuccess callback...')
           onSuccess({
             ...response,
             verified: true,
@@ -174,6 +190,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
           })
         }
       } else {
+        console.error('❌ Payment verification failed')
         throw new Error('Payment verification failed')
       }
 

@@ -6,7 +6,10 @@ import { getCart, getCartTotal } from '../utils/cart'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 import PaymentButton from '../components/Payment/PaymentButton'
 import { usePayment } from '../context/PaymentContext'
+import { useAuth } from '../context/AuthContext'
 import BUSINESS_INFO from '../constants/businessInfo'
+import UserService, { UserAddress } from '../firebase/userService'
+import { Timestamp } from 'firebase/firestore'
 
 const CheckoutSection = styled.section`
   padding: 80px 0;
@@ -379,10 +382,11 @@ interface FormErrors {
 const CheckoutAddress: React.FC = () => {
   const navigate = useNavigate()
   const { setPaymentSuccess } = usePayment()
+  const { currentUser } = useAuth()
+  const userService = UserService
   const [formData, setFormData] = useState<AddressFormData>({
     // Company Details
     companyName: '',
-    billingGST: '',
     // Billing Address
     billingFirstName: '',
     billingLastName: '',
@@ -393,8 +397,7 @@ const CheckoutAddress: React.FC = () => {
     billingState: '',
     billingPincode: '',
     billingCountry: 'India',
-    
-    
+    billingGST: '',
     // Shipping Address
     shippingFirstName: '',
     shippingLastName: '',
@@ -408,10 +411,50 @@ const CheckoutAddress: React.FC = () => {
     sameAsBilling: true
   })
 
+  // Check authentication and redirect to login if not authenticated
+  React.useEffect(() => {
+    if (!currentUser) {
+      // Save current cart data before redirecting
+      const cartItems = getCart()
+      const cartTotal = getCartTotal()
+      if (cartItems.length > 0) {
+        localStorage.setItem('esthira-cart-backup', JSON.stringify(cartItems))
+        localStorage.setItem('esthira-cart-total-backup', cartTotal.toString())
+      }
+      
+      // Redirect to login with return URL
+      navigate('/login?returnUrl=' + encodeURIComponent('/checkout'))
+    }
+  }, [currentUser, navigate])
+
   const [errors, setErrors] = useState<FormErrors>({})
 
   const cartItems = getCart()
   const cartTotal = getCartTotal()
+
+  // Restore cart data if returning from login
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const returnTo = urlParams.get('returnUrl')
+    
+    if (returnTo === '/checkout' && currentUser) {
+      const savedCart = localStorage.getItem('esthira-cart-backup')
+      const savedTotal = localStorage.getItem('esthira-cart-total-backup')
+      
+      if (savedCart && savedTotal) {
+        try {
+          const cartData = JSON.parse(savedCart)
+          const total = parseFloat(savedTotal)
+          localStorage.setItem('esthira-cart', JSON.stringify(cartData))
+          // Clear backup data
+          localStorage.removeItem('esthira-cart-backup')
+          localStorage.removeItem('esthira-cart-total-backup')
+        } catch (error) {
+          console.error('Error restoring cart:', error)
+        }
+      }
+    }
+  }, [currentUser])
 
   // Scroll to top when page loads or navigates
   useScrollToTop()
@@ -470,18 +513,24 @@ const CheckoutAddress: React.FC = () => {
     // Payment will be handled by PaymentButton
   }
 
-  const handlePaymentSuccess = (paymentResponse: any) => {
-    // Clear cart after successful payment
-    localStorage.setItem('esthira-cart', JSON.stringify([]))
+  const handlePaymentSuccess = async (paymentResponse: any) => {
+    console.log('CheckoutAddress - Payment success handler called:', paymentResponse)
     
-    // Store payment details with address information
-    setPaymentSuccess({
-      ...paymentResponse,
-      items: cartItems,
-      totalAmount: cartTotal,
-      billingAddress: {
+    if (!currentUser) {
+      console.error('❌ No current user found!')
+      return
+    }
+
+    try {
+      console.log('📝 Saving addresses to Firebase...')
+      // Save addresses to Firebase if user is logged in
+      let billingAddressId = ''
+      let shippingAddressId = ''
+      
+      // Save billing address
+      const billingAddress = await userService.addAddress(currentUser.uid, {
+        type: 'billing',
         companyName: formData.companyName,
-        gst: formData.billingGST,
         firstName: formData.billingFirstName,
         lastName: formData.billingLastName,
         email: formData.billingEmail,
@@ -490,36 +539,171 @@ const CheckoutAddress: React.FC = () => {
         city: formData.billingCity,
         state: formData.billingState,
         pincode: formData.billingPincode,
-        country: formData.billingCountry
-        
-      },
-      shippingAddress: formData.sameAsBilling ? {
-        companyName: formData.companyName,
-        firstName: formData.billingFirstName,
-        lastName: formData.billingLastName,
-        phone: formData.billingPhone,
-        address: formData.billingAddress,
-        city: formData.billingCity,
-        state: formData.billingState,
-        pincode: formData.billingPincode,
-        country: formData.billingCountry
-      } : {
-        companyName: formData.companyName,
-        firstName: formData.shippingFirstName,
-        lastName: formData.shippingLastName,
-        phone: formData.shippingPhone,
-        address: formData.shippingAddress,
-        city: formData.shippingCity,
-        state: formData.shippingState,
-        pincode: formData.shippingPincode,
-        country: formData.shippingCountry
-      },
-      timestamp: new Date().toISOString()
-    })
+        country: formData.billingCountry,
+        gst: formData.billingGST,
+        isDefault: true
+      })
+      billingAddressId = billingAddress.id
+      console.log('✅ Billing address saved:', billingAddressId)
 
-    // Show success message and redirect
-    alert('Payment successful! Your order has been placed.')
-    navigate('/order-success')
+      // Save shipping address if different from billing
+      if (!formData.sameAsBilling) {
+        const shippingAddress = await userService.addAddress(currentUser.uid, {
+          type: 'shipping',
+          companyName: formData.companyName,
+          firstName: formData.shippingFirstName,
+          lastName: formData.shippingLastName,
+          email: formData.billingEmail,
+          phone: formData.shippingPhone,
+          address: formData.shippingAddress,
+          city: formData.shippingCity,
+          state: formData.shippingState,
+          pincode: formData.shippingPincode,
+          country: formData.shippingCountry,
+          isDefault: false
+        })
+        shippingAddressId = shippingAddress.id
+        console.log('✅ Shipping address saved:', shippingAddressId)
+      }
+
+      console.log('🛒 Creating order...')
+      // Save order to Firebase
+      if (!currentUser) {
+        throw new Error('User not authenticated');
+      }
+      
+      const order = await userService.createOrder(currentUser.uid, {
+        totalAmount: cartTotal,
+        items: cartItems,
+        billingAddress: {
+          type: 'billing',
+          companyName: formData.companyName,
+          firstName: formData.billingFirstName,
+          lastName: formData.billingLastName,
+          email: formData.billingEmail,
+          phone: formData.billingPhone,
+          address: formData.billingAddress,
+          city: formData.billingCity,
+          state: formData.billingState,
+          pincode: formData.billingPincode,
+          country: formData.billingCountry,
+          gst: formData.billingGST,
+          isDefault: true
+        },
+        shippingAddress: formData.sameAsBilling ? 
+          {
+            type: 'shipping',
+            companyName: formData.companyName,
+            firstName: formData.billingFirstName,
+            lastName: formData.billingLastName,
+            email: formData.billingEmail,
+            phone: formData.billingPhone,
+            address: formData.billingAddress,
+            city: formData.billingCity,
+            state: formData.billingState,
+            pincode: formData.billingPincode,
+            country: formData.billingCountry,
+            isDefault: true
+          } : {
+            type: 'shipping',
+            companyName: formData.companyName,
+            firstName: formData.shippingFirstName,
+            lastName: formData.shippingLastName,
+            email: formData.billingEmail,
+            phone: formData.shippingPhone,
+            address: formData.shippingAddress,
+            city: formData.shippingCity,
+            state: formData.shippingState,
+            pincode: formData.shippingPincode,
+            country: formData.shippingCountry,
+            isDefault: false
+          },
+        status: 'pending' as const,
+        paymentStatus: 'completed' as const
+      })
+      console.log('✅ Order saved to Firebase:', order)
+
+      // Store payment details with address information
+      const paymentData = {
+        ...paymentResponse,
+        items: cartItems,
+        totalAmount: cartTotal,
+        billingAddress: {
+          type: 'billing',
+          companyName: formData.companyName,
+          firstName: formData.billingFirstName,
+          lastName: formData.billingLastName,
+          email: formData.billingEmail,
+          phone: formData.billingPhone,
+          address: formData.billingAddress,
+          city: formData.billingCity,
+          state: formData.billingState,
+          pincode: formData.billingPincode,
+          country: formData.billingCountry,
+          gst: formData.billingGST,
+          isDefault: true
+        },
+        shippingAddress: formData.sameAsBilling ? 
+          {
+            type: 'shipping',
+            companyName: formData.companyName,
+            firstName: formData.billingFirstName,
+            lastName: formData.billingLastName,
+            email: formData.billingEmail,
+            phone: formData.billingPhone,
+            address: formData.billingAddress,
+            city: formData.billingCity,
+            state: formData.billingState,
+            pincode: formData.billingPincode,
+            country: formData.billingCountry,
+            isDefault: true
+          } : {
+            type: 'shipping',
+            companyName: formData.companyName,
+            firstName: formData.shippingFirstName,
+            lastName: formData.shippingLastName,
+            email: formData.billingEmail,
+            phone: formData.shippingPhone,
+            address: formData.shippingAddress,
+            city: formData.shippingCity,
+            state: formData.shippingState,
+            pincode: formData.shippingPincode,
+            country: formData.shippingCountry,
+            isDefault: false
+          },
+        timestamp: Timestamp.now().toDate().toISOString(),
+        orderNumber: order.orderNumber
+      }
+
+      console.log('💾 Setting payment success data:', paymentData)
+
+      // Set payment success data first
+      setPaymentSuccess(paymentData)
+      console.log('✅ Payment success data set in context')
+
+      // Small delay to ensure state is updated before navigation
+      console.log('🚀 Preparing to navigate to order-success...')
+      setTimeout(() => {
+        console.log('🔄 Navigating to /order-success')
+        navigate('/order-success')
+      }, 100)
+    } catch (error: any) {
+      console.error('❌ Error processing payment success:', error)
+      console.error('❌ Error details:', {
+        message: error.message,
+        code: error.code,
+        stack: error.stack
+      })
+      
+      // More specific error messages
+      if (error.code === 'permission-denied') {
+        alert('Payment successful but there was a permission error saving your order. Please contact support.')
+      } else if (error.code === 'unavailable') {
+        alert('Payment successful but the database is temporarily unavailable. Please try again or contact support.')
+      } else {
+        alert('Payment successful but there was an error saving your order. Please contact support.')
+      }
+    }
   }
 
   const handlePaymentFailure = (error: any) => {
@@ -880,13 +1064,13 @@ const CheckoutAddress: React.FC = () => {
                   productName="eSthira Purchase"
                   productDescription={`Order with ${cartItems.length} item(s)`}
                   customerInfo={{
-                    name: `${formData.billingFirstName} ${formData.billingLastName}`,
+                    name: currentUser ? `${formData.billingFirstName} ${formData.billingLastName}` : undefined,
                     email: formData.billingEmail,
                     contact: formData.billingPhone
                   }}
                   onSuccess={handlePaymentSuccess}
                   onFailure={handlePaymentFailure}
-                  disabled={!isFormValid()}
+                  disabled={!currentUser || !isFormValid()}
                   size="large"
                 >
                   💳 Pay ₹{Math.round(cartTotal).toLocaleString('en-IN')}
