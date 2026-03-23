@@ -16,7 +16,7 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
-// Validate required environment variables (production only)
+// Validate required environment variables
 const requiredEnvVars = [
   'REACT_APP_FIREBASE_API_KEY',
   'REACT_APP_FIREBASE_AUTH_DOMAIN',
@@ -24,12 +24,19 @@ const requiredEnvVars = [
   'REACT_APP_FIREBASE_APP_ID'
 ];
 
-// Only validate in development to avoid production logs
-if (process.env.NODE_ENV === 'development') {
-  const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
-  
-  if (missingEnvVars.length > 0) {
-    console.error('Missing required Firebase environment variables:', missingEnvVars);
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+  if (process.env.NODE_ENV === 'development') {
+    console.warn('⚠️ Missing Firebase environment variables:', missingEnvVars);
+    console.warn('📝 Please add these to your .env file or Netlify environment variables');
+    console.warn('📋 See .env.example for required variables');
+    
+    // For development, we'll throw the error to make it obvious
+    throw new Error(`Missing Firebase configuration: ${missingEnvVars.join(', ')}`);
+  } else {
+    // In production, this should never happen if Netlify env vars are set
+    console.error('❌ Missing Firebase configuration in production');
     throw new Error(`Missing Firebase configuration: ${missingEnvVars.join(', ')}`);
   }
 }
