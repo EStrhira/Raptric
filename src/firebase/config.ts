@@ -5,58 +5,64 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-// Firebase configuration from environment variables
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
-};
+// Firebase configuration - will be loaded at runtime
+let app: any;
+let auth: any;
+let db: any;
+let storage: any;
+let analytics: any;
+let googleProvider: any;
 
-// Validate required environment variables
-const requiredEnvVars = [
-  'REACT_APP_FIREBASE_API_KEY',
-  'REACT_APP_FIREBASE_AUTH_DOMAIN',
-  'REACT_APP_FIREBASE_PROJECT_ID',
-  'REACT_APP_FIREBASE_APP_ID'
-];
+// Initialize Firebase with runtime environment variables
+const initializeFirebase = () => {
+  if (app) return app; // Already initialized
 
-const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+  // Get configuration from runtime environment variables
+  const firebaseConfig = {
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+  };
 
-if (missingEnvVars.length > 0) {
-  if (process.env.NODE_ENV === 'development') {
+  // Validate required environment variables
+  const requiredEnvVars = [
+    'REACT_APP_FIREBASE_API_KEY',
+    'REACT_APP_FIREBASE_AUTH_DOMAIN',
+    'REACT_APP_FIREBASE_PROJECT_ID',
+    'REACT_APP_FIREBASE_APP_ID'
+  ];
+
+  const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+  if (missingEnvVars.length > 0) {
     console.warn('⚠️ Missing Firebase environment variables:', missingEnvVars);
     console.warn('📝 Please add these to your .env file or Netlify environment variables');
     console.warn('📋 See .env.example for required variables');
-    
-    // For development, we'll throw the error to make it obvious
-    throw new Error(`Missing Firebase configuration: ${missingEnvVars.join(', ')}`);
-  } else {
-    // In production, this should never happen if Netlify env vars are set
-    console.error('❌ Missing Firebase configuration in production');
     throw new Error(`Missing Firebase configuration: ${missingEnvVars.join(', ')}`);
   }
-}
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+  // Initialize Firebase
+  app = initializeApp(firebaseConfig);
+  analytics = getAnalytics(app);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  storage = getStorage(app);
+  googleProvider = new GoogleAuthProvider();
+  googleProvider.setCustomParameters({
+    prompt: 'select_account'
+  });
 
-// Initialize Firebase services
-export const analytics = getAnalytics(app);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+  return app;
+};
 
-// Google Auth Provider
-export const googleProvider = new GoogleAuthProvider();
+// Initialize Firebase immediately when module is imported
+initializeFirebase();
 
-// Configure Google Provider
-googleProvider.setCustomParameters({
-  prompt: 'select_account'
-});
+// Export the Firebase instances for backward compatibility
+export { app, auth, db, storage, analytics, googleProvider };
 
-// Export app instance
 export default app;
