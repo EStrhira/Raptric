@@ -119,26 +119,41 @@ export class RazorpayService {
   // Verify payment (optional)
   async verifyPayment(paymentId: string, orderId: string, signature: string): Promise<boolean> {
     try {
-      const response = await fetch('/api/verify-payment', {
+      console.log('🔍 Starting payment verification:', {
+        paymentId,
+        orderId,
+        hasSignature: !!signature
+      });
+
+      const response = await fetch('/.netlify/functions/verify-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          payment_id: paymentId,
-          order_id: orderId,
-          signature,
+          razorpay_payment_id: paymentId,
+          razorpay_order_id: orderId,
+          razorpay_signature: signature,
         }),
       })
 
+      console.log('📡 Verification response status:', response.status);
+
       if (!response.ok) {
-        throw new Error('Payment verification failed')
+        const errorText = await response.text();
+        console.error('❌ Verification failed:', {
+          status: response.status,
+          statusText: response.statusText,
+          errorText
+        });
+        throw new Error(`Payment verification failed: ${response.status} ${response.statusText}`);
       }
 
-      const result = await response.json()
+      const result = await response.json();
+      console.log('✅ Verification result:', result);
       return result.success
     } catch (error) {
-      console.error('Error verifying payment:', error)
+      console.error('💥 Error verifying payment:', error);
       return false
     }
   }
