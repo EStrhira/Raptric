@@ -33,7 +33,7 @@ if (typeof window !== 'undefined' && process.env.REACT_APP_FIREBASE_API_KEY) {
 ### **For Local Development:**
 Your `.env` file contains:
 ```env
-REACT_APP_FIREBASE_API_KEY=AIzaSyBqDlkTbxnSspi6YE3magsTBl9fyF4vjfo
+REACT_APP_FIREBASE_API_KEY=your_firebase_api_key_here
 REACT_APP_FIREBASE_AUTH_DOMAIN=esthira-raptric.firebaseapp.com
 REACT_APP_FIREBASE_PROJECT_ID=esthira-raptric
 REACT_APP_FIREBASE_STORAGE_BUCKET=esthira-raptric.firebasestorage.app
@@ -45,7 +45,7 @@ REACT_APP_FIREBASE_MEASUREMENT_ID=G-F5L1D7JM1F
 ### **For Netlify Production:**
 Add these environment variables in Netlify Dashboard:
 ```
-REACT_APP_FIREBASE_API_KEY=AIzaSyBqDlkTbxnSspi6YE3magsTBl9fyF4vjfo
+REACT_APP_FIREBASE_API_KEY=your_firebase_api_key_here
 REACT_APP_FIREBASE_AUTH_DOMAIN=esthira-raptric.firebaseapp.com
 REACT_APP_FIREBASE_PROJECT_ID=esthira-raptric
 REACT_APP_FIREBASE_STORAGE_BUCKET=esthira-raptric.firebasestorage.app

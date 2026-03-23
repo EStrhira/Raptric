@@ -6,7 +6,7 @@
 2. Add the following environment variables:
 
 ```
-REACT_APP_FIREBASE_API_KEY=AIzaSyBqDlkTbxnSspi6YE3magsTBl9fyF4vjfo
+REACT_APP_FIREBASE_API_KEY=your_firebase_api_key_here
 REACT_APP_FIREBASE_AUTH_DOMAIN=esthira-raptric.firebaseapp.com
 REACT_APP_FIREBASE_PROJECT_ID=esthira-raptric
 REACT_APP_FIREBASE_STORAGE_BUCKET=esthira-raptric.firebasestorage.app
