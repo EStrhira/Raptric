@@ -125,7 +125,7 @@ export class RazorpayService {
         hasSignature: !!signature
       });
 
-      const response = await fetch('/.netlify/functions/verify-payment', {
+      const response = await fetch('/.netlify/functions/verify-payment-test', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -53,7 +53,10 @@ exports.handler = async (event) => {
       razorpay_order_id,
       razorpay_payment_id,
       bodyForSignature: body,
-      signatureValid: expectedSignature === razorpay_signature
+      expectedSignature: expectedSignature,
+      receivedSignature: razorpay_signature,
+      secretLength: secret ? secret.length : 0,
+      bodyLength: body.length
     });
 
     if (expectedSignature === razorpay_signature) {
