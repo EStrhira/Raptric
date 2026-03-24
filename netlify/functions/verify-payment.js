@@ -12,13 +12,13 @@ exports.handler = async (event) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = JSON.parse(event.body);
 
-    // Validate required fields
-    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+    // Validate required fields - order_id can be empty for direct payments
+    if (!razorpay_payment_id || !razorpay_signature) {
       return {
         statusCode: 400,
         body: JSON.stringify({ 
           success: false, 
-          error: 'Missing required fields: razorpay_order_id, razorpay_payment_id, razorpay_signature' 
+          error: 'Missing required fields: razorpay_payment_id, razorpay_signature' 
         }),
       };
     }
@@ -37,7 +37,12 @@ exports.handler = async (event) => {
       };
     }
 
-    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    // For Razorpay signature verification:
+    // - For order payments: body = "order_id|payment_id"
+    // - For direct payments: body = "payment_id" (no order_id)
+    const body = (razorpay_order_id && razorpay_order_id !== '') 
+      ? razorpay_order_id + "|" + razorpay_payment_id
+      : razorpay_payment_id;
 
     const expectedSignature = crypto
       .createHmac("sha256", secret)
@@ -47,6 +52,7 @@ exports.handler = async (event) => {
     console.log('Payment verification attempt:', {
       razorpay_order_id,
       razorpay_payment_id,
+      bodyForSignature: body,
       signatureValid: expectedSignature === razorpay_signature
     });
 
@@ -63,7 +69,12 @@ exports.handler = async (event) => {
         statusCode: 400,
         body: JSON.stringify({ 
           success: false, 
-          error: 'Invalid signature' 
+          error: 'Invalid signature',
+          debug: {
+            body: body,
+            expectedSignature: expectedSignature,
+            receivedSignature: razorpay_signature
+          }
         }),
       };
     }
@@ -73,7 +84,8 @@ exports.handler = async (event) => {
       statusCode: 500,
       body: JSON.stringify({ 
         success: false, 
-        error: 'Internal server error' 
+        error: 'Internal server error',
+        details: err.message 
       }),
     };
   }
