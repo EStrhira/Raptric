@@ -7,8 +7,13 @@
   SECRETS_SCAN_SMART_DETECTION_OMIT_VALUES = "AIza"
 
 [[redirects]]
+  from = "/api/create-order"
+  to = "/.netlify/functions/create-order"
+  status = 200
+
+[[redirects]]
   from = "/api/verify-payment"
-  to = "/.netlify/functions/verify-payment"
+  to = "/.netlify/functions/verify-payment-fixed"
   status = 200
 
 [[redirects]]

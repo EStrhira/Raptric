@@ -58,13 +58,39 @@ export class RazorpayService {
     }
   }
 
-  async createOrder(amount: number): Promise<any> {
-    // For live mode, we'll skip order creation and use direct payment
-    // This avoids 400 errors from Razorpay API
-    return {
-      id: undefined, // Skip order_id for direct payment
-      amount: amount * 100, // Razorpay expects amount in paise
-      currency: 'INR'
+  async createOrder(amount: number, receipt?: string): Promise<any> {
+    try {
+      const response = await fetch('/.netlify/functions/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: amount * 100, // Razorpay expects amount in paise
+          currency: 'INR',
+          receipt: receipt || `receipt_${Date.now()}`,
+          notes: {
+            timestamp: new Date().toISOString()
+          }
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ Order creation failed:', {
+          status: response.status,
+          statusText: response.statusText,
+          errorText
+        });
+        throw new Error(`Order creation failed: ${response.status} ${response.statusText}`);
+      }
+
+      const order = await response.json();
+      console.log('✅ Order created successfully:', order);
+      return order;
+    } catch (error) {
+      console.error('💥 Error creating order:', error);
+      throw error;
     }
   }
 
@@ -81,7 +107,7 @@ export class RazorpayService {
         key: BUSINESS_INFO.social.razorpay.apiKey,
         amount: order.amount,
         currency: order.currency,
-        order_id: order.id, // Will be undefined for direct payment
+        order_id: order.id, // Use actual order ID from backend
         name: options.name,
         description: options.description,
         image: options.image || '/E Sthira Logo Black.png',
@@ -125,7 +151,7 @@ export class RazorpayService {
         hasSignature: !!signature
       });
 
-      const response = await fetch('/.netlify/functions/verify-payment-test', {
+      const response = await fetch('/.netlify/functions/verify-payment-fixed', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
