@@ -1,6 +1,14 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const { GooglePlacesApi } = require('@googlemaps/google-maps-services-js');
+const {
+  corsHandler,
+  contactFormSchema,
+  orderConfirmationSchema,
+  welcomeEmailSchema,
+  emailTemplates,
+  sendEmail
+} = require('./emailService');
 
 // Initialize Firebase Admin
 admin.initializeApp();
@@ -211,4 +219,168 @@ exports.cleanupOldReviews = functions.https.onRequest(async (req, res) => {
       error: error.message
     });
   }
+});
+
+// ==================== EMAIL FUNCTIONS ====================
+
+/**
+ * Cloud Function to send contact form email
+ * POST /send-contact-email
+ */
+exports.sendContactEmail = functions.https.onRequest((req, res) => {
+  return corsHandler(req, res, async () => {
+    try {
+      // Only allow POST requests
+      if (req.method !== 'POST') {
+        return res.status(405).json({
+          success: false,
+          error: 'Method not allowed'
+        });
+      }
+
+      // Validate request body
+      const { error, value } = contactFormSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid input data',
+          details: error.details.map(d => d.message)
+        });
+      }
+
+      const { name, email, message, phone } = value;
+
+      // Send email to admin
+      const emailTemplate = emailTemplates.contactForm({ name, email, message, phone });
+      await sendEmail('info.esthira@gmail.com', emailTemplate.subject, emailTemplate.html);
+
+      console.log(`Contact form email sent from ${email}`);
+
+      res.status(200).json({
+        success: true,
+        message: 'Contact form submitted successfully'
+      });
+
+    } catch (error) {
+      console.error('Error sending contact email:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to send contact email',
+        message: error.message
+      });
+    }
+  });
+});
+
+/**
+ * Cloud Function to send order confirmation email
+ * POST /send-order-email
+ */
+exports.sendOrderEmail = functions.https.onRequest((req, res) => {
+  return corsHandler(req, res, async () => {
+    try {
+      // Only allow POST requests
+      if (req.method !== 'POST') {
+        return res.status(405).json({
+          success: false,
+          error: 'Method not allowed'
+        });
+      }
+
+      // Validate request body
+      const { error, value } = orderConfirmationSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid input data',
+          details: error.details.map(d => d.message)
+        });
+      }
+
+      const { orderId, userEmail, userName, orderItems, totalAmount, shippingAddress, estimatedDelivery, paymentMethod } = value;
+
+      // Send order confirmation email to user
+      const emailTemplate = emailTemplates.orderConfirmation({
+        orderId,
+        userEmail,
+        userName,
+        orderItems,
+        totalAmount,
+        shippingAddress,
+        estimatedDelivery,
+        paymentMethod
+      });
+
+      await sendEmail(userEmail, emailTemplate.subject, emailTemplate.html);
+
+      console.log(`Order confirmation email sent to ${userEmail} for order ${orderId}`);
+
+      res.status(200).json({
+        success: true,
+        message: 'Order confirmation email sent successfully'
+      });
+
+    } catch (error) {
+      console.error('Error sending order email:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to send order email',
+        message: error.message
+      });
+    }
+  });
+});
+
+/**
+ * Cloud Function to send welcome email
+ * POST /send-welcome-email
+ */
+exports.sendWelcomeEmail = functions.https.onRequest((req, res) => {
+  return corsHandler(req, res, async () => {
+    try {
+      // Only allow POST requests
+      if (req.method !== 'POST') {
+        return res.status(405).json({
+          success: false,
+          error: 'Method not allowed'
+        });
+      }
+
+      // Validate request body
+      const { error, value } = welcomeEmailSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid input data',
+          details: error.details.map(d => d.message)
+        });
+      }
+
+      const { userEmail, userName, loginMethod } = value;
+
+      // Send welcome email to user
+      const emailTemplate = emailTemplates.welcomeEmail({
+        userEmail,
+        userName,
+        loginMethod
+      });
+
+      await sendEmail(userEmail, emailTemplate.subject, emailTemplate.html);
+
+      console.log(`Welcome email sent to ${userEmail}`);
+
+      res.status(200).json({
+        success: true,
+        message: 'Welcome email sent successfully'
+      });
+
+    } catch (error) {
+      console.error('Error sending welcome email:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to send welcome email',
+        message: error.message
+      });
+    }
+  });
 });

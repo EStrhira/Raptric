@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ContactInfo } from '../lib/sanity'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
+import { useContactForm } from '../hooks/useEmail'
 
 const ContactSection = styled.section`
   padding: 80px 0;
@@ -187,7 +188,8 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
     message: ''
   })
   const [notification, setNotification] = useState<{ type: 'success' | 'error' | 'info', message: string } | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  
+  const { submitContactForm, loading, error, success } = useContactForm()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -214,27 +216,16 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
       return
     }
     
-    setIsSubmitting(true)
-    
     try {
-      // Send email via Netlify serverless function
-      const response = await fetch('/.netlify/functions/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          subject: formData.subject || 'Contact Form Submission',
-          message: formData.message
-        })
+      // Send email using our new email service
+      await submitContactForm({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: `${formData.subject}\n\n${formData.message}`
       })
 
-      const result = await response.json()
-
-      if (response.ok && result.success) {
+      if (success) {
         // Show success message
         setNotification({ 
           type: 'success', 
@@ -251,19 +242,15 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
         })
         
         setTimeout(() => setNotification(null), 10000)
-      } else {
-        throw new Error(result.error || 'Failed to send email')
       }
       
     } catch (error) {
       console.error('Error sending email:', error)
       setNotification({ 
         type: 'error', 
-        message: 'There was an error sending your message. Please try again or email us directly at info@esthira.com' 
+        message: 'There was an error sending your message. Please try again or email us directly at info.esthira@gmail.com' 
       })
       setTimeout(() => setNotification(null), 5000)
-    } finally {
-      setIsSubmitting(false)
     }
   }
 
@@ -381,8 +368,8 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
                   required
                 />
               </FormGroup>
-              <SubmitButton type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+              <SubmitButton type="submit" disabled={loading}>
+                {loading ? 'Sending...' : 'Send Message'}
               </SubmitButton>
             </ContactForm>
           </ContactContent>
