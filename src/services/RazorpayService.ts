@@ -143,6 +143,11 @@ export class RazorpayService {
     console.log('🔍 Order notes:', order.notes);
     console.log('🔍 Development mode check:', isDevelopment);
     console.log('🔍 Mock order detection:', order.notes?.development_mode);
+    console.log('🔍 Amount flow:', {
+      originalInput: options.amount,        // Amount from PaymentButton (₹1)
+      orderAmount: order.amount,           // Amount from order (100 paise)
+      currency: order.currency             // Currency (INR)
+    });
     
     // Always open the Razorpay payment modal (even for mock orders in development)
     // This allows users to see the payment gateway interface
@@ -150,7 +155,7 @@ export class RazorpayService {
     return new Promise((resolve, reject) => {
       const razorpayOptions = {
         key: BUSINESS_INFO.social.razorpay.apiKey,
-        amount: order.amount,
+        amount: order.amount, // Already in paise from createOrder conversion
         currency: order.currency,
         // Only pass order_id if it's not a mock order
         ...(order.notes?.development_mode ? {} : { order_id: order.id }),
