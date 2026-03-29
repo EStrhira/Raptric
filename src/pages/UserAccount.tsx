@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { Container } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 import { useAuth } from '../context/AuthContext'
 import LoginButton from '../components/LoginButton'
-import { Timestamp } from 'firebase/firestore'
 
 const UserAccountSection = styled.section`
   padding: 0;

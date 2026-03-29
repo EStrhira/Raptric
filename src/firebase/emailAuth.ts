@@ -6,10 +6,20 @@ import {
 } from "firebase/auth";
 import { auth } from "./config";
 import UserService from "./userService";
+import { firebaseConfigStatus } from "./config";
 
 class EmailAuthService {
+  // Check Firebase configuration before operations
+  private checkFirebaseConfig() {
+    if (!firebaseConfigStatus.isConfigured) {
+      throw new Error('Firebase is not properly configured. Please check your environment variables.');
+    }
+  }
+
   // Sign in with email and password
   async signInWithEmail(email: string, password: string) {
+    this.checkFirebaseConfig();
+    
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       
@@ -123,4 +133,5 @@ class EmailAuthService {
   }
 }
 
-export default new EmailAuthService();
+const emailAuthService = new EmailAuthService();
+export default emailAuthService;

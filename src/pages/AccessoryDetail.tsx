@@ -128,14 +128,14 @@ const CarouselContainer = styled.div`
   }
 `
 
-const CarouselSlide = styled.div<{ isActive?: boolean }>`
+const CarouselSlide = styled.div<{ $isActive?: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: ${props => props.isActive ? 1 : 0};
-  transform: ${props => props.isActive ? 'translateX(0)' : 'translateX(100%)'};
+  opacity: ${props => props.$isActive ? 1 : 0};
+  transform: ${props => props.$isActive ? 'translateX(0)' : 'translateX(100%)'};
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   
   img {
@@ -598,7 +598,7 @@ const AccessoryDetail: React.FC = () => {
               <CarouselContainer>
                 {accessory.images && accessory.images.length > 0 ? (
                   <>
-                    <CarouselSlide isActive={true}>
+                    <CarouselSlide $isActive={true}>
                       <img 
                         src={getCurrentImage() || ''} 
                         alt={accessory.name} 

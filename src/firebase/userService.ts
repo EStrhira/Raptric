@@ -12,8 +12,7 @@ import {
 } from "firebase/firestore";
 import { 
   signInWithPopup, 
-  signOut as firebaseSignOut,
-  GoogleAuthProvider 
+  signOut as firebaseSignOut
 } from "firebase/auth";
 import { auth, db, googleProvider } from "./config";
 

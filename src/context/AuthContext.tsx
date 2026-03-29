@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User } from 'firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase/config';
+import { auth, firebaseConfigStatus } from '../firebase/config';
 import UserService, { UserProfile, UserAddress, UserOrder } from '../firebase/userService';
 import EmailAuthService from '../firebase/emailAuth';
 
@@ -11,6 +11,7 @@ interface AuthContextType {
   userAddresses: UserAddress[];
   userOrders: UserOrder[];
   loading: boolean;
+  firebaseConfigured: boolean;
   signInWithGoogle: () => Promise<User>;
   signInWithEmail: (email: string, password: string) => Promise<User>;
   createAccountWithEmail: (email: string, password: string, displayName?: string) => Promise<User>;
@@ -34,6 +35,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [userAddresses, setUserAddresses] = useState<UserAddress[]>([]);
   const [userOrders, setUserOrders] = useState<UserOrder[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Check Firebase configuration before initializing
+  useEffect(() => {
+    try {
+      // Check if Firebase is properly configured
+      if (!firebaseConfigStatus.isConfigured) {
+        console.warn('⚠️ Firebase is not properly configured');
+        setError('Firebase is not properly configured');
+        setLoading(false);
+        return;
+      }
+      
+      console.log('✅ Firebase is properly configured, initializing auth...');
+    } catch (err) {
+      console.error('❌ Firebase configuration error:', err);
+      setError('Firebase configuration error');
+      setLoading(false);
+    }
+  }, []);
 
   // Sign in with Google
   const signInWithGoogle = async (): Promise<User> => {
@@ -149,42 +170,58 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Listen to auth state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setCurrentUser(user);
-      setLoading(true);
+    // Don't initialize auth if Firebase is not configured
+    if (!firebaseConfigStatus.isConfigured) {
+      console.warn('⚠️ Skipping auth initialization - Firebase not configured');
+      return;
+    }
 
-      if (user) {
-        try {
-          // Get or create user profile
-          let profile = await UserService.getUser(user.uid);
-          if (!profile) {
-            profile = await UserService.createUser(user);
+    try {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        console.log('🔍 Auth state changed:', user ? `User ${user.uid}` : 'No user');
+        setCurrentUser(user);
+        setLoading(true);
+
+        if (user) {
+          try {
+            // Get or create user profile
+            let profile = await UserService.getUser(user.uid);
+            if (!profile) {
+              profile = await UserService.createUser(user);
+            }
+
+            // Get user addresses and orders
+            const [addresses, orders] = await Promise.all([
+              UserService.getAddresses(user.uid),
+              UserService.getOrders(user.uid)
+            ]);
+
+            setUserProfile(profile);
+            setUserAddresses(addresses);
+            setUserOrders(orders);
+            console.log('✅ User data loaded successfully');
+          } catch (error) {
+            console.error('❌ Error loading user data:', error);
+            setError('Failed to load user data');
           }
-
-          // Get user addresses and orders
-          const [addresses, orders] = await Promise.all([
-            UserService.getAddresses(user.uid),
-            UserService.getOrders(user.uid)
-          ]);
-
-          setUserProfile(profile);
-          setUserAddresses(addresses);
-          setUserOrders(orders);
-        } catch (error) {
-          console.error('Error loading user data:', error);
+        } else {
+          // Clear user data when signed out
+          setUserProfile(null);
+          setUserAddresses([]);
+          setUserOrders([]);
+          console.log('✅ User signed out, data cleared');
         }
-      } else {
-        // Clear user data when signed out
-        setUserProfile(null);
-        setUserAddresses([]);
-        setUserOrders([]);
-      }
 
+        setLoading(false);
+      });
+
+      return unsubscribe;
+    } catch (error) {
+      console.error('❌ Error setting up auth listener:', error);
+      setError('Failed to initialize authentication');
       setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
+    }
+  }, [firebaseConfigStatus.isConfigured]);
 
   const value: AuthContextType = {
     currentUser,
@@ -192,6 +229,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     userAddresses,
     userOrders,
     loading,
+    firebaseConfigured: Boolean(firebaseConfigStatus.isConfigured),
     signInWithGoogle,
     signInWithEmail,
     createAccountWithEmail,
@@ -211,9 +249,49 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 };
 
 export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  try {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+      console.error('❌ useAuth must be used within an AuthProvider');
+      // Return a fallback context to prevent crashes
+      return {
+        currentUser: null,
+        userProfile: null,
+        userAddresses: [],
+        userOrders: [],
+        loading: false,
+        firebaseConfigured: false,
+        signInWithGoogle: async () => { throw new Error('Auth not initialized'); },
+        signInWithEmail: async () => { throw new Error('Auth not initialized'); },
+        createAccountWithEmail: async () => { throw new Error('Auth not initialized'); },
+        resetPassword: async () => { throw new Error('Auth not initialized'); },
+        signOut: async () => { throw new Error('Auth not initialized'); },
+        addAddress: async () => { throw new Error('Auth not initialized'); },
+        updateAddress: async () => { throw new Error('Auth not initialized'); },
+        deleteAddress: async () => { throw new Error('Auth not initialized'); },
+        refreshUserData: async () => { throw new Error('Auth not initialized'); }
+      };
+    }
+    return context;
+  } catch (error) {
+    console.error('❌ Error in useAuth hook:', error);
+    // Return a fallback context to prevent crashes
+    return {
+      currentUser: null,
+      userProfile: null,
+      userAddresses: [],
+      userOrders: [],
+      loading: false,
+      firebaseConfigured: false,
+      signInWithGoogle: async () => { throw new Error('Auth not initialized'); },
+      signInWithEmail: async () => { throw new Error('Auth not initialized'); },
+      createAccountWithEmail: async () => { throw new Error('Auth not initialized'); },
+      resetPassword: async () => { throw new Error('Auth not initialized'); },
+      signOut: async () => { throw new Error('Auth not initialized'); },
+      addAddress: async () => { throw new Error('Auth not initialized'); },
+      updateAddress: async () => { throw new Error('Auth not initialized'); },
+      deleteAddress: async () => { throw new Error('Auth not initialized'); },
+      refreshUserData: async () => { throw new Error('Auth not initialized'); }
+    };
   }
-  return context;
 };

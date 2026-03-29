@@ -1,17 +1,80 @@
 import { createClient } from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 
+/**
+ * Sanity client configuration
+ * Uses CDN for production builds for better performance
+ */
 export const client = createClient({
   projectId: 'wtyitmmo',
   dataset: 'production',
-  useCdn: false,
+  useCdn: process.env.NODE_ENV === 'production', // Enable CDN in production
   apiVersion: '2024-01-01',
+  perspective: 'published', // Only show published content
 })
 
-const builder = imageUrlBuilder(client)
+/**
+ * Image URL builder using the new Sanity Image URL API
+ * Replaces the deprecated imageUrlBuilder
+ */
+const imageBuilder = createImageUrlBuilder(client)
 
+/**
+ * Generates optimized image URLs for Sanity assets
+ * @param source - Sanity image asset reference
+ * @returns Image URL builder instance
+ */
 export function urlFor(source: any) {
-  return builder.image(source)
+  return imageBuilder.image(source)
+}
+
+/**
+ * Generates image URLs with common options
+ * @param source - Sanity image asset reference
+ * @param options - Image options (width, height, format, quality)
+ * @returns Complete image URL string
+ */
+export function buildImageUrl(
+  source: any, 
+  options: {
+    width?: number;
+    height?: number;
+    format?: 'webp' | 'jpg' | 'png';
+    quality?: number;
+    fit?: 'clip' | 'crop' | 'fill' | 'max' | 'scale';
+  } = {}
+): string {
+  let builder = imageBuilder.image(source)
+  
+  // Apply dimensions
+  if (options.width) builder = builder.width(options.width)
+  if (options.height) builder = builder.height(options.height)
+  
+  // Apply format and quality
+  if (options.format) builder = builder.format(options.format)
+  if (options.quality) builder = builder.quality(options.quality)
+  
+  // Apply fit mode (using correct Sanity FitMode values)
+  if (options.fit) builder = builder.fit(options.fit)
+  
+  // Auto-format for WebP support
+  if (!options.format && options.width) {
+    builder = builder.auto('format')
+  }
+  
+  return builder.url()
+}
+
+/**
+ * Responsive image URL generator
+ * @param source - Sanity image asset reference
+ * @returns Responsive image builder
+ */
+export function urlForResponsive(source: any) {
+  return imageBuilder
+    .image(source)
+    .auto('format')
+    .fit('max')
 }
 
 // Types for our content

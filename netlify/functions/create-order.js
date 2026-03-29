@@ -1,91 +1,52 @@
-const Razorpay = require('razorpay');
+const Razorpay = require("razorpay");
 
 exports.handler = async (event) => {
-  // Only allow POST requests
-  if (event.httpMethod !== 'POST') {
-    return { 
-      statusCode: 405, 
-      body: JSON.stringify({ error: 'Method not allowed' }) 
-    };
-  }
-
   try {
-    const { amount, currency = 'INR', receipt, notes } = JSON.parse(event.body);
+    console.log("=== CREATE ORDER START ===");
 
-    // Validate required fields
-    if (!amount) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ 
-          success: false, 
-          error: 'Missing required field: amount' 
-        }),
-      };
+    const { amount } = JSON.parse(event.body);
+    console.log("Amount received:", amount);
+
+    // ✅ Check env variables - Updated variable names
+    if (!process.env.RAZORPAY_KEY_ID && !process.env.RAZORPAY_KEY_SECRET) {
+      // Try alternative variable names
+      const keyId = process.env.RAZORPAY_KEY_ID || process.env.RAZORPAY_API_KEY;
+      const keySecret = process.env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_API_SECRET;
+      
+      if (!keyId || !keySecret) {
+        throw new Error("Missing Razorpay environment variables. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET");
+      }
+      
+      process.env.RAZORPAY_KEY_ID = keyId;
+      process.env.RAZORPAY_KEY_SECRET = keySecret;
     }
 
-    // Get Razorpay credentials
-    const key_id = process.env.RAZORPAY_KEY_ID;
-    const key_secret = process.env.RAZORPAY_KEY_SECRET;
-
-    if (!key_id || !key_secret) {
-      console.error('Razorpay credentials not configured');
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ 
-          success: false, 
-          error: 'Server configuration error' 
-        }),
-      };
-    }
-
-    console.log('Creating Razorpay order:', { amount, currency, receipt });
-
-    // Create Razorpay instance
     const razorpay = new Razorpay({
-      key_id: key_id,
-      key_secret: key_secret
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
-    // Create order
-    const orderOptions = {
-      amount: amount,
-      currency: currency,
-      receipt: receipt || `receipt_${Date.now()}`,
-      notes: notes || {},
-      payment_capture: 1
-    };
-
-    const order = await razorpay.orders.create(orderOptions);
-
-    console.log('Order created successfully:', {
-      id: order.id,
-      entity: order.entity,
-      amount: order.amount,
-      currency: order.currency
+    const order = await razorpay.orders.create({
+      amount: amount * 100,
+      currency: "INR",
+      receipt: `receipt_${Date.now()}`,
     });
+
+    console.log("Order created:", order);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ 
-        success: true,
-        order: {
-          id: order.id,
-          entity: order.entity,
-          amount: order.amount,
-          currency: order.currency,
-          receipt: order.receipt
-        }
-      }),
+      body: JSON.stringify(order),
     };
 
-  } catch (err) {
-    console.error('Order creation error:', err);
+  } catch (error) {
+    console.error("❌ ORDER CREATION ERROR:", error);
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ 
-        success: false, 
-        error: 'Order creation failed',
-        details: err.error?.description || err.message 
+      body: JSON.stringify({
+        error: "Order creation failed",
+        message: error.message,
       }),
     };
   }

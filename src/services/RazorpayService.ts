@@ -58,30 +58,63 @@ export class RazorpayService {
     }
   }
 
-  async createOrder(amount: number, receipt?: string): Promise<any> {
+  async createOrder(amount: number): Promise<any> {
     try {
+      console.log('🔧 Creating order with endpoint: /.netlify/functions/create-order', {
+        amount,
+        currency: 'INR',
+        timestamp: new Date().toISOString()
+      });
+
       const response = await fetch('/.netlify/functions/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: amount * 100, // Razorpay expects amount in paise
+          amount: amount * 100, // Convert to paise
           currency: 'INR',
-          receipt: receipt || `receipt_${Date.now()}`,
+          receipt: `receipt_${Date.now()}`,
           notes: {
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            environment: process.env.NODE_ENV || 'development'
           }
         }),
       });
 
+      console.log('📡 Order creation response status:', response.status);
+
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('❌ Order creation failed:', {
+        console.error('❌ Razorpay order creation failed:', {
           status: response.status,
           statusText: response.statusText,
           errorText
         });
+        
+        // If this is a 404 and we're in development, create a mock order
+        const isDevelopment = process.env.NODE_ENV === 'development';
+        if (response.status === 404 && isDevelopment) {
+          console.warn('⚠️ Netlify functions not found in development. This is expected if not using Netlify Dev.');
+          console.warn('💡 To fix this:');
+          console.warn('   1. Run: npm run netlify:dev');
+          console.warn('   2. Or deploy to Netlify for production');
+          console.warn('   3. For now, payment will proceed without server-side order creation');
+          
+          // Return a mock order for development
+          return {
+            id: `order_mock_${Date.now()}`,
+            amount: amount * 100,
+            currency: 'INR',
+            receipt: `receipt_${Date.now()}`,
+            status: 'created',
+            notes: {
+              timestamp: new Date().toISOString(),
+              development_mode: true
+            }
+          };
+        }
+        
         throw new Error(`Order creation failed: ${response.status} ${response.statusText}`);
       }
 
@@ -95,22 +128,32 @@ export class RazorpayService {
   }
 
   async openPaymentModal(options: PaymentOptions): Promise<any> {
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    
     const isLoaded = await this.loadRazorpay()
     if (!isLoaded) {
       throw new Error('Failed to load Razorpay')
     }
 
     const order = await this.createOrder(options.amount)
+    console.log('🔍 Order received in openPaymentModal:', order);
+    console.log('🔍 Order notes:', order.notes);
+    console.log('🔍 Development mode check:', isDevelopment);
+    console.log('🔍 Mock order detection:', order.notes?.development_mode);
     
+    // Always open the Razorpay payment modal (even for mock orders in development)
+    // This allows users to see the payment gateway interface
+    console.log('🔄 Opening Razorpay payment modal...');
     return new Promise((resolve, reject) => {
       const razorpayOptions = {
         key: BUSINESS_INFO.social.razorpay.apiKey,
         amount: order.amount,
         currency: order.currency,
-        order_id: order.id, // Use actual order ID from backend
+        // Only pass order_id if it's not a mock order
+        ...(order.notes?.development_mode ? {} : { order_id: order.id }),
         name: options.name,
         description: options.description,
-        image: options.image || '/E Sthira Logo Black.png',
+        image: options.image || '/eSthira_Logo_Black.png',
         prefill: {
           name: options.prefill?.name || '',
           email: options.prefill?.email || '',
@@ -133,13 +176,14 @@ export class RazorpayService {
           animate: options.modal?.animate !== false,
         },
         handler: (response: any) => {
-          resolve(response)
-        },
-      }
+          console.log('💳 Payment successful:', response);
+          resolve(response);
+        }
+      };
 
-      const rzp = new window.Razorpay(razorpayOptions)
-      rzp.open()
-    })
+      const razorpay = new window.Razorpay(razorpayOptions);
+      razorpay.open();
+    });
   }
 
   // Verify payment (optional)
@@ -151,6 +195,25 @@ export class RazorpayService {
         hasSignature: !!signature
       });
 
+      // Check if this is development mode (mock order)
+      const isDevelopment = process.env.NODE_ENV === 'development';
+      
+      // For real payments, we need to verify with Razorpay
+      // For mock orders, we simulate verification
+      const isMockOrder = orderId.startsWith('order_mock_') || paymentId.startsWith('pay_mock_');
+      
+      if (isMockOrder) {
+        console.log('🧪 Development mode: Simulating payment verification for mock order');
+        
+        // Simulate verification delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Mock verification always succeeds for development
+        console.log('✅ Mock payment verification successful');
+        return true;
+      }
+
+      // For real payments, verify with Razorpay server
       const response = await fetch('/.netlify/functions/verify-payment-fixed', {
         method: 'POST',
         headers: {
@@ -161,7 +224,7 @@ export class RazorpayService {
           razorpay_order_id: orderId,
           razorpay_signature: signature,
         }),
-      })
+      });
 
       console.log('📡 Verification response status:', response.status);
 
@@ -172,15 +235,28 @@ export class RazorpayService {
           statusText: response.statusText,
           errorText
         });
+        
+        // If this is a 404 and we're in development, provide a helpful message
+        if (response.status === 404 && isDevelopment) {
+          console.warn('⚠️ Netlify verification function not found in development. This is expected if not using Netlify Dev.');
+          console.warn('💡 To fix this:');
+          console.warn('   1. Run: npm run netlify:dev');
+          console.warn('   2. Or deploy to Netlify for production');
+          console.warn('   3. For now, payment will be considered verified');
+          
+          // Return true for development mock payments
+          return true;
+        }
+        
         throw new Error(`Payment verification failed: ${response.status} ${response.statusText}`);
       }
 
       const result = await response.json();
-      console.log('✅ Verification result:', result);
-      return result.success
+      console.log('✅ Payment verification result:', result);
+      return result.success || false;
     } catch (error) {
       console.error('💥 Error verifying payment:', error);
-      return false
+      throw error;
     }
   }
 }

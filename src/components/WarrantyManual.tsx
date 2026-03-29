@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Container, SectionTitle } from '../styles/GlobalStyles'
+import { Container } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 
 const WarrantyManualSection = styled.section`

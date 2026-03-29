@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
 import { Container } from '../styles/GlobalStyles'
-import { getCart, removeFromCart, updateQuantity } from '../utils/cart'
+import { getCart, removeFromCart } from '../utils/cart'
 import { useScrollToTop } from '../hooks/useScrollToTop'
-import PaymentButton from '../components/Payment/PaymentButton'
-import { usePayment } from '../context/PaymentContext'
 
 const CartSection = styled.section`
   padding: 80px 0;
@@ -112,7 +110,7 @@ const CartItems = styled.div`
   gap: 1rem;
 `
 
-const CartItem = styled.div`
+const CartItemStyled = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 1.5rem;
@@ -253,25 +251,12 @@ const CartSummary = styled.div`
   top: 100px;
 `
 
-const SummaryTitle = styled.h2`
-  color: #00a652;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-`
-
 const SummaryRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
   color: rgba(255, 255, 255, 0.8);
-`
-
-const SummaryDivider = styled.div`
-  height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-  margin: 1rem 0;
 `
 
 const SummaryTotal = styled.div`
@@ -283,16 +268,10 @@ const SummaryTotal = styled.div`
   border-top: 2px solid rgba(255, 255, 255, 0.1);
 `
 
-const TotalLabel = styled.span`
-  color: #ffffff;
-  font-size: 1.3rem;
-  font-weight: 600;
-`
-
-const TotalAmount = styled.span`
-  color: #00a652;
-  font-size: 1.5rem;
-  font-weight: 700;
+const SummaryDivider = styled.div`
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 1rem 0;
 `
 
 const CheckoutButton = styled.button`
@@ -358,22 +337,10 @@ const ShopNowButton = styled(Link)`
   }
 `
 
-interface CartItem {
-  id: string
-  name: string
-  category: string
-  price: string
-  quantity: number
-  image?: string
-  selectedColor?: string
-  tax?: number  // Tax percentage for accessories
-}
-
 const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
-  const { setPaymentSuccess, setError, clearError } = usePayment()
 
   // Scroll to top when page loads
   useScrollToTop()
@@ -419,44 +386,6 @@ const Cart: React.FC = () => {
       const price = parseFloat(item.price.replace(/[^\d.]/g, ''))
       return total + (price * item.quantity)
     }, 0)
-  }
-
-  const calculateTax = () => {
-    return 0 // No tax
-  }
-
-  const calculateBasePrice = () => {
-    return cartItems.reduce((total, item) => {
-      const price = parseFloat(item.price.replace(/[^\d.]/g, ''))
-      return total + (price * item.quantity)
-    }, 0)
-  }
-
-  const calculateTotal = () => {
-    return calculateBasePrice() // Total equals base price (no tax)
-  }
-
-  const handlePaymentSuccess = (paymentResponse: any) => {
-    // Clear cart after successful payment
-    localStorage.setItem('esthira-cart', JSON.stringify([]))
-    setCartItems([])
-    
-    // Store payment details
-    setPaymentSuccess({
-      ...paymentResponse,
-      items: cartItems,
-      totalAmount: calculateTotal(),
-      timestamp: new Date().toISOString()
-    })
-
-    // Show success message and redirect
-    alert('Payment successful! Thank you for your purchase.')
-    navigate('/order-success')
-  }
-
-  const handlePaymentFailure = (error: any) => {
-    console.error('Payment failed:', error)
-    setError(error.message || 'Payment failed. Please try again.')
   }
 
   const handleCheckout = () => {
@@ -516,7 +445,7 @@ const Cart: React.FC = () => {
             <CartContent>
               <CartItems>
                 {cartItems.map((item) => (
-                  <CartItem key={item.id}>
+                  <CartItemStyled key={item.id}>
                     <ItemImage>
                       {item.image ? (
                         <img src={item.image} alt={item.name} />
@@ -548,7 +477,7 @@ const Cart: React.FC = () => {
                         <i className="fas fa-trash"></i>
                       </RemoveButton>
                     </ItemActions>
-                  </CartItem>
+                  </CartItemStyled>
                 ))}
               </CartItems>
 
@@ -556,13 +485,13 @@ const Cart: React.FC = () => {
                 <h3>💳 Order Summary</h3>
                 <SummaryRow>
                   <span>Subtotal:</span>
-                  <span>₹{calculateBasePrice().toFixed(2)}</span>
+                  <span>₹{calculateSubtotal().toFixed(2)}</span>
                 </SummaryRow>
                 
                 <SummaryDivider />
                 <SummaryTotal>
                   <span>Total:</span>
-                  <span>₹{calculateTotal().toFixed(2)}</span>
+                  <span>₹{calculateSubtotal().toFixed(2)}</span>
                 </SummaryTotal>
                 <CheckoutButton onClick={handleCheckout}>
                   🛍️ Proceed to Checkout

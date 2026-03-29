@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { client, urlFor } from '../lib/sanity'
 import { Container } from '../styles/GlobalStyles'
 import { useScrollToTop } from '../hooks/useScrollToTop'
@@ -308,7 +307,7 @@ const ContactInfo = styled.div`
 `
 
 const Service: React.FC = () => {
-  const [loading, setLoading] = useState(true)
+  const [loading] = useState(true)
 
   // Scroll to top when page loads or navigates
   useScrollToTop()

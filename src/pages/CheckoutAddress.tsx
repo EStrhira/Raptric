@@ -663,7 +663,7 @@ const CheckoutAddress: React.FC = () => {
             isDefault: false
           },
         timestamp: Timestamp.now().toDate().toISOString(),
-        orderNumber: order.orderNumber
+        orderNumber: paymentResponse.orderNumber || `ORD-${Date.now()}`
       }
 
       // Set payment success data first
@@ -753,8 +753,8 @@ const CheckoutAddress: React.FC = () => {
           <CheckoutHeader>
             <CheckoutTitle>Checkout</CheckoutTitle>
             <CheckoutSteps>
-              <Step active>
-                <StepNumber active>1</StepNumber>
+              <Step active={true}>
+                <StepNumber active={true}>1</StepNumber>
                 Address
               </Step>
               <Step>

@@ -247,7 +247,7 @@ const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Get return URL from query params
-  const returnUrl = new URLSearchParams(window.location.search).get('returnUrl') || '/account';
+  const returnUrl = new URLSearchParams(window.location.search).get('returnUrl') || '/';
 
   // Scroll to top when page loads
   useScrollToTop();
@@ -267,7 +267,7 @@ const LoginPage: React.FC = () => {
 
     try {
       await EmailAuthService.signInWithEmail(email, password);
-      setSuccess('Successfully signed in!');
+      setSuccess('Successfully signed in! Redirecting to home page...');
       // Navigation will be handled by useEffect
     } catch (error: any) {
       setError(error.message);
@@ -295,7 +295,7 @@ const LoginPage: React.FC = () => {
       }
 
       await EmailAuthService.createAccountWithEmail(email, password, displayName);
-      setSuccess('Account created successfully!');
+      setSuccess('Account created successfully! Redirecting to home page...');
       // Navigation will be handled by useEffect
     } catch (error: any) {
       setError(error.message);
@@ -309,7 +309,7 @@ const LoginPage: React.FC = () => {
       setError('');
       setSuccess('Signing in...');
       await signInWithGoogle();
-      setSuccess('Successfully signed in!');
+      setSuccess('Successfully signed in! Redirecting to home page...');
       // Navigation will be handled by useEffect
     } catch (error: any) {
       setError(error.message || 'Failed to sign in with Google. Please try again.');

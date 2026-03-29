@@ -20,9 +20,9 @@
 .env.development
 .env.production
 
-# Firebase service account files
+# Firebase service account files (except manifest)
 serviceAccount.json
-*.json
+!manifest.json
 
 # misc
 .DS_Store

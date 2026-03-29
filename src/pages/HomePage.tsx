@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 import Hero from '../components/Hero'
 import RunningCounter from '../components/RunningCounter'
@@ -7,7 +7,6 @@ import ProductFeatures from '../components/ProductFeatures'
 import Benefits from '../components/Benefits'
 import Testimonials from '../components/Testimonials'
 import Support from '../components/Support'
-import Retailers from '../components/Retailers'
 import Contact from '../components/Contact'
 import MechanicalShowcaseSection from '../components/MechanicalShowcaseSection'
 import BUSINESS_INFO from '../constants/businessInfo'
@@ -70,9 +69,6 @@ const fallbackRetailers = [
 const HomePage: React.FC = () => {
   // Scroll to top when page loads or navigates
   useScrollToTop()
-
-  const [testimonials, setTestimonials] = useState(fallbackTestimonials)
-  const [retailers, setRetailers] = useState(fallbackRetailers)
 
   return (
     <>

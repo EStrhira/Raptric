@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { GlobalStyle } from './styles/GlobalStyles'
 import { PaymentProvider } from './context/PaymentContext'
 import { AuthProvider } from './context/AuthContext'
+import AuthErrorBoundary from './components/AuthErrorBoundary'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
@@ -81,14 +82,16 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <PaymentProvider>
-        <Router>
-          <AppContent />
-        </Router>
-      </PaymentProvider>
-    </AuthProvider>
-  )
+    <AuthErrorBoundary>
+      <AuthProvider>
+        <PaymentProvider>
+          <Router>
+            <AppContent />
+          </Router>
+        </PaymentProvider>
+      </AuthProvider>
+    </AuthErrorBoundary>
+  );
 }
 
 export default App

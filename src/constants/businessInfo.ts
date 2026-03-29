@@ -35,7 +35,8 @@ export const BUSINESS_INFO = {
       apiKey: 'YOUR_GOOGLE_API_KEY' // Replace with actual API key
     },
     razorpay: {
-      apiKey: process.env.REACT_APP_RAZORPAY_API_KEY || 'rzp_live_xw842G5NMLMYGb' // Use environment variable
+      apiKey: process.env.REACT_APP_RAZORPAY_API_KEY || 'rzp_live_SWADqU4LI1kctL', // Use live API key for both dev and prod
+      secret: process.env.REACT_APP_RAZORPAY_SECRET || 'u32aiccuZrWg1g5bALWxoL6I' // Use live API secret
     }
   }
 }
