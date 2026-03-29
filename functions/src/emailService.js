@@ -1,9 +1,10 @@
 const { Resend } = require('resend');
 const cors = require('cors');
 const Joi = require('joi');
+const functions = require('firebase-functions');
 
 // Initialize Resend with API key from environment
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || functions.config().resend?.api_key);
 
 // CORS configuration
 const corsHandler = cors({ origin: true });

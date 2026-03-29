@@ -225,24 +225,22 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
         message: `${formData.subject}\n\n${formData.message}`
       })
 
-      if (success) {
-        // Show success message
-        setNotification({ 
-          type: 'success', 
-          message: 'Thank you for your message! We have received your inquiry and will get back to you soon.' 
-        })
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          subject: '',
-          message: ''
-        })
-        
-        setTimeout(() => setNotification(null), 10000)
-      }
+      // Success is handled by the hook's state management
+      setNotification({ 
+        type: 'success', 
+        message: 'Thank you for your message! We have received your inquiry and will get back to you soon.' 
+      })
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      })
+      
+      setTimeout(() => setNotification(null), 10000)
       
     } catch (error) {
       console.error('Error sending email:', error)

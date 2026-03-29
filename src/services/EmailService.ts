@@ -1,5 +1,5 @@
 // Email service for frontend - calls Firebase Cloud Functions
-const EMAIL_SERVICE_URL = 'https://us-central1-esthira-react.cloudfunctions.net';
+const EMAIL_SERVICE_URL = 'https://us-central1-esthira-raptric.cloudfunctions.net';
 
 interface ContactFormData {
   name: string;

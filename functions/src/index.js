@@ -251,8 +251,9 @@ exports.sendContactEmail = functions.https.onRequest((req, res) => {
       const { name, email, message, phone } = value;
 
       // Send email to admin
+      const adminEmail = functions.config().admin?.email || 'info.esthira@gmail.com';
       const emailTemplate = emailTemplates.contactForm({ name, email, message, phone });
-      await sendEmail('info.esthira@gmail.com', emailTemplate.subject, emailTemplate.html);
+      await sendEmail(adminEmail, emailTemplate.subject, emailTemplate.html);
 
       console.log(`Contact form email sent from ${email}`);
 
