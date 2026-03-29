@@ -73,8 +73,13 @@ class UserService {
       }
       
       return result.user;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error signing in with Google:', error);
+      // Ignore popup-closed-by-user error
+      if (error.message && error.message.includes('auth/popup-closed-by-user')) {
+        // Re-throw a silent error that will be caught and ignored by the UI
+        throw new Error('auth/popup-closed-by-user');
+      }
       throw error;
     }
   }
