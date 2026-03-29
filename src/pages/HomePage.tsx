@@ -46,12 +46,6 @@ const fallbackBenefits = [
   { _id: '9', title: 'Accessibility & Inclusivity', description: 'eBikes make cycling accessible to those with physical limitations, in hilly areas, or facing long commutes, reducing barriers and allowing more to enjoy cycling benefits.', order: 9 }
 ]
 
-const fallbackTestimonials = [
-  { _id: '1', quote: 'Har ride ko bana do premium… RAPTRIC ke sath.', authorName: 'Happy Customer', authorTitle: 'Verified Buyer', order: 1 },
-  { _id: '2', quote: 'Another customer, another electric smile ⚡ Welcome to the eSthira family!', authorName: 'New Rider', authorTitle: 'Bangalore', order: 2 },
-  { _id: '3', quote: 'Not just riding… FLYING on wheels 🚴‍♂️💥', authorName: 'Enthusiast', authorTitle: 'Regular Commuter', order: 3 }
-]
-
 const fallbackContactInfo = {
   _id: 'fallback',
   address: BUSINESS_INFO.address.full,
@@ -59,12 +53,6 @@ const fallbackContactInfo = {
   email: BUSINESS_INFO.contact.email,
   workingHours: BUSINESS_INFO.hours.weekdays
 }
-
-const fallbackRetailers = [
-  { _id: '1', name: 'eSthira Bengaluru Headquarters', address: BUSINESS_INFO.address.full, phone: BUSINESS_INFO.contact.phoneFormatted, email: BUSINESS_INFO.contact.email, city: 'Bengaluru', order: 1 },
-  { _id: '2', name: 'eSthira Service Center', address: BUSINESS_INFO.address.full, phone: BUSINESS_INFO.contact.phoneFormatted, email: BUSINESS_INFO.contact.email, city: 'Bengaluru', order: 2 },
-  { _id: '3', name: 'eSthira Sales Office', address: BUSINESS_INFO.address.full, phone: BUSINESS_INFO.contact.phoneFormatted, email: BUSINESS_INFO.contact.email, city: 'Bengaluru', order: 3 }
-]
 
 const HomePage: React.FC = () => {
   // Scroll to top when page loads or navigates
