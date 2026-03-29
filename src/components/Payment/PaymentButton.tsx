@@ -120,10 +120,14 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 
   console.log('🔧 PaymentButton initialized with props:', {
     amount,
+    amountInRupees: amount,
+    amountInPaise: Math.round(amount * 100),
     productName,
     customerInfo,
     hasOnSuccess: !!onSuccess,
     hasOnFailure: !!onFailure,
+    variant,
+    size,
     disabled
   })
 

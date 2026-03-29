@@ -62,6 +62,7 @@ export class RazorpayService {
     try {
       console.log('🔧 Creating order with endpoint: /.netlify/functions/create-order', {
         amount,
+        amountInPaise: Math.round(amount * 100),
         currency: 'INR',
         timestamp: new Date().toISOString()
       });
@@ -72,12 +73,14 @@ export class RazorpayService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: amount * 100, // Convert to paise
+          amount: Math.round(amount * 100), // Convert rupees to paise (₹1 = 100 paise)
           currency: 'INR',
           receipt: `receipt_${Date.now()}`,
           notes: {
             timestamp: new Date().toISOString(),
-            environment: process.env.NODE_ENV || 'development'
+            environment: process.env.NODE_ENV || 'development',
+            originalAmount: amount, // Store original amount for debugging
+            convertedAmount: Math.round(amount * 100) // Store converted amount for debugging
           }
         }),
       });
