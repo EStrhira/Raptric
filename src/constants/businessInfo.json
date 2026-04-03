@@ -1,0 +1,35 @@
+{
+  "name": "eSthira",
+  "address": {
+    "line1": "367, 10T Main, Vidyapeeta Main Road",
+    "line2": "Banashankari 3rd Stage",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "pincode": "560085",
+    "country": "India",
+    "full": "367, 10T Main, Vidyapeeta Main Road, Banashankari 3rd Stage, Bengaluru, Karnataka 560085, India"
+  },
+  "contact": {
+    "phone": "+91 93802 76355",
+    "phoneFormatted": "+919380276355",
+    "email": "info.esthira@gmail.com",
+    "website": "https://esthira.com"
+  },
+  "hours": {
+    "weekdays": "Monday - Sunday: 10:30am to 8:30pm",
+    "weekdays2": "Monday - Saturday, 10:30am to 8:30pm",
+    "sunday": "10:30am to 8:30pm",
+    "sunday2": "10:30am to 8:30pm"
+  },
+  "social": {
+    "facebook": "https://facebook.com/esthira",
+    "instagram": "https://instagram.com/esthira",
+    "twitter": "https://twitter.com/esthira"
+  },
+  "seo": {
+    "siteUrl": "https://esthira.com",
+    "title": "eSthira - Premium Electric Bicycles & Cycles in Bangalore",
+    "description": "Shop premium electric bicycles and traditional cycles at eSthira, Bangalore's leading bicycle retailer. Eco-friendly mobility solutions with expert service.",
+    "keywords": "electric bicycle, e-bike, bicycle shop, Bangalore, premium cycles, electric mobility"
+  }
+}
