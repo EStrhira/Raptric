@@ -10,6 +10,14 @@ const HeroSection = styled.section`
   justify-content: center;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    min-height: 90vh;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 80vh;
+  }
 `
 
 const CarouselContainer = styled.div`
@@ -68,15 +76,24 @@ const HeroContent = styled.div`
   align-items: center;
   height: 100vh;
 
+  @media (max-width: 1024px) {
+    gap: 3rem;
+    padding: 50px 30px;
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     text-align: center;
     padding: 40px 20px;
     gap: 2rem;
+    height: auto;
+    min-height: 90vh;
   }
 
   @media (max-width: 480px) {
     padding: 30px 15px;
+    gap: 1.5rem;
+    min-height: 80vh;
   }
 `
 
@@ -91,8 +108,15 @@ const HeroTitle = styled.h1`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   letter-spacing: -0.5px;
 
+  @media (max-width: 1024px) {
+    font-size: 3rem;
+    margin-bottom: 1.25rem;
+  }
+
   @media (max-width: 768px) {
     font-size: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
   }
 
   @media (max-width: 480px) {
@@ -109,8 +133,21 @@ const HeroSubtitle = styled.p`
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
   max-width: 600px;
 
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
     font-size: 1rem;
+    margin-bottom: 1.25rem;
+    max-width: 500px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    max-width: 100%;
   }
 `
 
@@ -118,6 +155,16 @@ const HeroButtons = styled.div`
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 `
 
 const HeroButton = styled(Link)<{ $variant?: 'primary' | 'secondary' }>`
@@ -130,6 +177,18 @@ const HeroButton = styled(Link)<{ $variant?: 'primary' | 'secondary' }>`
   cursor: pointer;
   border: none;
   font-size: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    width: 100%;
+    text-align: center;
+  }
 
   ${props => props.$variant === 'primary' && `
     background: #ffffff;
@@ -161,6 +220,16 @@ const CarouselIndicators = styled.div`
   display: flex;
   gap: 12px;
   z-index: 3;
+
+  @media (max-width: 768px) {
+    bottom: 20px;
+    gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    bottom: 15px;
+    gap: 8px;
+  }
 `
 
 const Indicator = styled.button<{ $active: boolean }>`
@@ -171,6 +240,11 @@ const Indicator = styled.button<{ $active: boolean }>`
   background: ${props => props.$active ? '#ffffff' : 'rgba(255, 255, 255, 0.5)'};
   cursor: pointer;
   transition: all 0.3s ease;
+
+  @media (max-width: 480px) {
+    width: 10px;
+    height: 10px;
+  }
 
   &:hover {
     background: #ffffff;
@@ -187,6 +261,19 @@ const CounterContainer = styled.div`
   z-index: 3;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+
+  @media (max-width: 768px) {
+    top: 20px;
+    right: 20px;
+    padding: 10px 16px;
+  }
+
+  @media (max-width: 480px) {
+    top: 15px;
+    right: 15px;
+    padding: 8px 12px;
+    border-radius: 20px;
+  }
 `
 
 const CounterText = styled.div`
@@ -197,10 +284,19 @@ const CounterText = styled.div`
   align-items: center;
   gap: 8px;
 
+  @media (max-width: 480px) {
+    font-size: 12px;
+    gap: 6px;
+  }
+
   .current {
     color: #ffffff;
     font-size: 18px;
     font-weight: 700;
+
+    @media (max-width: 480px) {
+      font-size: 16px;
+    }
   }
 
   .separator {
@@ -210,6 +306,10 @@ const CounterText = styled.div`
   .total {
     color: rgba(255, 255, 255, 0.8);
     font-size: 14px;
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+    }
   }
 `
 

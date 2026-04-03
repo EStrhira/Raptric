@@ -8,12 +8,28 @@ const ShowcaseSection = styled.section`
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   position: relative;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 60px 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 40px 0;
+  }
 `
 
 const ShowcaseContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+
+  @media (max-width: 768px) {
+    padding: 0 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
 `
 
 const ShowcaseContent = styled.div`
@@ -22,9 +38,17 @@ const ShowcaseContent = styled.div`
   gap: 4rem;
   align-items: center;
 
+  @media (max-width: 1024px) {
+    gap: 3rem;
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 1.5rem;
   }
 `
 
@@ -43,6 +67,17 @@ const ShowcaseImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+    min-height: 350px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem;
+    min-height: 300px;
+    border-radius: 15px;
+  }
 
   &::before {
     content: '';

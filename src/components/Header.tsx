@@ -23,6 +23,16 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    padding: 0 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
   gap: 2rem;
 `
 
@@ -42,6 +52,7 @@ const Logo = styled(Link)`
   img {
     height: 40px;
     width: auto;
+    max-width: 200px;
     transition: transform 0.3s ease;
     margin: 0;
     padding: 0;
@@ -53,6 +64,15 @@ const Logo = styled(Link)`
 
   @media (max-width: 768px) {
     font-size: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+    
+    img {
+      height: 35px;
+      max-width: 150px;
+    }
   }
 `
 
@@ -68,17 +88,28 @@ const NavMenu = styled.ul<{ $isOpen: boolean }>`
   align-items: center;
   gap: 2rem;
 
+  @media (max-width: 1024px) {
+    gap: 1.5rem;
+  }
+
   @media (max-width: 768px) {
     position: fixed;
     left: ${props => props.$isOpen ? '0' : '-100%'};
     top: 70px;
     flex-direction: column;
-    background-color: #fff;
+    background-color: #000000;
     width: 100%;
     text-align: center;
     transition: 0.3s;
     box-shadow: 0 10px 27px rgba(0,0,0,0.05);
     padding: 2rem 0;
+    gap: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    top: 60px;
+    padding: 1.5rem 0;
+    gap: 0.5rem;
   }
 `
 
@@ -201,7 +232,13 @@ const CartIcon = styled(Link)`
   }
 
   @media (max-width: 768px) {
-    margin: 1rem 0;
+    font-size: 1.3rem;
+    padding: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    padding: 0.3rem;
   }
 `
 
@@ -220,27 +257,93 @@ const CartBadge = styled.span`
   align-items: center;
   justify-content: center;
   padding: 0 4px;
+
+  @media (max-width: 480px) {
+    top: -3px;
+    right: -3px;
+    font-size: 0.6rem;
+    min-width: 16px;
+    height: 16px;
+  }
 `
 
 const LoginLink = styled(Link)`
   background: #4285f4;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: #3367d6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+  }
+`;
+
+const DashboardLink = styled(Link)`
+  background: #00a652;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  text-decoration: none;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: #008a45;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 166, 82, 0.3);
+  }
+`;
+
+const UserSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
 
   &:hover {
-    background: #357ae8;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+    background: rgba(255, 255, 255, 0.2);
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.75rem;
+  }
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+`;
+
+const UserName = styled.span`
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+`;
+
+const UserEmail = styled.span`
+  color: #666;
+  font-size: 0.8rem;
 `;
 
 const UserAvatar = styled.img`
@@ -248,12 +351,18 @@ const UserAvatar = styled.img`
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
-`;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-const UserEmail = styled.span`
-  color: #ffffff;
-  font-size: 0.9rem;
-  margin-right: 1rem;
+  @media (max-width: 768px) {
+    width: 28px;
+    height: 28px;
+  }
+
+  @media (max-width: 480px) {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 const SignOutButton = styled.button`
@@ -269,6 +378,16 @@ const SignOutButton = styled.button`
   &:hover {
     background: #ffffff;
     color: #000000;
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 5px 10px;
+    font-size: 0.8rem;
   }
 `;
 
@@ -298,14 +417,6 @@ const Header: React.FC = () => {
 
   const closeMenu = () => {
     setIsMenuOpen(false)
-  }
-
-  const handleSignOut = async () => {
-    try {
-      await signOut()
-    } catch (error) {
-      console.error('Error signing out:', error)
-    }
   }
 
   return (
@@ -347,13 +458,15 @@ const Header: React.FC = () => {
             </NavItem>
             <NavItem>
               {currentUser && userProfile ? (
-                <>
+                <UserSection>
+                  <DashboardLink to="/dashboard" onClick={closeMenu}>
+                    <i className="fas fa-tachometer-alt"></i>
+                    <span>{userProfile.displayName || 'Dashboard'}</span>
+                  </DashboardLink>
                   {userProfile.photoURL && (
                     <UserAvatar src={userProfile.photoURL} alt={userProfile.displayName || 'User'} />
                   )}
-                  <UserEmail>{userProfile.email}</UserEmail>
-                  <SignOutButton onClick={handleSignOut}>Sign Out</SignOutButton>
-                </>
+                </UserSection>
               ) : (
                 <LoginLink to="/login" onClick={closeMenu}>
                   <i className="fas fa-user-circle"></i>

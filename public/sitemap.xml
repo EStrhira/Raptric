@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+    http://www.sitemaps.org/schemas/sitemap/0.9
+    http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+    <!-- Homepage -->
+    <url>
+        <loc>https://esthira.com/</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/" />
+    </url>
+    
+    <!-- E-Bikes Page -->
+    <url>
+        <loc>https://esthira.com/ebikes</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/ebikes" />
+    </url>
+    
+    <!-- Cycles Page -->
+    <url>
+        <loc>https://esthira.com/cycles</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/cycles" />
+    </url>
+    
+    <!-- Contact Page -->
+    <url>
+        <loc>https://esthira.com/contact</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/contact" />
+    </url>
+    
+    <!-- About/Services Pages -->
+    <url>
+        <loc>https://esthira.com/about</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/about" />
+    </url>
+    
+    <url>
+        <loc>https://esthira.com/services</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/services" />
+    </url>
+    
+    <!-- Product Categories -->
+    <url>
+        <loc>https://esthira.com/category/electric-bicycles</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/category/electric-bicycles" />
+    </url>
+    
+    <url>
+        <loc>https://esthira.com/category/traditional-bicycles</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/category/traditional-bicycles" />
+    </url>
+    
+    <url>
+        <loc>https://esthira.com/category/bicycle-accessories</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/category/bicycle-accessories" />
+    </url>
+    
+    <!-- Brand Pages -->
+    <url>
+        <loc>https://esthira.com/brands</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/brands" />
+    </url>
+    
+    <!-- Location Pages -->
+    <url>
+        <loc>https://esthira.com/bangalore</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/bangalore" />
+    </url>
+    
+    <!-- Blog/News -->
+    <url>
+        <loc>https://esthira.com/blog</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/blog" />
+    </url>
+    
+    <url>
+        <loc>https://esthira.com/news</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/news" />
+    </url>
+    
+    <!-- Support/FAQ -->
+    <url>
+        <loc>https://esthira.com/support</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/support" />
+    </url>
+    
+    <url>
+        <loc>https://esthira.com/faq</loc>
+        <lastmod>2026-04-02T00:00:00+00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/faq" />
+    </url>
+    
+    <!-- Testimonials -->
+    <url>
+        <loc>https://esthira.com/testimonials</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/testimonials" />
+    </url>
+    
+    <!-- Special Offers -->
+    <url>
+        <loc>https://esthira.com/offers</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/offers" />
+    </url>
+    
+    <!-- Warranty -->
+    <url>
+        <loc>https://esthira.com/warranty</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/warranty" />
+    </url>
+    
+    <!-- Financing -->
+    <url>
+        <loc>https://esthira.com/financing</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/financing" />
+    </url>
+    
+    <!-- Test Drive -->
+    <url>
+        <loc>https://esthira.com/test-drive</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/test-drive" />
+    </url>
+    
+    <!-- Careers -->
+    <url>
+        <loc>https://esthira.com/careers</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/careers" />
+    </url>
+    
+    <!-- Terms & Privacy -->
+    <url>
+        <loc>https://esthira.com/terms</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/terms" />
+    </url>
+    
+    <url>
+        <loc>https://esthira.com/privacy</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/privacy" />
+    </url>
+    
+    <!-- Sitemap Index -->
+    <url>
+        <loc>https://esthira.com/sitemap.xml</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://esthira.com/sitemap.xml" />
+    </url>
+    
+</urlset>

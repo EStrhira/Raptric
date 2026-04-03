@@ -6,6 +6,14 @@ import ReviewsSection from './ReviewsSection'
 const TestimonialsSection = styled.section`
   padding: 80px 0;
   background: #000000;
+
+  @media (max-width: 768px) {
+    padding: 60px 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 40px 0;
+  }
 `
 
 const Testimonials: React.FC = () => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import SEO from '../components/SEO'
 import { useScrollToTop } from '../hooks/useScrollToTop'
 import Hero from '../components/Hero'
 import RunningCounter from '../components/RunningCounter'
@@ -58,17 +59,64 @@ const HomePage: React.FC = () => {
   // Scroll to top when page loads or navigates
   useScrollToTop()
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "eSthira",
+    "url": "https://esthira.com",
+    "description": "Premium electric bicycles and cycles in Bangalore. Experience the future of commuting with cutting-edge e-bikes and traditional bicycles.",
+    "potentialAction": {
+      "@type": "ReadAction",
+      "target": "https://esthira.com",
+      "name": "Explore Our Electric Bicycles"
+    },
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "eSthira",
+      "url": "https://esthira.com",
+      "logo": "https://esthira.com/logo.png",
+      "description": "Premium electric bicycles and cycles retailer in Bangalore, offering eco-friendly mobility solutions.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "367, 10T Main, Vidyapeeta Main Road, Banashankari 3rd Stage",
+        "addressLocality": "Banashankari",
+        "addressRegion": "Bengaluru",
+        "postalCode": "560085",
+        "addressCountry": "India"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91 93802 76355",
+        "contactType": "customer service",
+        "email": "info.esthira@gmail.com",
+        "availableLanguage": ["English", "Hindi", "Kannada"]
+      },
+      "sameAs": [
+        "https://www.facebook.com/esthira",
+        "https://www.instagram.com/esthira",
+        "https://www.twitter.com/esthira"
+      ]
+    }
+  }
+
   return (
     <>
+      <SEO
+        title="eSthira - Premium Electric Bicycles & Cycles in Bangalore"
+        description="Experience the magic of electric bicycles (eBikes) and see the difference it creates in your lifestyle. Visit our Bangalore store today!"
+        keywords="electric bicycle, e-bike, electric cycle, Bangalore, premium e-bike, electric bike, eco-friendly transport, sustainable mobility, electric bicycle Bangalore, e-bike store, electric cycle price, best e-bike, electric bike India"
+        canonical="https://esthira.com"
+        ogImage="/images/og-home.jpg"
+        structuredData={structuredData}
+      />
       <Hero hero={fallbackHero} />
-      <ShowcaseSection />
       <RunningCounter title="E-BIKE SPECIFICATIONS" />
+      <ShowcaseSection />
       <MechanicalShowcaseSection />
       <ProductFeatures features={fallbackFeatures} />
       <Benefits benefits={fallbackBenefits} />
       <Testimonials />
       <Support />
-      
       <Contact contactInfo={fallbackContactInfo} />
     </>
   )

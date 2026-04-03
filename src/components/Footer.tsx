@@ -7,6 +7,14 @@ const FooterSection = styled.footer`
   background: #1a1a1a;
   color: #fff;
   padding: 50px 0 20px;
+
+  @media (max-width: 768px) {
+    padding: 40px 0 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 30px 0 10px;
+  }
 `
 
 const FooterContent = styled.div`
@@ -15,27 +23,73 @@ const FooterContent = styled.div`
   gap: 1rem;
   margin-bottom: 2rem;
 
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 1.5rem;
+    margin-bottom: 1rem;
   }
 `
 
 const FooterSectionTitle = styled.h3`
   margin-bottom: 1rem;
   color: #00a652;
+  font-size: 1.2rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
 `
 
 const FooterSectionSubtitle = styled.h4`
   margin-bottom: 1rem;
   color: #00a652;
   text-align: left;
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
 `
 
 const FooterText = styled.p`
   color: #ccc;
   line-height: 1.6;
   margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
 `
 
 const FooterList = styled.ul`
@@ -43,19 +97,36 @@ const FooterList = styled.ul`
   text-align: left;
   padding: 0;
   margin: 0;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `
 
 const FooterListItem = styled.li`
   margin-bottom: 0.5rem;
+
+  @media (max-width: 480px) {
+    margin-bottom: 0.3rem;
+  }
 `
 
 const FooterLink = styled(Link)`
   color: #ccc;
   text-decoration: none;
   transition: color 0.3s ease;
+  font-size: 0.9rem;
 
   &:hover {
     color: #00a652;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
   }
 `
 
@@ -65,6 +136,11 @@ const SocialLinks = styled.div`
 
   @media (max-width: 768px) {
     justify-content: center;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.5rem;
   }
 `
 
@@ -84,8 +160,26 @@ const SocialLink = styled.a`
     background: #00a652;
   }
 
+  @media (max-width: 768px) {
+    width: 35px;
+    height: 35px;
+  }
+
+  @media (max-width: 480px) {
+    width: 30px;
+    height: 30px;
+  }
+
   i {
     font-size: 1.2rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
   }
 `
 
@@ -94,6 +188,17 @@ const FooterBottom = styled.div`
   padding-top: 2rem;
   text-align: center;
   color: #ccc;
+  font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    padding-top: 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 1rem;
+    font-size: 0.8rem;
+  }
 `
 
 const Footer: React.FC = () => {

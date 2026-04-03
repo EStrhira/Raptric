@@ -141,11 +141,10 @@ class UserService {
   async addAddress(uid: string, address: Omit<UserAddress, 'id' | 'createdAt' | 'updatedAt'>): Promise<UserAddress> {
     try {
       const addressRef = doc(collection(db, "users", uid, "addresses"));
-      const addressId = addressRef.id;
       
       const newAddress: UserAddress = {
         ...address,
-        id: addressId,
+        id: addressRef.id,
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now()
       };
@@ -177,10 +176,18 @@ class UserService {
 
   async updateAddress(uid: string, addressId: string, updates: Partial<UserAddress>): Promise<void> {
     try {
-      await updateDoc(doc(db, "users", uid, "addresses", addressId), {
-        ...updates,
-        updatedAt: Timestamp.now()
-      });
+      const addressRef = doc(db, "users", uid, "addresses", addressId);
+      const addressDoc = await getDoc(addressRef);
+      if (addressDoc.exists()) {
+        const addressData = addressDoc.data() as UserAddress;
+        await updateDoc(addressRef, {
+          ...addressData,
+          ...updates,
+          updatedAt: Timestamp.now()
+        });
+      } else {
+        console.error('Error updating address: Address not found');
+      }
     } catch (error) {
       console.error('Error updating address:', error);
       throw error;
@@ -268,3 +275,4 @@ class UserService {
 // Singleton instance
 const userService = new UserService();
 export default userService;
+export { UserService };

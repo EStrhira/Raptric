@@ -34,6 +34,9 @@ import FAQ from './components/FAQ'
 import Manual from './components/Manual'
 import UserAccount from './pages/UserAccount'
 import Checkout from './pages/Checkout'
+import CustomerDashboard from './pages/CustomerDashboard'
+import OrderDetailPage from './pages/OrderDetailPage'
+import AddressForm from './components/Address/AddressForm'
 import ProtectedRoute from './components/ProtectedRoute'
 
 function AppContent() {
@@ -73,6 +76,10 @@ function AppContent() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/account" element={<ProtectedRoute><UserAccount /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><CustomerDashboard /></ProtectedRoute>} />
+        <Route path="/order/:orderId" element={<ProtectedRoute><OrderDetailPage /></ProtectedRoute>} />
+        <Route path="/address/add" element={<ProtectedRoute><AddressForm /></ProtectedRoute>} />
+        <Route path="/address/edit/:addressId" element={<ProtectedRoute><AddressForm isEdit={true} /></ProtectedRoute>} />
         <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
       </Routes>
       {!shouldHideHeader && <Footer />}

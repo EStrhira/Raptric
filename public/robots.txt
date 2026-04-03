@@ -1,3 +1,78 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+
+# Block unnecessary crawlers
+User-agent: AhrefsBot
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+User-agent: DotBot
+Disallow: /
+User-agent: ia_archiver
+Disallow: /
+
+# Allow important crawlers
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: Slurp
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
+User-agent: Baidu
+Allow: /
+
+# Sitemaps
+Sitemap: https://esthira.com/sitemap.xml
+Sitemap: https://esthira.com/sitemap-index.xml
+
+# Specific file restrictions
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*.env$
+Disallow: /temp/
+Disallow: /cache/
+
+# Allow important directories
+Allow: /images/
+Allow: /css/
+Allow: /js/
+Allow: /static/
+
+# Crawl delay for good bots
+Crawl-delay: 1
+
+# Host information
+Host: esthira.com
+
+# Additional SEO directives
+# Prioritize important pages
+Allow: /$
+Disallow: /search?*$
+Allow: /search$
+
+# Social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+User-agent: Twitterbot
+Allow: /
+User-agent: LinkedInBot
+Allow: /
+
+# Image optimization
+Allow: *.jpg
+Allow: *.png
+Allow: *.webp
+Allow: *.svg
+
+# API restrictions (if any)
+Disallow: /api/v1/
+Disallow: /api/v2/
+
+# Local development (should be blocked in production)
+# Disallow: /local/
+# Disallow: /dev/
+# Disallow: /staging/

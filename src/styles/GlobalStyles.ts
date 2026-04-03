@@ -1,4 +1,5 @@
-import { createGlobalStyle, styled } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -14,6 +15,8 @@ export const GlobalStyle = createGlobalStyle`
     background-color: #000000;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    padding-top: 100px; /* Account for fixed header height */
+    overflow-x: hidden;
   }
 
   html {
@@ -24,21 +27,32 @@ export const GlobalStyle = createGlobalStyle`
     margin-bottom: 1rem;
     font-weight: 600;
     line-height: 1.2;
+    
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
   }
 
   p {
     margin-bottom: 1rem;
+    
+    @media (max-width: 768px) {
+      font-size: 0.95rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.9rem;
+    }
   }
 
   a {
     color: #ffffff;
     text-decoration: none;
     transition: color 0.3s ease;
-  }
-
-  ul, ol {
-    margin-bottom: 1rem;
-    padding-left: 2rem;
   }
 
   img {
