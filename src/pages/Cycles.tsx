@@ -392,7 +392,8 @@ const Cycles: React.FC<CyclesProps> = () => {
           discountPrice,
           shortDescription,
           colors,
-          image
+          image,
+          images
         }`
         const result = await (client as any).fetch(query)
         setcycles(result)
@@ -518,9 +519,9 @@ const Cycles: React.FC<CyclesProps> = () => {
               {cycles.map((cycle) => (
                 <CycleCard key={cycle._id}>
                   <CycleImage>
-                    {cycle.image ? (
+                    {cycle.images && cycle.images.length > 0 ? (
                       <img 
-                        src={urlFor(cycle.image).url()} 
+                        src={urlFor(cycle.images[0]).url()} 
                         alt={cycle.name} 
                       />
                     ) : (

@@ -392,7 +392,8 @@ const Ebikes: React.FC<EbikesProps> = () => {
           discountPrice,
           shortDescription,
           colors,
-          image
+          image,
+          images
         }`
         const result = await (client as any).fetch(query)
         setEbikes(result)
@@ -518,9 +519,9 @@ const Ebikes: React.FC<EbikesProps> = () => {
               {ebikes.map((ebike) => (
                 <EbikeCard key={ebike._id}>
                   <EbikeImage>
-                    {ebike.image ? (
+                    {ebike.images && ebike.images.length > 0 ? (
                       <img 
-                        src={urlFor(ebike.image).url()} 
+                        src={urlFor(ebike.images[0]).url()} 
                         alt={ebike.name} 
                       />
                     ) : (
