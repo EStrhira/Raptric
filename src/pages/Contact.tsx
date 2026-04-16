@@ -198,12 +198,12 @@ const ContactSubtitle = styled.p`
 
 const ContactGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
   margin-top: 3rem;
 
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 
@@ -223,7 +223,7 @@ const ContactGrid = styled.div`
 const ContactCard = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.2rem;
   border-left: 4px solid #00a652;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -231,6 +231,10 @@ const ContactCard = styled.div`
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (max-width: 1200px) {
+    padding: 1.5rem;
   }
 
   @media (max-width: 768px) {
@@ -243,10 +247,15 @@ const ContactCard = styled.div`
 `
 
 const ContactIcon = styled.div`
-  font-size: 3rem;
+  font-size: 2rem;
   color: #00a652;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
   text-align: center;
+
+  @media (max-width: 1200px) {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
@@ -261,13 +270,19 @@ const ContactIcon = styled.div`
 
 const ContactName = styled.h3`
   color: #ffffff;
-  font-size: 1.3rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.6rem 0;
   text-align: center;
+
+  @media (max-width: 1200px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
 
   @media (max-width: 768px) {
     font-size: 1.2rem;
+    margin-bottom: 1rem;
   }
 
   @media (max-width: 480px) {
@@ -277,11 +292,18 @@ const ContactName = styled.h3`
 
 const ContactInfo = styled.div`
   color: #cccccc;
-  line-height: 1.6;
+  line-height: 1.4;
   text-align: center;
+  font-size: 0.75rem;
+
+  @media (max-width: 1200px) {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
+    line-height: 1.6;
   }
 
   @media (max-width: 480px) {
@@ -631,6 +653,18 @@ const Contact: React.FC<ContactProps> = () => {
                 <ContactInfo>
                   <ContactLink href={`mailto:${BUSINESS_INFO.contact.email}`}>
                     {BUSINESS_INFO.contact.email}
+                  </ContactLink>
+                </ContactInfo>
+              </ContactCard>
+              
+              <ContactCard>
+                <ContactIcon>
+                  <i className="fas fa-map"></i>
+                </ContactIcon>
+                <ContactName>Location</ContactName>
+                <ContactInfo>
+                  <ContactLink href="https://maps.app.goo.gl/gweZK6bb3bZzGMaG7" target="_blank" rel="noopener noreferrer">
+                    View on Google Maps
                   </ContactLink>
                 </ContactInfo>
               </ContactCard>
