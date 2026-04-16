@@ -286,32 +286,6 @@ const AccessoryInfo = styled.div`
     }
   }
 
-  .compatibility {
-    margin-bottom: 2rem;
-  }
-
-  .compatibility h3 {
-    color: #00a652;
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  .compatibility-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .compatibility-item {
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.9);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
   .category {
     background: rgba(0, 166, 82, 0.1);
     color: #00a652;
@@ -477,14 +451,14 @@ const AccessoryDetail: React.FC = () => {
             name,
             slug,
             price,
+            discountPrice,
             description,
             images,
             features,
-            compatibility,
             inStock,
             featured
           }`, { slug }),
-          (client as any).fetch('*[_type == "accessory"] | order(featured desc, name asc) { _id, name, slug, price, description, images, features, compatibility, inStock, featured }[0...5]')
+          (client as any).fetch('*[_type == "accessory"] | order(featured desc, name asc) { _id, name, slug, price, description, images, features, inStock, featured }[0...5]')
         ])
         
         setAccessory(accessoryData)
@@ -657,17 +631,7 @@ const AccessoryDetail: React.FC = () => {
                 </div>
               )}
 
-              {accessory.compatibility && accessory.compatibility.length > 0 && (
-                <div className="compatibility">
-                  <h3>🔧 Compatible Models</h3>
-                  <div className="compatibility-list">
-                    {accessory.compatibility.map((item, index) => (
-                      <span key={index} className="compatibility-item">{item.model}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
+              
               <BuyButton onClick={handleAddToCart} disabled={addedToCart}>
                 <i className="fas fa-shopping-cart"></i>
                 {addedToCart ? 'Added to Cart!' : 'Add to Cart'}

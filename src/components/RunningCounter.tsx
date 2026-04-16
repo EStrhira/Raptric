@@ -171,8 +171,7 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
     gear: 0
   })
   const [isAnimating, setIsAnimating] = useState(false)
-  const [hasAnimated, setHasAnimated] = useState(false)
-  const animationRef = useRef<NodeJS.Timeout | null>(null)
+  const animationRef = useRef<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const targetValues = {
@@ -230,10 +229,12 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
   ]
 
   const startAnimation = () => {
-    if (hasAnimated) return // Only animate once
+    // Clear any existing animation
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current)
+    }
     
     setIsAnimating(true)
-    setHasAnimated(true)
     setCurrentValues({
       range: 0,
       speed: 0,
@@ -247,45 +248,38 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
 
   const animateToTargets = () => {
     const duration = 3000 // 3 seconds for animation
-    const steps = 30 // Number of animation steps
-    const stepDuration = duration / steps
+    const startTime = Date.now()
 
-    let currentStep = 0
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 1) // Cap at 1
 
-    const interval = setInterval(() => {
-      if (currentStep >= steps) {
-        setIsAnimating(false)
-        if (animationRef.current) {
-          clearInterval(animationRef.current)
-        }
-        return
-      }
-
-      setCurrentValues(prev => {
-        const newValues = { ...prev }
-        const progress = (currentStep + 1) / steps
-
-        // Animate each spec towards target
-        newValues.range = Math.ceil(targetValues.range * progress)
-        newValues.speed = Math.ceil(targetValues.speed * progress)
-        newValues.battery = Math.ceil(targetValues.battery * progress)
-        newValues.motor = Math.ceil(targetValues.motor * progress)
-        newValues.pas = Math.ceil(targetValues.pas * progress)
-        newValues.gear = Math.ceil(targetValues.gear * progress)
-
-        return newValues
+      setCurrentValues({
+        range: Math.round(targetValues.range * progress),
+        speed: Math.round(targetValues.speed * progress),
+        battery: Math.round(targetValues.battery * progress),
+        motor: Math.round(targetValues.motor * progress),
+        pas: Math.round(targetValues.pas * progress),
+        gear: Math.round(targetValues.gear * progress)
       })
 
-      currentStep++
-    }, stepDuration)
-
-    animationRef.current = interval
-
-    return () => {
-      if (animationRef.current) {
-        clearInterval(animationRef.current)
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate)
+      } else {
+        setIsAnimating(false)
+        // Ensure final values are exactly the targets
+        setCurrentValues({
+          range: targetValues.range,
+          speed: targetValues.speed,
+          battery: targetValues.battery,
+          motor: targetValues.motor,
+          pas: targetValues.pas,
+          gear: targetValues.gear
+        })
       }
     }
+
+    animationRef.current = requestAnimationFrame(animate)
   }
 
   useEffect(() => {
@@ -312,7 +306,7 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
         observer.unobserve(containerRef.current)
       }
       if (animationRef.current) {
-        clearInterval(animationRef.current)
+        cancelAnimationFrame(animationRef.current)
       }
     }
   }, [])
@@ -338,7 +332,7 @@ const RunningCounter: React.FC<CounterProps> = ({ title = "E-BIKE SPECIFICATIONS
             
             {isAnimating && (
               <ProgressBar>
-                <ProgressFill $progress={(currentValues[spec.label.toLowerCase() as keyof typeof currentValues] / spec.target) * 100} />
+                <ProgressFill $progress={(spec.value / spec.target) * 100} />
               </ProgressBar>
             )}
           </SpecItem>

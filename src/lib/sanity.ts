@@ -132,22 +132,6 @@ export interface Retailer {
   order: number
 }
 
-export interface Cycle {
-  _id: string
-  name: string
-  slug: { current: string }
-  price: string
-  discountPrice?: string
-  description: string
-  shortDescription?: string
-  image?: any
-  images?: any[]
-  colors?: string[]
-  specifications?: string
-  inStock: boolean
-  featured: boolean
-}
-
 export interface Accessory {
   _id: string
   name: string
@@ -158,7 +142,6 @@ export interface Accessory {
   shortDescription?: string
   images?: any[]
   features: { feature: string }[]
-  compatibility: { model: string }[]
   inStock: boolean
   featured: boolean
 }
@@ -186,7 +169,23 @@ export interface NewsPost {
   featured: boolean
 }
 
-export interface EBike {
+export interface mBikes {
+  _id: string
+  name: string
+  slug: { current: string }
+  price: string
+  discountPrice?: string
+  description: string
+  shortDescription?: string
+  image?: any
+  images?: any[]
+  colors?: string[]
+  specifications?: string
+  inStock: boolean
+  featured: boolean
+}
+
+export interface eBikes {
   _id: string
   name: string
   slug: { current: string }

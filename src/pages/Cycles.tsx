@@ -384,11 +384,12 @@ const Cycles: React.FC<CyclesProps> = () => {
   useEffect(() => {
     const fetchCycles = async () => {
       try {
-        const query = `*[_type == "cycle"] | order(name asc) {
+        const query = `*[_type == "cycle"] | order(price asc) {
           _id,
           name,
           slug,
           price,
+          discountPrice,
           shortDescription,
           colors,
           image
@@ -523,16 +524,34 @@ const Cycles: React.FC<CyclesProps> = () => {
                         alt={cycle.name} 
                       />
                     ) : (
-                      <i className="fas fa-bicycle"></i>
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: '100%',
+                        color: '#666',
+                        fontSize: '14px',
+                        textAlign: 'center',
+                        padding: '20px'
+                      }}>
+                        <i className="fas fa-bicycle" style={{ fontSize: '3rem', marginBottom: '10px', color: '#00a652' }}></i>
+                        <div style={{ fontSize: '12px', opacity: 0.7 }}>
+                          Image Coming Soon
+                        </div>
+                      </div>
                     )}
                   </CycleImage>
                   <CycleInfo>
                     <CycleName>{cycle.name}</CycleName>
                     <CyclePrice>
-                      {cycle.price ? (
-                        <>₹{cycle.price}</>
+                      {cycle.discountPrice ? (
+                        <>
+                          <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>₹{cycle.price}</span>
+                          <span>₹{cycle.discountPrice}</span>
+                        </>
                       ) : (
-                        <>Contact for Price</>
+                        <>₹{cycle.price}</>
                       )}
                     </CyclePrice>
                     {cycle.shortDescription && (

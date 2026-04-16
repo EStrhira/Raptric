@@ -384,11 +384,12 @@ const Ebikes: React.FC<EbikesProps> = () => {
   useEffect(() => {
     const fetchEbikes = async () => {
       try {
-        const query = `*[_type == "ebike"] | order(name asc) {
+        const query = `*[_type == "ebike"] | order(price asc) {
           _id,
           name,
           slug,
           price,
+          discountPrice,
           shortDescription,
           colors,
           image
@@ -523,16 +524,34 @@ const Ebikes: React.FC<EbikesProps> = () => {
                         alt={ebike.name} 
                       />
                     ) : (
-                      <i className="fas fa-bicycle"></i>
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: '100%',
+                        color: '#666',
+                        fontSize: '14px',
+                        textAlign: 'center',
+                        padding: '20px'
+                      }}>
+                        <i className="fas fa-bicycle" style={{ fontSize: '3rem', marginBottom: '10px', color: '#00a652' }}></i>
+                        <div style={{ fontSize: '12px', opacity: 0.7 }}>
+                          Image Coming Soon
+                        </div>
+                      </div>
                     )}
                   </EbikeImage>
                   <EbikeInfo>
                     <EbikeName>{ebike.name}</EbikeName>
                     <EbikePrice>
-                      {ebike.price ? (
-                        <>₹{ebike.price}</>
+                      {ebike.discountPrice ? (
+                        <>
+                          <span style={{ textDecoration: 'line-through', opacity: 0.7, marginRight: '0.5rem' }}>₹{ebike.price}</span>
+                          <span>₹{ebike.discountPrice}</span>
+                        </>
                       ) : (
-                        <>Contact for Price</>
+                        <>₹{ebike.price}</>
                       )}
                     </EbikePrice>
                     {ebike.shortDescription && (

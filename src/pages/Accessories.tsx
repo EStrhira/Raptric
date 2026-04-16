@@ -226,7 +226,7 @@ const Accessories: React.FC = () => {
   useEffect(() => {
     const fetchAccessories = async () => {
       try {
-        const data = await (client as any).fetch('*[_type == "accessory"] | order(featured desc, name asc) { _id, name, slug, price, discountPrice, description, shortDescription, images, features, compatibility, inStock, featured }')
+        const data = await (client as any).fetch('*[_type == "accessory"] | order(featured desc, name asc) { _id, name, slug, price, discountPrice, description, shortDescription, images, features, inStock, featured }')
         setAccessories(data)
       } catch (error) {
         console.error('Error fetching accessories:', error)
