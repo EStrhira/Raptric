@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ContactInfo } from '../lib/sanity'
 import { Container, SectionTitle } from '../styles/GlobalStyles'
-import { useContactForm } from '../hooks/useEmail'
 
 const ContactSection = styled.section`
   padding: 80px 0;
@@ -179,77 +178,110 @@ interface ContactProps {
   contactInfo: ContactInfo
 }
 
+interface ContactFormData {
+  name: string
+  email: string
+  subject: string
+  message: string
+}
+
+interface ContactResponse {
+  success: boolean
+  message?: string
+  error?: string
+}
+
 const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
-    phone: '',
     subject: '',
     message: ''
   })
+  const [loading, setLoading] = useState(false)
   const [notification, setNotification] = useState<{ type: 'success' | 'error' | 'info', message: string } | null>(null)
-  
-  const { submitContactForm, loading, error, success } = useContactForm()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+  const validateForm = (): boolean => {
+    if (!formData.name.trim()) {
+      setNotification({ type: 'error', message: 'Name is required' })
+      setTimeout(() => setNotification(null), 5000)
+      return false
+    }
+    if (!formData.email.trim()) {
+      setNotification({ type: 'error', message: 'Email is required' })
+      setTimeout(() => setNotification(null), 5000)
+      return false
+    }
+    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setNotification({ type: 'error', message: 'Please enter a valid email address' })
+      setTimeout(() => setNotification(null), 5000)
+      return false
+    }
+    if (!formData.message.trim()) {
+      setNotification({ type: 'error', message: 'Message is required' })
+      setTimeout(() => setNotification(null), 5000)
+      return false
+    }
+    return true
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.phone || !formData.subject || !formData.message) {
-      setNotification({ type: 'error', message: 'Please fill in all required fields.' })
-      setTimeout(() => setNotification(null), 5000)
+    if (!validateForm()) {
       return
     }
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(formData.email)) {
-      setNotification({ type: 'error', message: 'Please enter a valid email address.' })
-      setTimeout(() => setNotification(null), 5000)
-      return
-    }
-    
+
+    setLoading(true)
+    setNotification(null)
+
     try {
-      // Send email using our new email service
-      await submitContactForm({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        message: `${formData.subject}\n\n${formData.message}`
+      const response = await fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        })
       })
 
-      // Success is handled by the hook's state management
-      setNotification({ 
-        type: 'success', 
-        message: 'Thank you for your message! We have received your inquiry and will get back to you soon.' 
-      })
+      const data: ContactResponse = await response.json()
       
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      })
-      
-      setTimeout(() => setNotification(null), 10000)
-      
+      if (response.ok && data.success) {
+        setNotification({ 
+          type: 'success', 
+          message: 'Thank you for your message! We have received your inquiry and will get back to you soon.' 
+        })
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        setTimeout(() => setNotification(null), 10000)
+      } else {
+        setNotification({ 
+          type: 'error', 
+          message: data.error || 'Failed to send message. Please try again.' 
+        })
+        setTimeout(() => setNotification(null), 5000)
+      }
     } catch (error) {
-      console.error('Error sending email:', error)
       setNotification({ 
         type: 'error', 
-        message: 'There was an error sending your message. Please try again or email us directly at info.esthira@gmail.com' 
+        message: 'Network error. Please try again.' 
       })
       setTimeout(() => setNotification(null), 5000)
+    } finally {
+      setLoading(false)
     }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
   return (
@@ -324,17 +356,6 @@ const Contact: React.FC<ContactProps> = ({ contactInfo }) => {
                   id="email"
                   name="email"
                   value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="phone">Phone *</FormLabel>
-                <FormInput
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
                   onChange={handleChange}
                   required
                 />
