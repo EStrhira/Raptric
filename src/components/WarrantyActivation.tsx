@@ -361,6 +361,20 @@ const WarrantyActivation: React.FC = () => {
     return true
   }
 
+  const readFileAsBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        const result = reader.result as string
+        // Remove data:image/jpeg;base64, prefix if present
+        const base64Data = result.includes(',') ? result.split(',')[1] : result
+        resolve(base64Data)
+      }
+      reader.onerror = reject
+      reader.readAsDataURL(file)
+    })
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setMessage(null)
@@ -370,24 +384,53 @@ const WarrantyActivation: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      setMessage({ 
-        type: 'success', 
-        text: 'Warranty activation submitted successfully! We will review your documents and contact you within 24-48 hours.' 
+      // Convert images to base64
+      const [billImageBase64, motorImageBase64] = await Promise.all([
+        billImage ? readFileAsBase64(billImage) : Promise.resolve(null),
+        motorImage ? readFileAsBase64(motorImage) : Promise.resolve(null)
+      ])
+
+      const response = await fetch('/.netlify/functions/warranty-activation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phoneNumber: formData.phoneNumber,
+          email: formData.email,
+          billImage: billImageBase64,
+          motorImage: motorImageBase64
+        })
       })
+
+      const data = await response.json()
       
-      // Reset form
-      setFormData({ name: '', phoneNumber: '', email: '' })
-      setBillImage(null)
-      setMotorImage(null)
-      
+      if (response.ok && data.success) {
+        setMessage({ 
+          type: 'success', 
+          text: 'Warranty activation submitted successfully! We will review your documents and contact you within 24-48 hours.' 
+        })
+        
+        // Reset form
+        setFormData({ name: '', phoneNumber: '', email: '' })
+        setBillImage(null)
+        setMotorImage(null)
+        
+        setTimeout(() => setMessage(null), 10000)
+      } else {
+        setMessage({ 
+          type: 'error', 
+          text: data.error || 'Failed to submit warranty activation. Please try again.' 
+        })
+        setTimeout(() => setMessage(null), 5000)
+      }
     } catch (error) {
       setMessage({ 
         type: 'error', 
-        text: 'Failed to submit warranty activation. Please try again or contact support.' 
+        text: 'Network error. Please try again or contact support directly.' 
       })
+      setTimeout(() => setMessage(null), 5000)
     } finally {
       setIsSubmitting(false)
     }

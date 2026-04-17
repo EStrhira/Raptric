@@ -3,7 +3,7 @@ const BUSINESS_INFO = require('../../src/constants/businessInfo.json');
 
 exports.handler = async (event) => {
   try {
-    const { name, email, message } = JSON.parse(event.body);
+    const { name, email, subject, message } = JSON.parse(event.body);
 
     const client = SibApiV3Sdk.ApiClient.instance;
     client.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
@@ -13,9 +13,10 @@ exports.handler = async (event) => {
     await emailApi.sendTransacEmail({
       sender: { email: BUSINESS_INFO.contact.email, name: BUSINESS_INFO.name },
       to: [{ email: BUSINESS_INFO.contact.email }],
-      subject: "New Contact Form Lead",
+      subject: subject || "New Contact Form Lead",
       htmlContent: `
         <h3>New Lead</h3>
+        <p><b>Subject:</b> ${subject || 'No subject'}</p>
         <p><b>Name:</b> ${name}</p>
         <p><b>Email:</b> ${email}</p>
         <p><b>Message:</b> ${message}</p>
