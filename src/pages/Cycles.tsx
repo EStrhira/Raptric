@@ -500,9 +500,9 @@ const Cycles: React.FC<CyclesProps> = () => {
               <BannerIcon>
                 <i className="fas fa-bicycle"></i>
               </BannerIcon>
-              <BannerTitle>Our Cycles</BannerTitle>
+              <BannerTitle>Our Convertible Cycles</BannerTitle>
               <BannerSubtitle>
-                Discover our range of high-quality bicycles designed for urban commuting and adventure riding
+                Discover our range of high-quality convertible bicycles. Buy regular mechanical cycles today, convert to electric at your choice of time and convenience
               </BannerSubtitle>
             </BannerContent>
           </BannerSection>
@@ -511,7 +511,7 @@ const Cycles: React.FC<CyclesProps> = () => {
             <CyclesHeader>
               <CyclesTitle>Choose Your Ride</CyclesTitle>
               <CyclesSubtitle>
-                Select from our premium collection of bicycles, each designed for specific riding needs and preferences
+                Select from our premium collection of convertible bicycles, each designed for specific riding needs and preferences
               </CyclesSubtitle>
             </CyclesHeader>
             
