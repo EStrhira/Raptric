@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+    http://www.sitemaps.org/schemas/sitemap/0.9
+    http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+    <!-- Homepage -->
+    <url>
+        <loc>https://raptric.in/</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/" />
+    </url>
+    
+    <!-- E-Bikes Page -->
+    <url>
+        <loc>https://raptric.in/ebikes</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/ebikes" />
+    </url>
+    
+    <!-- Cycles Page -->
+    <url>
+        <loc>https://raptric.in/cycles</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/cycles" />
+    </url>
+    
+    <!-- Contact Page -->
+    <url>
+        <loc>https://raptric.in/contact</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/contact" />
+    </url>
+    
+    <!-- About/Services Pages -->
+    <url>
+        <loc>https://raptric.in/about</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/about" />
+    </url>
+    
+    <url>
+        <loc>https://raptric.in/services</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/services" />
+    </url>
+    
+    <!-- Product Categories -->
+    <url>
+        <loc>https://raptric.in/category/electric-bicycles</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/category/electric-bicycles" />
+    </url>
+    
+    <url>
+        <loc>https://raptric.in/category/traditional-bicycles</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/category/traditional-bicycles" />
+    </url>
+    
+    <url>
+        <loc>https://raptric.in/category/bicycle-accessories</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/category/bicycle-accessories" />
+    </url>
+    
+    <!-- Brand Pages -->
+    <url>
+        <loc>https://raptric.in/brands</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/brands" />
+    </url>
+    
+    <!-- Location Pages -->
+    <url>
+        <loc>https://raptric.in/bangalore</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/bangalore" />
+    </url>
+    
+    <!-- Blog/News -->
+    <url>
+        <loc>https://raptric.in/blog</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/blog" />
+    </url>
+    
+    <url>
+        <loc>https://raptric.in/news</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/news" />
+    </url>
+    
+    <!-- Support/FAQ -->
+    <url>
+        <loc>https://raptric.in/support</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/support" />
+    </url>
+    
+    <url>
+        <loc>https://raptric.in/faq</loc>
+        <lastmod>2026-04-02T00:00:00+00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/faq" />
+    </url>
+    
+    <!-- Testimonials -->
+    <url>
+        <loc>https://raptric.in/testimonials</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/testimonials" />
+    </url>
+    
+    <!-- Special Offers -->
+    <url>
+        <loc>https://raptric.in/offers</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/offers" />
+    </url>
+    
+    <!-- Warranty -->
+    <url>
+        <loc>https://raptric.in/warranty</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/warranty" />
+    </url>
+    
+    <!-- Financing -->
+    <url>
+        <loc>https://raptric.in/financing</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/financing" />
+    </url>
+    
+    <!-- Test Drive -->
+    <url>
+        <loc>https://raptric.in/test-drive</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/test-drive" />
+    </url>
+    
+    <!-- Careers -->
+    <url>
+        <loc>https://raptric.in/careers</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/careers" />
+    </url>
+    
+    <!-- Terms & Privacy -->
+    <url>
+        <loc>https://raptric.in/terms</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/terms" />
+    </url>
+    
+    <url>
+        <loc>https://raptric.in/privacy</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/privacy" />
+    </url>
+    
+    <!-- Sitemap Index -->
+    <url>
+        <loc>https://raptric.in/sitemap.xml</loc>
+        <lastmod>2026-04-02T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://raptric.in/sitemap.xml" />
+    </url>
+    
+</urlset>

@@ -1,0 +1,35 @@
+{
+  "name": "RAPTRIC",
+  "address": {
+    "line1": "367, 10T Main, Vidyapeeta Main Road",
+    "line2": "Banashankari 3rd Stage",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "pincode": "560085",
+    "country": "India",
+    "full": "367, 10T Main, Vidyapeeta Main Road, Banashankari 3rd Stage, Bengaluru, Karnataka 560085, India"
+  },
+  "contact": {
+    "phone": "+91 93802 76355",
+    "phoneFormatted": "+919380276355",
+    "email": "info.esthira@gmail.com",
+    "website": "https://raptric.in"
+  },
+  "hours": {
+    "weekdays": "Monday - Sunday: 10:30am to 8:30pm",
+    "weekdays2": "Monday - Saturday, 10:30am to 8:30pm",
+    "sunday": "10:30am to 8:30pm",
+    "sunday2": "10:30am to 8:30pm"
+  },
+  "social": {
+    "facebook": "https://facebook.com/esthira",
+    "instagram": "https://instagram.com/rideraptric",
+    "twitter": "https://twitter.com/esthira"
+  },
+  "seo": {
+    "siteUrl": "https://raptric.in",
+    "title": "RAPTRIC - Premium Electric & Convertible Bicycles in Bangalore",
+    "description": "Shop premium electric bicycles and traditional cycles at RAPTRIC, Bangalore's leading bicycle retailer. Eco-friendly mobility solutions with expert service.",
+    "keywords": "raptric, electric bicycle, e-bike, bicycle shop, Bangalore, premium cycles, electric mobility"
+  }
+}
