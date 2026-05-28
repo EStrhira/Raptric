@@ -2,29 +2,29 @@
 /api/* /.netlify/functions/:splat 200
 
 # Specific old-domain redirects must stay before the catch-all rules.
-https://esthira.com/warranty-activation https://raptric.in/warranty-activation 301!
-https://esthira.com/warranty-activation/ https://raptric.in/warranty-activation 301!
-https://esthira.com/warranty-activation/* https://raptric.in/warranty-activation 301!
-https://www.esthira.com/warranty-activation https://raptric.in/warranty-activation 301!
-https://www.esthira.com/warranty-activation/ https://raptric.in/warranty-activation 301!
-https://www.esthira.com/warranty-activation/* https://raptric.in/warranty-activation 301!
-https://esthira.com/warrantyactivation https://raptric.in/warranty-activation 301!
-https://esthira.com/warrantyactivation/ https://raptric.in/warranty-activation 301!
-https://esthira.com/warrantyactivation/* https://raptric.in/warranty-activation 301!
-https://www.esthira.com/warrantyactivation https://raptric.in/warranty-activation 301!
-https://www.esthira.com/warrantyactivation/ https://raptric.in/warranty-activation 301!
-https://www.esthira.com/warrantyactivation/* https://raptric.in/warranty-activation 301!
+https://esthira.com/warranty-activation https://raptric.in/raptric 301!
+https://esthira.com/warranty-activation/ https://raptric.in/raptric 301!
+https://esthira.com/warranty-activation/* https://raptric.in/raptric 301!
+https://www.esthira.com/warranty-activation https://raptric.in/raptric 301!
+https://www.esthira.com/warranty-activation/ https://raptric.in/raptric 301!
+https://www.esthira.com/warranty-activation/* https://raptric.in/raptric 301!
+https://esthira.com/warrantyactivation https://raptric.in/raptric 301!
+https://esthira.com/warrantyactivation/ https://raptric.in/raptric 301!
+https://esthira.com/warrantyactivation/* https://raptric.in/raptric 301!
+https://www.esthira.com/warrantyactivation https://raptric.in/raptric 301!
+https://www.esthira.com/warrantyactivation/ https://raptric.in/raptric 301!
+https://www.esthira.com/warrantyactivation/* https://raptric.in/raptric 301!
 
-https://esthira.com/manual https://raptric.in/manual 301!
-https://esthira.com/manual/ https://raptric.in/manual 301!
-https://esthira.com/manual/* https://raptric.in/manual 301!
-https://www.esthira.com/manual https://raptric.in/manual 301!
-https://www.esthira.com/manual/ https://raptric.in/manual 301!
-https://www.esthira.com/manual/* https://raptric.in/manual 301!
+https://esthira.com/manual https://raptric.in/raptric 301!
+https://esthira.com/manual/ https://raptric.in/raptric 301!
+https://esthira.com/manual/* https://raptric.in/raptric 301!
+https://www.esthira.com/manual https://raptric.in/raptric 301!
+https://www.esthira.com/manual/ https://raptric.in/raptric 301!
+https://www.esthira.com/manual/* https://raptric.in/raptric 301!
 
 # QR link fix on the active domain.
-/warrantyactivation https://raptric.in/warranty-activation 301!
-/warrantyactivation/ https://raptric.in/warranty-activation 301!
+/warrantyactivation https://raptric.in/raptric 301!
+/warrantyactivation/ https://raptric.in/raptric 301!
 
 # Redirect the rest of the old domain.
 https://esthira.com/* https://raptric.in/:splat 301!
