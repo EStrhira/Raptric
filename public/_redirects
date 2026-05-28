@@ -1,0 +1,9 @@
+# 🔹 QR link fix
+/warranty-activation https://raptric.in/warranty-activation 301!
+/warranty-activation/ https://raptric.in/warranty-activation 301!
+/warrantyactivation https://raptric.in/warranty-activation 301!
+/warrantyactivation/ https://raptric.in/warranty-activation 301!
+
+# 🔹 Redirect entire old domain
+https://esthira.com/* https://raptric.in/:splat 301!
+https://www.esthira.com/* https://raptric.in/:splat 301!

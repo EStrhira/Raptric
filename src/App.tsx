@@ -75,7 +75,7 @@ function AppContent() {
         <Route path="/shipping-delivery" element={<ShippingDelivery />} />
         <Route path="/cancellation-refund-replacement" element={<CancellationRefundReplacement />} />
         <Route path="/warranty" element={<WarrantyManual />} />
-        <Route path="/warrantyactivation" element={<WarrantyActivation />} />
+        <Route path="/warranty-activation" element={<WarrantyActivation />} />
         <Route path="/safety-tips" element={<SafetyTips />} />
         <Route path="/manual" element={<Manual />} />
         <Route path="/faq" element={<FAQ />} />

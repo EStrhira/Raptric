@@ -257,7 +257,7 @@ const Footer: React.FC = () => {
               <FooterListItem><FooterLink to="/cancellation-refund-replacement">Cancellation, Refund & Replacement</FooterLink></FooterListItem>
               <FooterListItem><FooterLink to="/shipping-delivery">Shipping & Delivery Policy</FooterLink></FooterListItem>
               <FooterListItem><FooterLink to="/warranty">Warranty</FooterLink></FooterListItem>
-              <FooterListItem><FooterLink to="/warrantyactivation">Warranty Activation</FooterLink></FooterListItem>
+              <FooterListItem><FooterLink to="/warranty-activation">Warranty Activation</FooterLink></FooterListItem>
             </FooterList>
           </div>
         </FooterContent>
