@@ -51,6 +51,42 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "https://esthira.com/warrantyactivation"
+  to = "https://raptric.in/warranty-activation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://esthira.com/warrantyactivation/"
+  to = "https://raptric.in/warranty-activation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://esthira.com/warrantyactivation/*"
+  to = "https://raptric.in/warranty-activation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.esthira.com/warrantyactivation"
+  to = "https://raptric.in/warranty-activation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.esthira.com/warrantyactivation/"
+  to = "https://raptric.in/warranty-activation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.esthira.com/warrantyactivation/*"
+  to = "https://raptric.in/warranty-activation"
+  status = 301
+  force = true
+
 # Manual redirect
 [[redirects]]
   from = "https://esthira.com/manual"
