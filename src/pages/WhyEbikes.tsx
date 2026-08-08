@@ -362,13 +362,6 @@ const WhyEbikes: React.FC = () => {
         </BannerSection>
 
         <Container>
-          <HeroContent>
-            <HeroTitle>Why Choose eBikes?</HeroTitle>
-            <HeroSubtitle>
-              Discover the benefits of electric bicycles for urban commuting. Save time, money, and the environment while enjoying a comfortable ride.
-            </HeroSubtitle>
-          </HeroContent>
-
           <IntroSection>
             <IntroText>
               Electric bicycles are transforming urban mobility across the world. As cities become more congested and environmental concerns grow, eBikes offer a perfect solution that combines convenience, sustainability, and health benefits.

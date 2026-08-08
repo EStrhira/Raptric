@@ -151,16 +151,27 @@ const ContactContainer = styled.div`
   }
 `
 
+const ContactLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+`
+
 const ContactHeader = styled.div`
-  text-align: center;
-  margin-bottom: 3rem;
+  text-align: left;
+  margin-bottom: 2rem;
 
   @media (max-width: 768px) {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   @media (max-width: 480px) {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 `
 
@@ -198,25 +209,20 @@ const ContactSubtitle = styled.p`
 
 const ContactGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.2rem;
-  margin-top: 3rem;
-
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
+  margin-top: 2rem;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 1.5rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 `
 
@@ -327,16 +333,13 @@ const ContactForm = styled.form`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 2rem;
-  margin-top: 3rem;
 
   @media (max-width: 768px) {
     padding: 1.5rem;
-    margin-top: 2rem;
   }
 
   @media (max-width: 480px) {
     padding: 1rem;
-    margin-top: 1.5rem;
   }
 `
 
@@ -613,14 +616,16 @@ const Contact: React.FC<ContactProps> = () => {
           </BannerSection>
           
           <ContactContainer>
-            <ContactHeader>
-              <ContactTitle>Get In Touch</ContactTitle>
-              <ContactSubtitle>
-                We're here to help and answer any questions you might have
-              </ContactSubtitle>
-            </ContactHeader>
-            
-            <ContactGrid>
+            <ContactLayout>
+              <div>
+                <ContactHeader>
+                  <ContactTitle>Get In Touch</ContactTitle>
+                  <ContactSubtitle>
+                    We're here to help and answer any questions you might have
+                  </ContactSubtitle>
+                </ContactHeader>
+
+                <ContactGrid>
               <ContactCard>
                 <ContactIcon>
                   <i className="fas fa-map-marker-alt"></i>
@@ -669,7 +674,9 @@ const Contact: React.FC<ContactProps> = () => {
                 </ContactInfo>
               </ContactCard>
             </ContactGrid>
-            
+              </div>
+
+              <div>
             <ContactForm onSubmit={handleSubmit}>
               {response && (
                 <ResponseMessage $type={response.success ? 'success' : 'error'}>
@@ -737,6 +744,8 @@ const Contact: React.FC<ContactProps> = () => {
                 {loading ? 'Sending...' : 'Send Message'}
               </SubmitButton>
             </ContactForm>
+              </div>
+            </ContactLayout>
           </ContactContainer>
         </Container>
       </ContactSection>

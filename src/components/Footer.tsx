@@ -218,7 +218,7 @@ const Footer: React.FC = () => {
               <SocialLink href="https://facebook.com/rideraptric" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-facebook"></i>
               </SocialLink>
-              <SocialLink href="https://www.youtube.com/@rideraptric" target="_blank" rel="noopener noreferrer">
+              <SocialLink href="https://www.youtube.com/@raptric" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-youtube"></i>
               </SocialLink>
             </SocialLinks>
