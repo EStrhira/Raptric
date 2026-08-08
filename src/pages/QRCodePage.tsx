@@ -45,12 +45,18 @@ const LogoSection = styled.div`
   margin-bottom: 30px;
 `
 
-const Logo = styled.h1`
-  font-size: 2.5rem;
-  font-weight: 800;
+const Logo = styled.img`
+  max-width: 260px;
+  height: auto;
+  margin: 0 auto;
+`
+
+const LogoSubtitle = styled.div`
+  font-size: 1.2rem;
+  font-weight: 600;
   color: #ffffff;
-  margin: 0;
-  letter-spacing: 2px;
+  margin-top: 10px;
+  letter-spacing: 3px;
 `
 
 const WelcomeSection = styled.div`
@@ -200,13 +206,14 @@ const QRCodePage: React.FC = () => {
       <PageContainer>
         <ContentWrapper>
           <LogoSection>
-            <Logo>RAPTRIC</Logo>
+            <Logo src="/Raptric_White_Logo_Latest.png" alt="RAPTRIC Logo" />
+            <LogoSubtitle>EBIKES & MBIKES</LogoSubtitle>
           </LogoSection>
 
           <WelcomeSection>
             <WelcomeTitle>Welcome!</WelcomeTitle>
             <WelcomeText>
-              Thank you for choosing RAPTRIC. Scan this QR code to quickly access all the resources you need for your e-bike.
+              Thank you for choosing RAPTRIC. You can access all the resources you need for your e-bike below.
             </WelcomeText>
           </WelcomeSection>
 

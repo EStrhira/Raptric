@@ -414,7 +414,7 @@ const WhyEbikes: React.FC = () => {
               Experience the perfect blend of technology, sustainability, and freedom with RAPTRIC eBikes.
             </CTADescription>
             <CTAButtons>
-              <Button to="/ebikes" $variant="primary">Explore RAPTRIC RAPTRIC</Button>
+              <Button to="/ebikes" $variant="primary">Explore RAPTRIC</Button>
               <Button to="/contact" $variant="secondary">Schedule a Test Ride</Button>
             </CTAButtons>
           </CTASection>

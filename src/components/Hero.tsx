@@ -383,13 +383,23 @@ const Hero: React.FC<HeroProps> = ({ hero }) => {
     },
     {
       id: '4',
-      title: '🎊 Ugadhi Festive Offer - Celebrate with eSthira!',
-      subtitle: 'Special festive discounts on all eSthira RAPTRIC eBikes! Limited time offer with exclusive benefits and free accessories. Make this Ugadhi memorable with sustainable mobility.',
+      title: '🇮🇳 Independence Day Offer 🎊 Celebrate with RAPTRIC!',
+      subtitle: 'Special discounts on all RAPTRIC eBikes! Limited time offer with exclusive benefits and free accessories.',
       primaryButtonText: 'Grab Offer',
       primaryButtonLink: '/ebikes',
       secondaryButtonText: 'Learn More',
       secondaryButtonLink: '/contact',
       imageUrl: '/Festive.png'
+    },
+    {
+      id: '5',
+      title: '🇮🇳 Independence Day Offer',
+      subtitle: 'Special discounts on the Z26 RAPTRIC eBike for limited period offer.',
+      primaryButtonText: 'Buy Now',
+      primaryButtonLink: '/ebike/raptric-z26-26-steel-step-through-electric-cycle',
+      secondaryButtonText: 'Contact Us',
+      secondaryButtonLink: '/contact',
+      imageUrl: '/Festive2.jpeg'
     }
   ]
 

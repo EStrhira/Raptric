@@ -161,7 +161,7 @@ export class RazorpayService {
         ...(order.notes?.development_mode ? {} : { order_id: order.id }),
         name: options.name,
         description: options.description,
-        image: options.image || '/eSthira_Logo_Black.png',
+        image: options.image || '/RAPTRIC_R_LOGO.png',
         prefill: {
           name: options.prefill?.name || '',
           email: options.prefill?.email || '',

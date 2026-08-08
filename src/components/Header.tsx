@@ -424,7 +424,7 @@ const Header: React.FC = () => {
       <Nav>
         <NavContainer>
           <Logo to="/">
-            <img src="/eSthira_Logo_White.png" alt="RAPTRIC" />
+            <img src="/RAPTRIC_R_LOGO.png" alt="RAPTRIC" />
           </Logo>
           <NavMenuContainer>
             <NavMenu $isOpen={isMenuOpen}>
