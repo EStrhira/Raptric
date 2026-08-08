@@ -224,9 +224,9 @@ const QRCodePage: React.FC = () => {
               <LinkDescription>Complete guide for your e-bike</LinkDescription>
             </LinkCard>
 
-            <LinkCard href="/warrantyactivation">
+            <LinkCard href="/warranty-activation">
               <LinkIcon>🛡️</LinkIcon>
-              <LinkTitle>Warranty Registration</LinkTitle>
+              <LinkTitle>Warranty Activation</LinkTitle>
               <LinkDescription>Register your warranty now</LinkDescription>
             </LinkCard>
 
