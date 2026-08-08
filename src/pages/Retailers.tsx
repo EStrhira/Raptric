@@ -537,7 +537,7 @@ const Retailers: React.FC = () => {
                 • All listed retailers are authorized RAPTRIC partners with trained staff
               </NoteText>
               <NoteText>
-                • Test rides available at all locations - call ahead to schedule
+                • Test rides available at selected locations only - call ahead to check and schedule
               </NoteText>
               <NoteText>
                 • Complete after-sales service and warranty support available
