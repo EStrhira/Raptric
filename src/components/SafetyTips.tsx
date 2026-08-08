@@ -228,7 +228,7 @@ const SafetyTips: React.FC = () => {
     },
     {
       icon: 'fa-tint',
-      title: 'Pressure Wash',
+      title: 'Do Not Pressure Wash',
       description: 'Do not pressure wash the eBikes.'
     },
     {
@@ -243,7 +243,7 @@ const SafetyTips: React.FC = () => {
     },
     {
       icon: 'fa-tachometer-alt',
-      title: 'Do Not Speed',
+      title: 'Do Not Over-Speed',
       description: 'Maintain a safe, controllable speed. Remember, faster speeds make it harder to react in time.'
     },
     {
